@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ficking Alindra Wijayadarma · GIS & Remote Sensing</title>
+<meta name="description" content="Portfolio of Ficking Alindra Wijayadarma, Cartography and Remote Sensing graduate of Universitas Gadjah Mada. GIS analysis, remote sensing, cartography and WebGIS.">
+<meta property="og:title" content="Ficking Alindra Wijayadarma · GIS & Remote Sensing">
+<meta property="og:description" content="Maps, remote sensing analysis and WebGIS projects by a UGM Cartography & Remote Sensing graduate.">
+<meta property="og:image" content="img/palmgis-process.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#151719">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23151719'/%3E%3Ccircle cx='32' cy='28' r='11' fill='none' stroke='%23f2b33d' stroke-width='5'/%3E%3Cpath d='M32 39v14' stroke='%23f2b33d' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: clean single page, left-aligned hero over a quiet contour field; content on a 1120px measure. Dark-first. */
+:root{
+  --bg:#151719;--surface:#1d2023;--surface-2:#272b2f;--line:#32373c;
+  --fg:#f0efea;--muted:#a1a6a8;--accent:#f2b33d;--accent-ink:#1a1407;
+  --contour:rgba(242,179,61,.10);--shadow:0 18px 40px rgba(0,0,0,.35);
+  --sans:"Plus Jakarta Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --measure:1120px;color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#f5f4ef;--surface:#ffffff;--surface-2:#ebe8df;--line:#dcd7ca;--fg:#1c1e20;--muted:#5d6266;
+  --accent:#b07208;--accent-ink:#ffffff;--contour:rgba(176,114,8,.13);--shadow:0 18px 40px rgba(60,48,20,.12);color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#f5f4ef;--surface:#ffffff;--surface-2:#ebe8df;--line:#dcd7ca;--fg:#1c1e20;--muted:#5d6266;
+  --accent:#b07208;--accent-ink:#ffffff;--contour:rgba(176,114,8,.13);--shadow:0 18px 40px rgba(60,48,20,.12);color-scheme:light}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+[hidden]{display:none!important}
+h1,h2,h3,h4{font-family:var(--sans);line-height:1.12;text-wrap:balance;margin:0}
+p{margin:0}
+.wrap{max-width:var(--measure);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.03em}
+
+/* ---------- nav ---------- */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:24px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;font:700 1.05rem var(--sans);text-decoration:none;letter-spacing:-.01em}
+.brand i{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent)}
+.links{display:flex;gap:26px;margin:0 0 0 auto;list-style:none;padding:0}
+.links a{text-decoration:none;font-size:.95rem;font-weight:500;color:var(--muted);display:inline-flex;align-items:center;gap:7px}
+.links a::before{content:"";width:5px;height:5px;border-radius:50%;background:transparent}
+.links a:hover{color:var(--fg)}
+.links a.active{color:var(--fg)}
+.links a.active::before{background:var(--accent)}
+.icons{display:flex;gap:4px;align-items:center;padding-left:14px;border-left:1px solid var(--line)}
+.iconbtn{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;border:0;background:transparent;cursor:pointer;text-decoration:none}
+.iconbtn:hover{background:var(--surface-2)}
+.iconbtn svg{width:19px;height:19px}
+.menu-btn{display:none}
+@media (max-width:880px){
+  .links{position:fixed;inset:calc(68px + env(safe-area-inset-top,0px)) 0 auto;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--line);
+    padding:8px max(20px,env(safe-area-inset-right,0px)) 16px max(20px,env(safe-area-inset-left,0px));transform:translateY(-8px);opacity:0;pointer-events:none;transition:.2s}
+  .links.open{transform:none;opacity:1;pointer-events:auto}
+  .links a{padding:12px 0;font-size:1.05rem}
+  .menu-btn{display:grid}
+  .icons{margin-left:auto;border-left:0;padding-left:0}
+}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:10px;font:600 .97rem var(--sans);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .15s,border-color .15s,color .15s}
+.btn svg{width:17px;height:17px}
+.btn-accent{background:var(--accent);color:var(--accent-ink)}
+.btn-accent:hover{transform:translateY(-1px)}
+.btn-text{color:var(--fg);padding-inline:6px;border-bottom:1px solid var(--line);border-radius:0;padding-block:6px}
+.btn-text:hover{border-bottom-color:var(--accent)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+#contours{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:56px;align-items:center;padding-block:clamp(72px,12vh,128px)}
+.hero-text{display:flex;flex-direction:column;gap:20px;min-width:0}
+.coord{color:var(--muted)}
+.hero h1{font-size:clamp(2.5rem,6vw,4.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.02}
+.hero h1 span{color:var(--accent)}
+.role{font-size:clamp(1.05rem,1.8vw,1.25rem);font-weight:500}
+.lead{color:var(--muted);max-width:52ch}
+.ctas{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.photo{position:relative;width:clamp(200px,24vw,300px);aspect-ratio:1;flex:none}
+.photo img{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:center 30%;border:6px solid var(--bg);box-shadow:0 0 0 1px var(--line)}
+.photo::before{content:"";position:absolute;inset:-18px;border-radius:50%;border:1px dashed color-mix(in srgb,var(--accent) 55%,transparent)}
+.photo .pin{position:absolute;left:6%;bottom:8%;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px;display:flex;gap:8px;align-items:center;box-shadow:var(--shadow);white-space:nowrap}
+.photo .pin i{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.scale{display:flex;flex-direction:column;gap:5px;margin-top:18px;color:var(--muted)}
+.scale .bar{display:flex}
+.scale .bar i{width:40px;height:6px;border:1px solid var(--muted)}
+.scale .bar i:nth-child(odd){background:var(--muted)}
+.scale .lbl{display:flex;justify-content:space-between;width:160px}
+@media (max-width:820px){.hero .wrap{grid-template-columns:1fr;gap:40px}.photo{order:-1;width:170px;margin:18px 0 0 18px}.photo .pin{display:none}}
+
+/* ---------- sections ---------- */
+section{padding-block:clamp(72px,10vw,108px)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.sec-head h2{font-size:clamp(1.8rem,3.4vw,2.4rem);font-weight:800;letter-spacing:-.025em}
+.sec-head .mono{color:var(--accent);display:block;margin-bottom:8px}
+.sec-head p{color:var(--muted);max-width:46ch}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:56px;align-items:start}
+.portrait img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top;border-radius:16px}
+.about-body{display:flex;flex-direction:column;gap:20px;min-width:0}
+.about-body p{color:var(--muted);max-width:62ch}
+.about-body p b{color:var(--fg);font-weight:600}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--line)}
+.fact{padding:16px 16px 16px 0}
+.fact+.fact{padding-left:16px;border-left:1px solid var(--line)}
+.fact strong{display:block;font-size:1.7rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.fact span{color:var(--muted);font-size:.86rem;line-height:1.35;display:block}
+.skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.skill-group h4{margin:0 0 10px;font:500 .74rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);border-radius:6px;padding:4px 10px;font-size:.85rem}
+@media (max-width:820px){.about{grid-template-columns:1fr;gap:28px}.portrait{max-width:300px}.skills{grid-template-columns:1fr}}
+@media (max-width:480px){.facts{grid-template-columns:1fr}.fact,.fact+.fact{padding:12px 0;border-left:0}.fact+.fact{border-top:1px solid var(--line)}}
+
+/* tabs (experience + project filter) */
+.tabs{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:32px;border-bottom:1px solid var(--line)}
+.tabs button{border:0;background:transparent;padding:0 0 12px;margin-bottom:-1px;cursor:pointer;color:var(--muted);font-weight:500;font-size:.95rem;border-bottom:2px solid transparent;display:inline-flex;gap:6px;align-items:baseline}
+.tabs button small{font:400 .72rem var(--mono)}
+.tabs button:hover{color:var(--fg)}
+.tabs button[aria-pressed="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+@media (max-width:560px){.tabs{gap:18px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.tabs button{flex:none}}
+
+/* experience */
+.timeline{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.job{display:grid;grid-template-columns:170px minmax(0,1fr);gap:28px;padding:22px 0;border-bottom:1px solid var(--line)}
+.job:first-child{padding-top:4px}
+.job .when{color:var(--muted);padding-top:3px}
+.job h3{font-size:1.12rem;font-weight:700}
+.job .org{color:var(--accent);font-weight:600;font-size:.95rem;margin:2px 0 10px}
+.job ul{margin:0;padding-left:18px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.job ul b{color:var(--fg);font-weight:600}
+@media (max-width:640px){.job{grid-template-columns:1fr;gap:6px}}
+
+/* projects */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 24px}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.grid{grid-template-columns:1fr}}
+.card{display:flex;flex-direction:column;gap:12px;text-align:left;background:transparent;border:0;padding:0;cursor:pointer;min-width:0}
+.thumb{border-radius:12px;overflow:hidden;aspect-ratio:3/2;background:var(--surface-2);border:1px solid var(--line)}
+.thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover .thumb img{transform:scale(1.04)}
+.card .cat{color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-size:.7rem}
+.card h3{font-size:1.25rem;font-weight:700;letter-spacing:-.01em}
+.card p{color:var(--muted);font-size:.94rem;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .more{font-weight:600;font-size:.9rem;display:inline-flex;align-items:center;gap:6px;color:var(--fg)}
+.card .more svg{width:15px;height:15px;transition:transform .15s;color:var(--accent)}
+.card:hover .more svg{transform:translateX(4px)}
+.card:hover h3{color:var(--accent)}
+
+/* certificates */
+.certs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.cert{display:flex;flex-direction:column;gap:10px;text-align:left;background:transparent;border:0;padding:0;cursor:zoom-in}
+.cert img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;border-radius:10px;border:1px solid var(--line);background:#fff}
+.cert strong{font-size:.95rem;line-height:1.35;font-weight:600}
+.cert span{color:var(--muted);font-size:.82rem;display:block;margin-top:2px}
+.langs{margin-top:32px;color:var(--muted);display:flex;gap:28px;flex-wrap:wrap}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:48px;align-items:start}
+.contact h3{font-size:clamp(1.7rem,3.2vw,2.3rem);font-weight:800;letter-spacing:-.025em}
+.contact p{color:var(--muted);margin-top:14px;max-width:46ch}
+.c-list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.c-row{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);text-decoration:none;min-width:0}
+.c-row svg{width:20px;height:20px;flex:none;color:var(--accent)}
+.c-row .v{min-width:0;overflow-wrap:anywhere}
+.c-row small{display:block;color:var(--muted);font-size:.78rem}
+.c-row .act{margin-left:auto;flex:none;color:var(--muted);font-size:.85rem;border:0;background:transparent;cursor:pointer;padding:4px 8px;border-radius:6px}
+.c-row .act:hover,a.c-row:hover .act{color:var(--fg)}
+@media (max-width:820px){.contact{grid-template-columns:1fr;gap:28px}}
+
+footer{border-top:1px solid var(--line);padding-block:26px;color:var(--muted);font-size:.88rem}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:100;background:rgba(8,9,10,.75);display:grid;place-items:center;
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:18px;width:min(980px,100%);max-height:100%;overflow:auto;box-shadow:var(--shadow)}
+.sheet-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding:22px 24px 0}
+.sheet-head .mono{color:var(--accent)}
+.sheet-head h3{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;margin-top:4px}
+.sheet-body{padding:18px 24px 26px;display:grid;gap:20px}
+.viewer{position:relative;background:var(--bg);border-radius:12px;overflow:hidden}
+.viewer img{width:100%;max-height:64vh;object-fit:contain;margin:0 auto}
+.viewer .nav-arrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:0;background:color-mix(in srgb,var(--bg) 82%,transparent);cursor:pointer;display:grid;place-items:center}
+.viewer .prev{left:10px}.viewer .next{right:10px}
+.viewer .count{position:absolute;right:12px;bottom:10px;background:color-mix(in srgb,var(--bg) 82%,transparent);padding:3px 8px;border-radius:6px}
+.viewer .full{position:absolute;left:12px;bottom:10px;background:color-mix(in srgb,var(--bg) 82%,transparent);padding:4px 9px;border-radius:6px;text-decoration:none;font-size:.8rem}
+.thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.thumbs button{flex:none;width:80px;height:56px;border-radius:8px;overflow:hidden;border:2px solid transparent;padding:0;cursor:pointer;background:var(--surface-2)}
+.thumbs button[aria-current="true"]{border-color:var(--accent)}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.detail{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px}
+.detail p{color:var(--muted)}
+.detail ul{margin:12px 0 0;padding-left:18px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.meta{display:flex;flex-direction:column;gap:14px}
+.meta .figure{font-size:1.5rem;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.meta .figure small{display:block;font-size:.82rem;font-weight:400;color:var(--muted);letter-spacing:0}
+.meta h4{font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+@media (max-width:720px){.detail{grid-template-columns:1fr}.sheet-head{padding:18px 18px 0}.sheet-body{padding:14px 18px 22px}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;z-index:120}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Back to top"><i></i>Ficking Alindra</a>
+    <ul class="links" id="links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certificates">Certificates</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="icons">
+      <button class="iconbtn" id="themeBtn" type="button" aria-label="Switch light or dark theme">
+        <svg id="icoMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg id="icoSun" hidden viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a class="iconbtn" href="https://www.linkedin.com/in/fickingalindrawijayadarma" target="_blank" rel="noopener" aria-label="LinkedIn profile">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.75v5.7h-4v-5.05c0-1.2-.02-2.75-1.7-2.75-1.7 0-1.95 1.3-1.95 2.66v5.14h-4z"/></svg></a>
+      <button class="iconbtn menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero" id="home" style="padding:0">
+  <canvas id="contours" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="coord mono">7°46′ S · 110°22′ E — Yogyakarta, Indonesia</span>
+      <h1>Ficking Alindra<br><span>Wijayadarma</span></h1>
+      <p class="role">GIS &amp; Remote Sensing · Cartography</p>
+      <p class="lead">Cartography and Remote Sensing graduate of Universitas Gadjah Mada. I turn aerial and satellite imagery, field surveys and spatial data into maps that support planning, plantation and mining decisions.</p>
+      <div class="ctas">
+        <a class="btn btn-accent" href="#projects">View projects
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-text" href="cv.pdf" target="_blank" rel="noopener">Download CV</a>
+      </div>
+      <div class="scale" aria-hidden="true"><div class="bar"><i></i><i></i><i></i><i></i></div><div class="lbl mono"><span>0</span><span>1</span><span>2 km</span></div></div>
+    </div>
+    <div class="photo">
+      <img src="img/profile.jpg" alt="Ficking Alindra Wijayadarma" width="700" height="700">
+      <span class="pin mono"><i></i>Open to work</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="mono">About</span><h2>A geographer who maps from above</h2></div></div>
+    <div class="about">
+      <figure class="portrait" style="margin:0"><img src="img/portrait.jpg" alt="Portrait of Ficking Alindra Wijayadarma" loading="lazy"></figure>
+      <div class="about-body">
+        <p>I work with <b>spatial data, satellite and aerial imagery, and GIS analysis</b> for urban development, plantation management, environmental studies and mining. My work runs from field surveys and ground-truthing to the final map, and lately into WebGIS tools that put that analysis in a browser.</p>
+        <p>I have taught GIS and programming practicals as a lab assistant, led field courses of up to 98 students, and georeferenced mining permit maps for the provincial government of Yogyakarta.</p>
+        <div class="facts">
+          <div class="fact"><strong>3.81</strong><span>GPA out of 4.00</span></div>
+          <div class="fact"><strong>150+</strong><span>mining maps georeferenced</span></div>
+          <div class="fact"><strong>98</strong><span>students led in Field Course III</span></div>
+        </div>
+        <div class="skills">
+          <div class="skill-group"><h4>GIS &amp; Remote Sensing</h4><div class="chips">
+            <span class="chip">ArcGIS Pro</span><span class="chip">ArcMap</span><span class="chip">QGIS</span><span class="chip">ENVI</span><span class="chip">SNAP</span><span class="chip">Google Earth Engine</span><span class="chip">Agisoft Metashape</span><span class="chip">ILWIS</span></div></div>
+          <div class="skill-group"><h4>Analysis</h4><div class="chips">
+            <span class="chip">Georeferencing</span><span class="chip">Digitising</span><span class="chip">Weighted overlay</span><span class="chip">Land suitability</span><span class="chip">Image classification</span><span class="chip">Ground-truthing</span></div></div>
+          <div class="skill-group"><h4>Code &amp; Data</h4><div class="chips">
+            <span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">Leaflet</span><span class="chip">YOLO / ONNX</span><span class="chip">R Studio</span></div></div>
+          <div class="skill-group"><h4>Working style</h4><div class="chips">
+            <span class="chip">Team leadership</span><span class="chip">Mentoring</span><span class="chip">Project management</span><span class="chip">Stakeholder liaison</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience" style="background:var(--surface);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="mono">Experience</span><h2>Research, teaching and fieldwork</h2></div></div>
+    <div class="tabs" id="expTabs" role="group" aria-label="Experience type"></div>
+    <ol class="timeline" id="timeline"></ol>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="mono">Projects</span><h2>Selected work</h2></div><p>Click a project to see its maps in full size, the method and the numbers.</p></div>
+    <div class="tabs" id="filters" role="group" aria-label="Filter projects"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- ================= CERTIFICATES ================= -->
+<section id="certificates" style="background:var(--surface);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="mono">Certificates</span><h2>Certification &amp; training</h2></div></div>
+    <div class="certs" id="certs"></div>
+    <div class="langs mono"><span>Indonesian — native</span><span>English — intermediate (AcEPT UGM, B1)</span></div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="wrap contact">
+    <div>
+      <span class="mono" style="color:var(--accent)">Contact</span>
+      <h3 style="margin-top:8px">Looking for a GIS or remote sensing analyst?</h3>
+      <p>I'm open to roles in GIS analysis, plantation and environmental mapping, and spatial data. Email reaches me fastest.</p>
+    </div>
+    <div class="c-list">
+      <div class="c-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        <span class="v"><small>Email</small><a href="mailto:falindraw@gmail.com" style="text-decoration:none">falindraw@gmail.com</a></span>
+        <button class="act" type="button" data-copy="falindraw@gmail.com">Copy</button>
+      </div>
+      <a class="c-row" href="https://www.linkedin.com/in/fickingalindrawijayadarma" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.75v5.7h-4v-5.05c0-1.2-.02-2.75-1.7-2.75-1.7 0-1.95 1.3-1.95 2.66v5.14h-4z"/></svg>
+        <span class="v"><small>LinkedIn</small>linkedin.com/in/fickingalindrawijayadarma</span><span class="act">Open ↗</span></a>
+      <a class="c-row" href="cv.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
+        <span class="v"><small>Curriculum vitae</small>CV (PDF)</span><span class="act">Download ↓</span></a>
+      <div class="c-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        <span class="v"><small>Based in</small>Sleman, Yogyakarta, Indonesia</span></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© <span id="yr">2026</span> Ficking Alindra Wijayadarma</span><span class="mono">WGS 84 · hosted on Vercel</span></div></footer>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div><span class="mono" id="mCat"></span><h3 id="mTitle"></h3></div>
+      <button class="iconbtn" id="mClose" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="sheet-body">
+      <div class="viewer">
+        <img id="mImg" alt="">
+        <button class="nav-arrow prev" id="mPrev" type="button" aria-label="Previous image"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m15 6-6 6 6 6"/></svg></button>
+        <button class="nav-arrow next" id="mNext" type="button" aria-label="Next image"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
+        <a class="full" id="mFull" href="#" target="_blank" rel="noopener">Open full size ↗</a>
+        <span class="count mono" id="mCount"></span>
+      </div>
+      <div class="thumbs" id="mThumbs"></div>
+      <div class="detail">
+        <div><p id="mDesc"></p><ul id="mPoints"></ul></div>
+        <div class="meta" id="mMeta"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* =====================================================================
+   DATA — edit here to change the website content.
+   Images live in the "img" folder. To use your own (sharper) image:
+   upload it to img/ and write its full file name below, e.g. 'peta-parkir.png'.
+   The first image of each project is its cover in the grid.
+   ===================================================================== */
+const PROJECTS=[
+ {id:'palmgis',title:'PalmGIS',cat:['webgis','rs'],label:'WebGIS · Deep learning',
+  short:'A browser WebGIS that counts oil palms from GeoTIFF imagery with a YOLO model and grades canopy health with VARI.',
+  desc:'End-to-end WebGIS: upload a GeoTIFF, detect every palm automatically with a YOLOv8 model on 640 px tiles running in the browser (ONNX), score crown greenness with the VARI index, and export an interactive map, a 4-page PDF report and Excel/CSV/GeoJSON data.',
+  points:['Tested on 6.73 ha: 507 palms detected, 75 palms/ha, with a distribution matching the QGIS overlay.','Compared with the QGIS Deepness deep-learning plugin: tighter crown boxes, per-palm health classes and automatic reporting.','Runs client-side: the image never leaves the user’s computer.'],
+  meta:[['507','palms detected in the test block'],['6.73 ha','test area']],when:'Ongoing',tools:['JavaScript','Leaflet','YOLOv8','ONNX'],
+  imgs:['palmgis-process.jpg','palmgis-landing.jpg','palmgis-output.jpg'],github:'https://github.com/FickingAlindra/palmgis'},
+ {id:'parking',title:'UGM Parking Capacity',cat:['research','rs'],label:'Research · UAV',
+  short:'Estimating vehicle capacity of every campus parking pocket at UGM from high-resolution UAV aerial photos.',
+  desc:'As a Research Assistant at the Faculty of Geography, UGM, I digitised parking areas from UAV aerial photographs, measured their area, and calculated capacity from the space needed per vehicle plus circulation space. Outputs: a campus parking capacity map and a recap by faculty, location and block.',
+  points:['107 parking polygons digitised.','Estimated capacity of 18,788 vehicles: 2,359 cars and 16,429 motorbikes.','Field checks with a laser rangefinder.'],
+  meta:[['18,788','vehicles of estimated capacity'],['1:10,000','map scale']],when:'Oct 2025 – Oct 2026',tools:['ArcGIS Pro','UAV imagery','Digitising'],
+  imgs:['parking-map.jpg','parking-recap.jpg']},
+ {id:'jembrana',title:'Jembrana Spatial Plan Suitability',cat:['rs','field'],label:'Remote sensing · Field',
+  short:'Residential land suitability against the Jembrana Regency spatial plan (RTRW) from PlanetScope imagery.',
+  desc:'Field Course III theme in Negara and Jembrana districts, Bali. I processed DEM, PlanetScope imagery and existing maps, built six parameter maps (soil texture, slope, drainage, groundwater depth, flood hazard, road access) and overlaid them to test settlement land against the RTRW.',
+  points:['Field validation and interviews at 40+ sample points, 96–99% parameter accuracy.','Suitable residential land (S2+S3) covers 95.79 km², more than the RTRW allocation of 44.55 km².','Chairperson of the field course: 98 students across 8 research themes.'],
+  meta:[['95.79 km²','suitable residential land'],['44.55 km²','RTRW allocation']],when:'Dec 2024 – Jul 2025',tools:['PlanetScope','Weighted overlay','ArcGIS'],
+  imgs:['jembrana-overlay.jpg','jembrana-landuse.jpg','jembrana-field.jpg']},
+ {id:'gombong',title:'Gombong Land-Use Database',cat:['carto','field'],label:'Cartography · Field',
+  short:'A 1:5,000 land-use map of Gombong, Kebumen, built for an agribusiness land suitability database.',
+  desc:'Field Course II, Large-Scale Mapping theme. Land use was interpreted visually from Google Earth imagery (1.18 m) with the RSNI2 level-4 scheme, then validated in the field and with a confusion matrix.',
+  points:['Overall accuracy 85.86% and Kappa 84.52%, above the 70% threshold.','Ground-truthing at 50 sample points, including density measurements for 15 settlement blocks.','Team leader for 18 students.'],
+  meta:[['85.86%','overall accuracy'],['1:5,000','map scale']],when:'Oct 2023 – Jul 2024',tools:['Visual interpretation','Confusion matrix','RSNI2'],
+  imgs:['gombong-map.jpg','gombong-flow.jpg','gombong-field.jpg']},
+ {id:'mining',title:'DIY Mining Area Map 2025',cat:['gis'],label:'GIS · Government',
+  short:'Consolidating permit records and georeferencing mining maps for the 2025 Regional Mining Area Map of Yogyakarta.',
+  desc:'Internship at DPUP-ESDM Yogyakarta. I consolidated spatial records of mining business permits (IUP), people’s mining permits (IPR), mineral potential and quarry sites, and digitised and georeferenced older permit maps.',
+  points:['500+ spatial records consolidated; permit verification about 30% faster.','150+ mining maps georeferenced to about ±5 m boundary accuracy.','Active permits aligned 100% with provincial spatial planning.'],
+  meta:[['500+','spatial records'],['±5 m','boundary accuracy']],when:'Aug – Oct 2025',tools:['ArcGIS','Georeferencing'],imgs:['mining-site.jpg']},
+ {id:'insar',title:'Sentinel-1 Land Deformation',cat:['rs'],label:'Remote sensing · Radar',
+  short:'InSAR interferogram and land deformation map over part of East Java from Sentinel-1 imagery.',
+  desc:'Processed a Sentinel-1 SAR pair in SNAP into an interferogram and a displacement map, laid out as a 1:640,000 deformation map of part of East Java.',
+  points:['Displacement between about −0.033 m and +0.028 m.'],meta:[['1:640,000','map scale']],when:'Coursework',tools:['SNAP','Sentinel-1','InSAR'],imgs:['deformation.jpg','insar.jpg']},
+ {id:'lidar',title:'LiDAR & DEM Processing',cat:['rs'],label:'Remote sensing · 3D',
+  short:'LAS point elevation classes, DEM surfaces and 3D terrain views.',
+  desc:'Processed LiDAR point clouds into elevation models, inspected them in LiDAR Data Viewer and produced colour-shaded DEM visualisations.',
+  points:[],meta:[],when:'Coursework',tools:['LiDAR','LAS','DEM'],imgs:['lidar.jpg','dem.jpg']},
+ {id:'thematic',title:'Thematic Maps & Cartograms',cat:['carto'],label:'Cartography',
+  short:'Population regionalisation, oil and gas distribution, GDP classes and cartograms of Java.',
+  desc:'Thematic maps from cartography coursework: choropleth regionalisation of Indonesian population (2010, 2020), oil and gas in Southeast Asia, Sumatra GDP classes, cartograms of Java’s population, a 1:25,000 Rupabumi-style map of Salatiga, and slope and population density maps of Bogor City.',
+  points:[],meta:[],when:'Coursework',tools:['ArcGIS','Choropleth','Cartogram'],imgs:['pop2010.jpg','kartogram.jpg','migas.jpg','rupabumi.jpg','bogor.jpg']},
+ {id:'landform',title:'Terrain & Landform Analysis',cat:['rs'],label:'Remote sensing',
+  short:'Slope and aspect of Mount Muria and landform delineation of aeolian and karst terrain.',
+  desc:'Classified aspect in ILWIS and slope in ArcGIS for Mount Muria (1:300,000), and delineated aeolian landforms in Colorado and solutional karst landforms in Gunung Kidul.',
+  points:[],meta:[],when:'Coursework',tools:['ILWIS','ArcGIS','DEM'],imgs:['muria.jpg','colorado.jpg']},
+ {id:'pati',title:'Pati Land-Use Classification',cat:['rs'],label:'Remote sensing · Classification',
+  short:'Random Trees classification of land use in Pati Regency and its agreement with the land-use directive.',
+  desc:'Classified land use in Pati Regency with the Random Trees (random forest) classifier, then compared it with the regency’s land-use function directive to map agreement and conflict.',
+  points:[],meta:[],when:'Coursework',tools:['Random Trees','Supervised classification'],imgs:['pati.jpg']},
+ {id:'storymap',title:'Vulkanisme Indonesia StoryMap',cat:['carto'],label:'StoryMap',
+  short:'An ArcGIS StoryMap on Indonesian volcanism: mapping, benefits and hazards.',
+  desc:'A narrative web map built with ArcGIS StoryMaps on Indonesia’s volcanoes: background, definitions, benefits to people and the threats they pose.',
+  points:[],meta:[],when:'Oct 2024',tools:['ArcGIS StoryMaps'],imgs:['storymap.jpg']},
+ {id:'teaching',title:'GIS Lab Modules',cat:['gis'],label:'Teaching',
+  short:'Practical modules and example maps for the Geographic Information Systems lab at UGM.',
+  desc:'As a Laboratory Teaching Assistant I co-developed modules on spatial analysis and map layout and produced example maps of Godean, Sleman (land use, vegetation density, roads and rivers) for students to reproduce.',
+  points:['Guided 13 students; their average score was above the practicum average.','100% of assessed student map projects completed.'],
+  meta:[['13','students guided']],when:'Feb – May 2025',tools:['QGIS','Map layout'],imgs:['lab-maps.jpg']}
+];
+const FILTERS=[['all','All'],['webgis','WebGIS'],['rs','Remote sensing'],['carto','Cartography'],['field','Field research'],['research','Research'],['gis','GIS']];
+const EXP={
+ work:['Work & research',[
+  ['Oct 2025 – Oct 2026','Research Assistant','Faculty of Geography, UGM',['Parking capacity estimation for UGM campus parking pockets from <b>UAV aerial photographs</b>.','Digitised parking areas and calculated capacity from area, space per vehicle and circulation space.']],
+  ['Aug – Oct 2025','GIS Intern','DPUP-ESDM Yogyakarta',['Consolidated <b>500+ spatial records</b> on mining permits; permit verification about 30% faster.','Digitised and georeferenced <b>150+ mining maps</b> (±5 m) for the 2025 Regional Mining Area Map.']],
+  ['Feb – May 2025','Lab Teaching Assistant, Geographic Information Systems','Dept. of Geographic Information Science, UGM',['Guided 13 students through georeferencing, digitising, geoprocessing, symbology and layout.','Co-developed spatial analysis and visualisation modules.']],
+  ['Aug – Dec 2024','Lab Teaching Assistant & Practicum Coordinator, Algorithms and Programming','Dept. of Geographic Information Science, UGM',['Taught algorithm design and debugging to 11 students.','Designed programming modules for geospatial problem-solving.']],
+  ['Apr – May 2022','Data Entry & GIS Intern','Transport Studies Community (TRANSCO)',['Peak-hour vehicle counts across road segments in the Bogor metropolitan area.','Processed and validated <b>1,000+ observation records</b>, cutting input errors by 25%.']]]],
+ field:['Field projects',[
+  ['Dec 2024 – Jul 2025','Chairperson, Field Course III','West Bali, UGM',['Led and coordinated <b>98 students</b> across 8 research themes.','Theme: suitability of the Jembrana spatial plan (RTRW) for settlement land using remote sensing.']],
+  ['Oct 2023 – Jul 2024','Team Leader, Large-Scale Mapping','Field Course II, Kebumen, UGM',['Led 18 students in land use, socio-economic and waste management mapping.','Ground-truthing at 50 sample points; 1:5,000 land-use map.']]]],
+ org:['Organisations',[
+  ['Mar 2023 – May 2025','Staff, Talent and Interest Division','HMSaIG (GIS Student Association), UGM',['Ran sports and arts programmes for 300+ students; participation up about 35% year over year.','Built a 300+ member database.']],
+  ['May 2024 – Feb 2025','Public Relations Staff','Pionir Geospace, UGM',['Produced 30+ promotional contents; event engagement up about 40%.','Liaison officer for 50+ speakers and guests.']],
+  ['Apr – Sep 2023','Secretariat Staff','GIS Competition (GISCOM & MAPCOM), UGM',['Managed documentation for 39 competition teams with complete records.']]]],
+ edu:['Education',[
+  ['Aug 2022 – Sep 2026','B.Sc. Cartography and Remote Sensing','Faculty of Geography, Universitas Gadjah Mada',['GPA <b>3.81 / 4.00</b>.','Thesis: spatial analysis of traffic accident vulnerability using aerial photos and a weighted overlay approach in Magelang City.']]]]
+};
+const CERTS=[
+ ['cert-yonsei.jpg','Spatial Data Science and Applications','Yonsei University · Coursera · Oct 2026'],
+ ['cert-michigan.jpg','GIS: Geographic Information Systems for Sustainability','University of Michigan · Coursera · Oct 2026'],
+ ['cert-mining.jpg','Masterclass GIS for Mining: ArcGIS Pro','Takeclass.id · Apr 2026'],
+ ['cert-k3.jpg','OHS Management System, SNI ISO 45001:2018','National Standardization Agency (BSN) · Oct 2026'],
+ ['cert-risk.jpg','Risk Management, SNI ISO 31000','National Standardization Agency (BSN) · Oct 2026'],
+ ['cert-python.jpg','Python Essentials 1','Cisco Networking Academy & OpenEDG · Oct 2026'],
+ ['cert-ds.jpg','Data Science Essentials with Python','Cisco Networking Academy · Oct 2026']
+];
+
+/* =================== RENDER =================== */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const IMG=f=>'img/'+f;
+const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+let filter='all';
+function renderFilters(){
+  $('#filters').innerHTML=FILTERS.map(([k,l])=>{const n=k==='all'?PROJECTS.length:PROJECTS.filter(p=>p.cat.includes(k)).length;
+    return n?`<button type="button" data-f="${k}" aria-pressed="${k===filter}">${l}<small>${n}</small></button>`:'';}).join('');}
+function renderGrid(){
+  $('#grid').innerHTML=PROJECTS.filter(p=>filter==='all'||p.cat.includes(filter)).map(p=>`
+   <button class="card" type="button" data-open="${p.id}">
+     <span class="thumb"><img src="${IMG(p.imgs[0])}" alt="${p.title}" loading="lazy"></span>
+     <span class="cat mono">${p.label}</span>
+     <h3>${p.title}</h3>
+     <p>${p.short}</p>
+     <span class="more">View details ${ARROW}</span>
+   </button>`).join('');}
+$('#filters').addEventListener('click',e=>{const b=e.target.closest('[data-f]');if(!b)return;filter=b.dataset.f;renderFilters();renderGrid();});
+$('#grid').addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b)openModal(PROJECTS.find(p=>p.id===b.dataset.open));});
+
+let expKind='work';
+function renderExp(){
+  $('#expTabs').innerHTML=Object.entries(EXP).map(([k,[l,it]])=>`<button type="button" data-exp="${k}" aria-pressed="${k===expKind}">${l}<small>${it.length}</small></button>`).join('');
+  $('#timeline').innerHTML=EXP[expKind][1].map(([when,role,org,pts])=>`
+   <li class="job"><span class="when mono">${when}</span>
+     <div><h3>${role}</h3><div class="org">${org}</div><ul>${pts.map(x=>`<li>${x}</li>`).join('')}</ul></div></li>`).join('');}
+$('#expTabs').addEventListener('click',e=>{const b=e.target.closest('[data-exp]');if(!b)return;expKind=b.dataset.exp;renderExp();});
+
+$('#certs').innerHTML=CERTS.map(([img,t,s],i)=>`
+  <button class="cert" type="button" data-cert="${i}"><img src="${IMG(img)}" alt="Certificate: ${t}" loading="lazy">
+  <span><strong>${t}</strong><span>${s}</span></span></button>`).join('');
+$('#certs').addEventListener('click',e=>{const b=e.target.closest('[data-cert]');if(!b)return;const c=CERTS[+b.dataset.cert];
+  openModal({title:c[1],label:'Certificate',imgs:[c[0]],desc:c[2],points:[],meta:[]});});
+
+/* =================== MODAL =================== */
+let cur=null,idx=0,lastFocus=null;
+function openModal(p){cur=p;idx=0;lastFocus=document.activeElement;
+  $('#mCat').textContent=p.label||'';$('#mTitle').textContent=p.title;$('#mDesc').textContent=p.desc;
+  $('#mPoints').innerHTML=(p.points||[]).map(x=>`<li>${x}</li>`).join('');$('#mPoints').hidden=!(p.points||[]).length;
+  let meta=(p.meta||[]).map(([v,l])=>`<div class="figure">${v}<small>${l}</small></div>`).join('');
+  if(p.when)meta+=`<div><h4>When</h4><span class="mono">${p.when}</span></div>`;
+  if(p.tools)meta+=`<div><h4>Tools</h4><div class="chips">${p.tools.map(t=>`<span class="chip">${t}</span>`).join('')}</div></div>`;
+  if(p.github)meta+=`<a class="btn btn-accent" href="${p.github}" target="_blank" rel="noopener" style="align-self:flex-start">View on GitHub ${ARROW}</a>`;
+  $('#mMeta').innerHTML=meta;$('#mMeta').hidden=!meta;
+  const many=p.imgs.length>1;
+  $('#mThumbs').innerHTML=many?p.imgs.map((s,i)=>`<button type="button" data-i="${i}" aria-label="Image ${i+1}"><img src="${IMG(s)}" alt=""></button>`).join(''):'';
+  $('#mThumbs').hidden=!many;$('#mPrev').hidden=$('#mNext').hidden=$('#mCount').hidden=!many;
+  show(0);$('#modal').hidden=false;document.body.style.overflow='hidden';$('#mClose').focus();}
+function show(i){idx=(i+cur.imgs.length)%cur.imgs.length;const src=IMG(cur.imgs[idx]);
+  $('#mImg').src=src;$('#mImg').alt=`${cur.title}, image ${idx+1}`;$('#mFull').href=src;
+  $('#mCount').textContent=`${idx+1} / ${cur.imgs.length}`;
+  $$('#mThumbs button').forEach((b,j)=>b.setAttribute('aria-current',j===idx));}
+function closeModal(){$('#modal').hidden=true;document.body.style.overflow='';if(lastFocus)lastFocus.focus();}
+$('#mClose').onclick=closeModal;$('#mPrev').onclick=()=>show(idx-1);$('#mNext').onclick=()=>show(idx+1);
+$('#mThumbs').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)show(+b.dataset.i);});
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal();});
+document.addEventListener('keydown',e=>{if($('#modal').hidden)return;
+  if(e.key==='Escape')closeModal();if(e.key==='ArrowLeft')show(idx-1);if(e.key==='ArrowRight')show(idx+1);});
+
+/* =================== THEME, NAV, COPY =================== */
+const root=document.documentElement;
+function applyTheme(t){root.setAttribute('data-theme',t);$('#icoMoon').hidden=t==='light';$('#icoSun').hidden=t==='dark';
+  document.querySelector('meta[name=theme-color]').content=t==='light'?'#f5f4ef':'#151719';}
+let saved=null;try{saved=localStorage.getItem('theme')}catch(_){}
+applyTheme(saved||'dark');
+$('#themeBtn').onclick=()=>{const t=root.getAttribute('data-theme')==='dark'?'light':'dark';applyTheme(t);try{localStorage.setItem('theme',t)}catch(_){};drawContours(true);};
+$('#menuBtn').onclick=()=>{const o=$('#links').classList.toggle('open');$('#menuBtn').setAttribute('aria-expanded',o);};
+$('#links').addEventListener('click',e=>{if(e.target.closest('a')){$('#links').classList.remove('open');$('#menuBtn').setAttribute('aria-expanded',false);}});
+const secs=$$('main section');
+function onScroll(){$('#nav').classList.toggle('scrolled',scrollY>8);
+  let id='home';for(const s of secs)if(s.getBoundingClientRect().top<140)id=s.id;
+  $$('.links a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}
+addEventListener('scroll',onScroll,{passive:true});
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(!b)return;
+  try{await navigator.clipboard.writeText(b.dataset.copy);toast('Email copied');}catch(_){toast(b.dataset.copy);}});
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,1800);}
+$('#yr').textContent=new Date().getFullYear();
+
+/* =================== HERO CONTOURS (canvas, marching squares on smooth noise) =================== */
+const cv=$('#contours'),cx=cv.getContext('2d');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const P=new Uint8Array(512);(function(){const p=[...Array(256).keys()];let s=7;for(let i=255;i>0;i--){s=(s*16807)%2147483647;const j=s%(i+1);[p[i],p[j]]=[p[j],p[i]];}for(let i=0;i<512;i++)P[i]=p[i&255];})();
+const fade=t=>t*t*t*(t*(t*6-15)+10),lerp=(a,b,t)=>a+(b-a)*t;
+function grad(h,x,y){const g=h&3;return (g&1?-x:x)+(g&2?-y:y);}
+function noise(x,y){const X=Math.floor(x)&255,Y=Math.floor(y)&255;x-=Math.floor(x);y-=Math.floor(y);const u=fade(x),v=fade(y);
+  const a=P[X]+Y,b=P[X+1]+Y;return lerp(lerp(grad(P[a],x,y),grad(P[b],x-1,y),u),lerp(grad(P[a+1],x,y-1),grad(P[b+1],x-1,y-1),u),v);}
+let t0=0,raf=0;
+function field(x,y,t){return noise(x*.0042+t,y*.0042)+noise(x*.011-t*.6,y*.011+3)*.35;}
+function drawContours(force){
+  const r=cv.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
+  if(force||cv.width!==Math.round(r.width*dpr)){cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);}
+  const W=r.width,H=r.height;cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,H);
+  cx.strokeStyle=getComputedStyle(root).getPropertyValue('--contour').trim()||'rgba(242,179,61,.1)';
+  const step=14,cols=Math.ceil(W/step)+1,rows=Math.ceil(H/step)+1,v=new Float32Array(cols*rows);
+  for(let j=0;j<rows;j++)for(let i=0;i<cols;i++)v[j*cols+i]=field(i*step,j*step,t0);
+  for(let lv=-0.6;lv<=0.6;lv+=0.1){cx.lineWidth=Math.abs(lv%0.4)<0.01?1.6:1;cx.beginPath();
+    for(let j=0;j<rows-1;j++)for(let i=0;i<cols-1;i++){
+      const a=v[j*cols+i],b=v[j*cols+i+1],c=v[(j+1)*cols+i+1],d=v[(j+1)*cols+i];
+      const k=(a>lv?8:0)|(b>lv?4:0)|(c>lv?2:0)|(d>lv?1:0);if(k===0||k===15)continue;
+      const x=i*step,y=j*step,e=(p,q)=>(lv-p)/(q-p);
+      const T=[x+step*e(a,b),y],R=[x+step,y+step*e(b,c)],B=[x+step*e(d,c),y+step],L=[x,y+step*e(a,d)];
+      const seg=(p,q)=>{cx.moveTo(p[0],p[1]);cx.lineTo(q[0],q[1]);};
+      switch(k){case 1:case 14:seg(L,B);break;case 2:case 13:seg(B,R);break;case 3:case 12:seg(L,R);break;case 4:case 11:seg(T,R);break;
+        case 5:seg(L,T);seg(B,R);break;case 6:case 9:seg(T,B);break;case 7:case 8:seg(L,T);break;case 10:seg(T,R);seg(L,B);break;}}
+    cx.stroke();}
+}
+function loop(){t0+=0.0009;drawContours();raf=requestAnimationFrame(loop);}
+drawContours(true);
+if(!reduce){new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){if(!raf)raf=requestAnimationFrame(loop);}else{cancelAnimationFrame(raf);raf=0;}})).observe(cv);}
+addEventListener('resize',()=>drawContours(true));
+
+renderFilters();renderGrid();renderExp();onScroll();
+</script>
+</body>
+</html>

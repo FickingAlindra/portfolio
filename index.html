@@ -160,12 +160,51 @@ section{padding-block:clamp(72px,10vw,108px)}
 .card:hover h3{color:var(--accent)}
 .subhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;font-size:1.3rem;font-weight:700;margin:64px 0 24px;padding-top:28px;border-top:1px solid var(--line)}
 .subhead .mono{color:var(--muted);font-weight:400}
+.imap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+@media (max-width:860px){.imap-grid{grid-template-columns:1fr}}
+.imap{display:flex;flex-direction:column;gap:10px;text-decoration:none;min-width:0}
+.imap .thumb{aspect-ratio:3/2}
+.imap .thumb img{object-fit:contain}
+.imap .cat{color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-size:.7rem}
+.imap strong{font-size:1.1rem}
+.imap:hover strong{color:var(--accent)}
+.imap:hover .thumb img{transform:scale(1.04)}
 .xlink{margin-top:12px;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:transparent;border-radius:8px;padding:6px 10px 6px 6px;cursor:pointer;font-size:.86rem;font-weight:600}
 .xlink:not(:has(img)){padding-left:10px}
 .xlink img{width:34px;height:34px;object-fit:cover;border-radius:5px}
 .xlink svg{width:14px;height:14px;color:var(--accent)}
 .xlink:hover{border-color:var(--accent)}
+.links-row{display:flex;gap:10px;flex-wrap:wrap}
+.links-row .btn{padding:11px 18px}
+.btn-ghost{border-color:var(--line);color:var(--fg);background:transparent}
+.btn-ghost:hover{border-color:var(--fg)}
 .viewer img.loading{filter:blur(2px);opacity:.85}
+
+
+/* layer stacks */
+.stack-wrap{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);gap:32px;align-items:center;position:relative;z-index:0}
+#stackTabs{position:relative;z-index:2}
+.stack{position:relative;height:calc(var(--n)*var(--gap) + 300px + 80px);--gap:30px;transition:height .7s ease}
+.stack.open{--gap:64px}
+.srow{position:absolute;left:0;right:0;top:calc(40px + var(--i)*var(--gap));height:300px;display:flex;align-items:center;transition:top .7s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.slayer{position:relative;flex:none;width:min(56%,440px);aspect-ratio:1.414;margin-left:6%;transform:rotateX(58deg) rotateZ(-36deg);transform-style:preserve-3d;
+  border:1px solid rgba(0,0,0,.25);background:#fff;box-shadow:0 18px 30px -12px rgba(0,0,0,.55);cursor:pointer;pointer-events:auto;transition:transform .35s,filter .35s,opacity .35s}
+.stack-persp{perspective:1800px}
+.slayer img{width:100%;height:100%;object-fit:cover;display:block}
+.slabel{position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:10px;pointer-events:auto;cursor:pointer;max-width:48%}
+.slabel::before{content:"";flex:none;width:clamp(16px,4vw,70px);border-top:1.5px dotted var(--muted)}
+.slabel span{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 10px;font-size:.86rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.srow.top .slabel span{border-color:var(--accent);font-weight:700}
+.srow.hot .slayer{transform:rotateX(58deg) rotateZ(-36deg) translateZ(26px)}
+.srow.hot .slabel span{border-color:var(--accent);color:var(--accent)}
+.stack.hovering .srow:not(.hot) .slayer{opacity:.55}
+.stack-info{display:flex;flex-direction:column;gap:14px;min-width:0}
+.stack-info h3{font-size:1.4rem;font-weight:800;letter-spacing:-.02em}
+.stack-info p{color:var(--muted)}
+.stack-info ol{margin:0;padding-left:20px;color:var(--muted);display:flex;flex-direction:column;gap:4px;font-size:.92rem}
+.stack-info ol li.res{color:var(--fg);font-weight:600}
+@media (max-width:900px){.stack-wrap{grid-template-columns:1fr;gap:12px}.stack{--gap:22px;height:calc(var(--n)*var(--gap) + 170px)}.stack.open{--gap:38px}.srow{height:170px;top:calc(var(--i)*var(--gap) - 10px)}.slayer{width:56%;margin-left:0}.slabel{max-width:44%;gap:6px}.slabel::before{width:12px}.slabel span{font-size:.72rem;padding:4px 7px;white-space:nowrap}}
+@media (prefers-reduced-motion: reduce){.srow,.stack{transition:none}}
 
 /* certificates */
 .certs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
@@ -229,6 +268,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       <li><a href="#about">About</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#stacks">Methods</a></li>
       <li><a href="#certificates">Certificates</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -318,6 +358,19 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   </div>
 </section>
 
+
+<!-- ================= LAYER STACKS ================= -->
+<section id="stacks" style="background:var(--surface);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="mono">Methods</span><h2>How the maps are built</h2></div><p>Each result is an overlay of thematic layers. Hover a layer to lift it, click it to open the full map.</p></div>
+    <div class="tabs" id="stackTabs" role="group" aria-label="Choose an analysis"></div>
+    <div class="stack-wrap">
+      <div class="stack" id="stack" aria-live="polite"></div>
+      <div class="stack-info" id="stackInfo"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= CERTIFICATES ================= -->
 <section id="certificates" style="background:var(--surface);border-block:1px solid var(--line)">
   <div class="wrap">
@@ -398,7 +451,8 @@ const PROJECTS=[
   points:['Test block: 507 palms on 6.73 ha (75.4 palms/ha), mean VARI 0.665.','Health classes: 437 healthy (86.2%), 39 moderate (7.7%), 31 stressed (6.1%).','Automatic report with method notes, charts, an interpretation and a sample of the detection table.'],
   meta:[['507','palms detected'],['6.73 ha','test area'],['0.665','mean VARI']],when:'2026 · ongoing',tools:['JavaScript','Leaflet','YOLOv8','ONNX','Python'],
   imgs:['palmgis/12.png','palmgis/01.png','palmgis/05.png','palmgis/07.png','palmgis/02.png','palmgis/04.png','palmgis/03.png','palmgis/06.png','palmgis/13.png','palmgis/10.png','palmgis/08.png','palmgis/11.png'],
-  github:'https://github.com/FickingAlindra/palmgis'},
+  github:'https://github.com/FickingAlindra/palmgis',
+  demo:''   /* isi dengan link online PalmGIS, misalnya 'https://palmgis.vercel.app' */},
  {id:'thesis',group:'main',title:'Traffic Accident Vulnerability, Magelang City',cat:['research','rs','field'],label:'Undergraduate thesis',
   short:'Road-segment vulnerability to traffic accidents at weekend morning peak hours, from aerial photos, weighted overlay and field survey.',
   desc:'Undergraduate thesis. Road segments of Magelang City were assessed for traffic accident vulnerability during the weekend morning peak, combining interpretation of 2025 aerial photographs, the city road network and a 2026 field survey in a weighted overlay. Field observations covered road markings, roadside land use, sight distance, curve radius, pedestrian crossings, junction control and signs, on-street parking, side friction and traffic flow, and sidewalks.',
@@ -524,6 +578,9 @@ const IMG=f=>'img/'+f;                                   /* original, full quali
 const TH=f=>'img/thumb/'+f.replace(/\.(png|jpe?g)$/i,'.jpg');  /* light preview */
 const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 const byId=id=>PROJECTS.find(p=>p.id===id);
+const MAPI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>';
+const EXT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+const GHI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>';
 
 let filter='all';
 function renderFilters(){
@@ -532,7 +589,7 @@ function renderFilters(){
 const card=p=>`
    <button class="card" type="button" data-open="${p.id}">
      <span class="thumb"><img src="${TH(p.imgs[0])}" alt="${p.title}" loading="lazy"></span>
-     <span class="cat mono">${p.label}${p.imgs.length>1?` · ${p.imgs.length} images`:''}</span>
+     <span class="cat mono">${p.label}${p.demo?' · live demo':p.imgs.length>1?` · ${p.imgs.length} images`:''}</span>
      <h3>${p.title}</h3>
      <p>${p.short}</p>
      <span class="more">View details ${ARROW}</span>
@@ -564,6 +621,50 @@ $('#certs').innerHTML=CERTS.map((c,i)=>`
 $('#certs').addEventListener('click',e=>{const b=e.target.closest('[data-cert]');if(!b)return;const c=CERTS[+b.dataset.cert];
   openModal({title:c.t,label:'Certificate',imgs:c.imgs,desc:c.s,points:[],meta:[],verify:c.link});});
 
+
+/* =================== LAYER STACKS =================== */
+/* layers listed TOP (result) to BOTTOM (inputs); img = file in img/ (preview from img/thumb is shown) */
+const STACKS=[
+ {id:'jembrana',tab:'Jembrana',title:'Residential land suitability vs. spatial plan',proj:'jembrana',
+  text:'Six physical parameters were scored and overlaid into a suitability map, then compared with existing land use and the settlement zones of the regency spatial plan (RTRW).',
+  layers:[['Result: suitability vs. RTRW','jembrana/05.png'],['RTRW settlement zones','jembrana/06.png'],['Existing land use','jembrana/13.png'],['Drainage','jembrana/12.png'],['Distance to roads','jembrana/11.png'],['Groundwater depth','jembrana/10.png'],['Slope','jembrana/09.png'],['Flood hazard','jembrana/08.png'],['Soil texture','jembrana/07.png']]},
+ {id:'gombong',tab:'Gombong',title:'Land-use database, Gombong',proj:'gombong',
+  text:'A tentative land-use map was interpreted from imagery, tested with accuracy and settlement-density samples in the field, then corrected into the final 1:5,000 map.',
+  layers:[['Result: final land-use map','gombong/04.jpg'],['Settlement density samples','gombong/03.jpg'],['Accuracy assessment samples','gombong/02.jpg'],['Tentative land-use map','gombong/01.jpg']]},
+ {id:'pati',tab:'Pati',title:'Land-use directive vs. existing use, Pati',proj:'pati',
+  text:'A land-use function directive derived from slope, rainfall and soil texture was compared with a Random Trees land-use classification to map where existing use agrees with the directive.',
+  layers:[['Result: agreement map','other/18.png'],['Land use, Random Trees','other/19.png'],['Land-use function directive','other/20.png']]},
+ {id:'godean',tab:'Godean',title:'Thematic layers of Godean District',proj:'siglab',
+  text:'Three thematic layers of the same district prepared as example maps for the GIS practicum: transport and hydrography, vegetation density and land use.',
+  layers:[['Land use','sig-lab/03.png'],['Vegetation density','sig-lab/02.png'],['Roads & rivers','sig-lab/01.png']]},
+ {id:'population',tab:'Population',title:'Population regionalization of Indonesia',proj:'regionalisasi',
+  text:'Provincial population in 2010 and 2020 classified into regions, then compared to show where the growth rate changed between the two decades.',
+  layers:[['Result: change in growth rate','other/24.png'],['Population 2020','other/23.png'],['Population 2010','other/22.png']]}
+];
+let stackId=STACKS[0].id,stackOpen=false;
+function renderStack(){
+  const st=STACKS.find(x=>x.id===stackId),n=st.layers.length,el=$('#stack');
+  $('#stackTabs').innerHTML=STACKS.map(x=>`<button type="button" data-st="${x.id}" aria-pressed="${x.id===stackId}">${x.tab}<small>${x.layers.length}</small></button>`).join('');
+  el.style.setProperty('--n',n-1);el.classList.add('stack-persp');
+  el.innerHTML=st.layers.map(([lab,img],i)=>`<div class="srow${i===0?' top':''}" style="--i:${i};z-index:${n-i}" data-k="${i}">
+     <div class="slayer" role="button" tabindex="0" aria-label="Open ${lab}"><img src="${TH(img)}" alt="" loading="lazy"></div>
+     <div class="slabel"><span>${lab}</span></div></div>`).join('');
+  $('#stackInfo').innerHTML=`<span class="mono" style="color:var(--accent)">${n} layers</span><h3>${st.title}</h3><p>${st.text}</p>
+    <ol>${st.layers.slice().reverse().map(([l],i)=>`<li${i===n-1?' class="res"':''}>${l}</li>`).join('')}</ol>
+    <button class="xlink" type="button" data-open="${st.proj}">See the project ${ARROW}</button>`;
+  if(stackOpen)requestAnimationFrame(()=>el.classList.add('open'));}
+$('#stackTabs').addEventListener('click',e=>{const b=e.target.closest('[data-st]');if(!b)return;stackId=b.dataset.st;renderStack();});
+const stackEl=$('#stack');
+stackEl.addEventListener('mouseover',e=>{const r=e.target.closest('.srow');if(!r)return;stackEl.classList.add('hovering');$$('.srow').forEach(x=>x.classList.toggle('hot',x===r));});
+stackEl.addEventListener('mouseleave',()=>{stackEl.classList.remove('hovering');$$('.srow').forEach(x=>x.classList.remove('hot'));});
+function openLayer(e){const r=e.target.closest('.srow');if(!r)return;const st=STACKS.find(x=>x.id===stackId);
+  openModal({title:st.title,label:'Layer stack',imgs:st.layers.map(l=>l[1]),desc:st.text,points:[],meta:[]});show(+r.dataset.k);}
+stackEl.addEventListener('click',openLayer);
+stackEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLayer(e);}});
+if('IntersectionObserver' in window){new IntersectionObserver((es,o)=>es.forEach(en=>{if(en.isIntersecting){stackOpen=true;stackEl.classList.add('open');o.disconnect();}}),{threshold:.35}).observe(stackEl);}
+else{stackOpen=true;}
+renderStack();
+
 /* =================== MODAL =================== */
 let cur=null,idx=0,lastFocus=null;
 function openModal(p){cur=p;idx=0;lastFocus=document.activeElement;
@@ -573,7 +674,7 @@ function openModal(p){cur=p;idx=0;lastFocus=document.activeElement;
   if(p.when)meta+=`<div><h4>When</h4><span class="mono">${p.when}</span></div>`;
   if(p.tools)meta+=`<div><h4>Tools</h4><div class="chips">${p.tools.map(t=>`<span class="chip">${t}</span>`).join('')}</div></div>`;
   if(p.verify)meta+=`<a class="btn btn-text" href="${p.verify}" target="_blank" rel="noopener" style="align-self:flex-start">Verify certificate ↗</a>`;
-  if(p.github)meta+=`<a class="btn btn-accent" href="${p.github}" target="_blank" rel="noopener" style="align-self:flex-start">View on GitHub ${ARROW}</a>`;
+  if(p.demo||p.github)meta+=`<div class="links-row">${p.demo?`<a class="btn btn-accent" href="${p.demo}" target="_blank" rel="noopener">${EXT}Live demo</a>`:''}${p.github?`<a class="btn btn-ghost" href="${p.github}" target="_blank" rel="noopener">${GHI}GitHub</a>`:''}</div>`;
   $('#mMeta').innerHTML=meta;$('#mMeta').hidden=!meta;
   const many=p.imgs.length>1;
   $('#mThumbs').innerHTML=many?p.imgs.map((s,i)=>`<button type="button" data-i="${i}" aria-label="Image ${i+1}"><img src="${TH(s)}" alt="" loading="lazy"></button>`).join(''):'';

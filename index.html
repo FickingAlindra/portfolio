@@ -7,7 +7,7 @@
 <meta name="description" content="Portfolio of Ficking Alindra Wijayadarma, Cartography and Remote Sensing graduate of Universitas Gadjah Mada. GIS analysis, remote sensing, cartography and WebGIS.">
 <meta property="og:title" content="Ficking Alindra Wijayadarma · GIS & Remote Sensing">
 <meta property="og:description" content="Maps, remote sensing analysis and WebGIS projects by a UGM Cartography & Remote Sensing graduate.">
-<meta property="og:image" content="img/palmgis-process.jpg">
+<meta property="og:image" content="img/thumb/palmgis/12.jpg">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#151719">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23151719'/%3E%3Ccircle cx='32' cy='28' r='11' fill='none' stroke='%23f2b33d' stroke-width='5'/%3E%3Cpath d='M32 39v14' stroke='%23f2b33d' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -163,6 +163,14 @@ section{padding-block:clamp(72px,10vw,108px)}
 .card .more svg{width:15px;height:15px;transition:transform .15s;color:var(--accent)}
 .card:hover .more svg{transform:translateX(4px)}
 .card:hover h3{color:var(--accent)}
+.subhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;font-size:1.3rem;font-weight:700;margin:64px 0 24px;padding-top:28px;border-top:1px solid var(--line)}
+.subhead .mono{color:var(--muted);font-weight:400}
+.xlink{margin-top:12px;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:transparent;border-radius:8px;padding:6px 10px 6px 6px;cursor:pointer;font-size:.86rem;font-weight:600}
+.xlink:not(:has(img)){padding-left:10px}
+.xlink img{width:34px;height:34px;object-fit:cover;border-radius:5px}
+.xlink svg{width:14px;height:14px;color:var(--accent)}
+.xlink:hover{border-color:var(--accent)}
+.viewer img.loading{filter:blur(2px);opacity:.85}
 
 /* certificates */
 .certs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
@@ -277,7 +285,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
         <p>I have taught GIS and programming practicals as a lab assistant, led field courses of up to 98 students, and georeferenced mining permit maps for the provincial government of Yogyakarta.</p>
         <div class="facts">
           <div class="fact"><strong>3.81</strong><span>GPA out of 4.00</span></div>
-          <div class="fact"><strong>Hundreds</strong><span>of maps made, from thematic layouts to field and mining maps</span></div>
+          <div class="fact"><strong>300+</strong><span>maps made so far, from thematic layouts to field and mining maps</span></div>
           <div class="fact"><strong>98</strong><span>students led in Field Course III</span></div>
         </div>
         <div class="skills">
@@ -310,6 +318,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     <div class="sec-head"><div><span class="mono">Projects</span><h2>Selected work</h2></div><p>Click a project to see its maps in full size, the method and the numbers.</p></div>
     <div class="tabs" id="filters" role="group" aria-label="Filter projects"></div>
     <div class="grid" id="grid"></div>
+    <div id="otherWrap">
+      <h3 class="subhead">Other geospatial projects <span class="mono">coursework &amp; lab maps</span></h3>
+      <div class="grid" id="grid2"></div>
+    </div>
   </div>
 </section>
 
@@ -379,132 +391,182 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 <script>
 /* =====================================================================
    DATA — edit here to change the website content.
-   Images live in the "img" folder. To use your own (sharper) image:
-   upload it to img/ and write its full file name below, e.g. 'peta-parkir.png'.
-   The first image of each project is its cover in the grid.
+   Images live in img/<folder>/ and are shown at their original quality.
+   Light previews (img/thumb/...) are only used for cards and the thumbnail strip.
+   The first image of each project is its cover.
    ===================================================================== */
 const PROJECTS=[
- {id:'palmgis',title:'PalmGIS',cat:['webgis','rs'],label:'WebGIS · Deep learning',
-  short:'A browser WebGIS that counts oil palms from GeoTIFF imagery with a YOLO model and grades canopy health with VARI.',
-  desc:'End-to-end WebGIS: upload a GeoTIFF, detect every palm automatically with a YOLOv8 model on 640 px tiles running in the browser (ONNX), score crown greenness with the VARI index, and export an interactive map, a 4-page PDF report and Excel/CSV/GeoJSON data.',
-  points:['Tested on 6.73 ha: 507 palms detected, 75 palms/ha, with a distribution matching the QGIS overlay.','Compared with the QGIS Deepness deep-learning plugin: tighter crown boxes, per-palm health classes and automatic reporting.','Runs client-side: the image never leaves the user’s computer.'],
-  meta:[['507','palms detected in the test block'],['6.73 ha','test area']],when:'Ongoing',tools:['JavaScript','Leaflet','YOLOv8','ONNX'],
-  imgs:['palmgis-process.jpg','palmgis-landing.jpg','palmgis-output.jpg'],github:'https://github.com/FickingAlindra/palmgis'},
- {id:'parking',title:'UGM Parking Capacity',cat:['research','rs'],label:'Research · UAV',
-  short:'Estimating vehicle capacity of every campus parking pocket at UGM from high-resolution UAV aerial photos.',
-  desc:'As a Research Assistant at the Faculty of Geography, UGM, I digitized parking areas from UAV aerial photographs, measured their area, and calculated capacity from the space needed per vehicle plus circulation space. Outputs: a campus parking capacity map and a recap by faculty, location and block.',
-  points:['107 parking polygons digitized.','Estimated capacity of 18,788 vehicles: 2,359 cars and 16,429 motorbikes.','Field checks with a laser rangefinder.'],
-  meta:[['18,788','vehicles of estimated capacity'],['1:10,000','map scale']],when:'Oct 2025 – Oct 2026',tools:['ArcGIS Pro','UAV imagery','Digitizing'],
-  imgs:['parking-map.jpg','parking-recap.jpg']},
- {id:'jembrana',title:'Jembrana Spatial Plan Suitability',cat:['rs','field'],label:'Remote sensing · Field',
-  short:'Residential land suitability against the Jembrana Regency spatial plan (RTRW) from PlanetScope imagery.',
-  desc:'Field Course III theme in Negara and Jembrana districts, Bali. I processed DEM, PlanetScope imagery and existing maps, built six parameter maps (soil texture, slope, drainage, groundwater depth, flood hazard, road access) and overlaid them to test settlement land against the RTRW.',
-  points:['Field validation and interviews at 40+ sample points, 96–99% parameter accuracy.','Suitable residential land (S2+S3) covers 95.79 km², more than the RTRW allocation of 44.55 km².','Chairperson of the field course: 98 students across 8 research themes.'],
-  meta:[['95.79 km²','suitable residential land'],['44.55 km²','RTRW allocation']],when:'Dec 2024 – Jul 2025',tools:['PlanetScope','Weighted overlay','ArcGIS'],
-  imgs:['jembrana-overlay.jpg','jembrana-landuse.jpg','jembrana-field.jpg']},
- {id:'gombong',title:'Gombong Land-Use Database',cat:['carto','field'],label:'Cartography · Field',
-  short:'A 1:5,000 land-use map of Gombong, Kebumen, built for an agribusiness land suitability database.',
-  desc:'Field Course II, Large-Scale Mapping theme. Land use was interpreted visually from Google Earth imagery (1.18 m) with the RSNI2 level-4 scheme, then validated in the field and with a confusion matrix.',
-  points:['Overall accuracy 85.86% and Kappa 84.52%, above the 70% threshold.','Ground-truthing at 50 sample points, including density measurements for 15 settlement blocks.','Team leader for 18 students.'],
-  meta:[['85.86%','overall accuracy'],['1:5,000','map scale']],when:'Oct 2023 – Jul 2024',tools:['Visual interpretation','Confusion matrix','RSNI2'],
-  imgs:['gombong-map.jpg','gombong-flow.jpg','gombong-field.jpg']},
- {id:'mining',title:'DIY Mining Area Map 2025',cat:['gis'],label:'GIS · Government',
-  short:'Consolidating permit records and georeferencing mining maps for the 2025 Regional Mining Area Map of Yogyakarta.',
-  desc:'Internship at DPUP-ESDM Yogyakarta. I consolidated spatial records of mining business permits (IUP), people’s mining permits (IPR), mineral potential and quarry sites, and digitized and georeferenced older permit maps.',
-  points:['500+ spatial records consolidated; permit verification about 30% faster.','150+ mining maps georeferenced to about ±5 m boundary accuracy.','Active permits aligned 100% with provincial spatial planning.'],
-  meta:[['500+','spatial records'],['±5 m','boundary accuracy']],when:'Aug – Oct 2025',tools:['ArcGIS','Georeferencing'],imgs:['mining-site.jpg']},
- {id:'insar',title:'Sentinel-1 Land Deformation',cat:['rs'],label:'Remote sensing · Radar',
-  short:'InSAR interferogram and land deformation map over part of East Java from Sentinel-1 imagery.',
-  desc:'Processed a Sentinel-1 SAR pair in SNAP into an interferogram and a displacement map, laid out as a 1:640,000 deformation map of part of East Java.',
-  points:['Displacement between about −0.033 m and +0.028 m.'],meta:[['1:640,000','map scale']],when:'Coursework',tools:['SNAP','Sentinel-1','InSAR'],imgs:['deformation.jpg','insar.jpg']},
- {id:'lidar',title:'LiDAR & DEM Processing',cat:['rs'],label:'Remote sensing · 3D',
-  short:'LAS point elevation classes, DEM surfaces and 3D terrain views.',
-  desc:'Processed LiDAR point clouds into elevation models, inspected them in LiDAR Data Viewer and produced color-shaded DEM visualizations.',
-  points:[],meta:[],when:'Coursework',tools:['LiDAR','LAS','DEM'],imgs:['lidar.jpg','dem.jpg']},
- {id:'thematic',title:'Thematic Maps & Cartograms',cat:['carto'],label:'Cartography',
-  short:'Population regionalization, oil and gas distribution, GDP classes and cartograms of Java.',
-  desc:'Thematic maps from cartography coursework: choropleth regionalization of Indonesian population (2010, 2020), oil and gas in Southeast Asia, Sumatra GDP classes, cartograms of Java’s population, a 1:25,000 Rupabumi-style map of Salatiga, and slope and population density maps of Bogor City.',
-  points:[],meta:[],when:'Coursework',tools:['ArcGIS','Choropleth','Cartogram'],imgs:['pop2010.jpg','kartogram.jpg','migas.jpg','rupabumi.jpg','bogor.jpg']},
- {id:'landform',title:'Terrain & Landform Analysis',cat:['rs'],label:'Remote sensing',
-  short:'Slope and aspect of Mount Muria and landform delineation of aeolian and karst terrain.',
-  desc:'Classified aspect in ILWIS and slope in ArcGIS for Mount Muria (1:300,000), and delineated aeolian landforms in Colorado and solutional karst landforms in Gunung Kidul.',
-  points:[],meta:[],when:'Coursework',tools:['ILWIS','ArcGIS','DEM'],imgs:['muria.jpg','colorado.jpg']},
- {id:'pati',title:'Pati Land-Use Classification',cat:['rs'],label:'Remote sensing · Classification',
-  short:'Random Trees classification of land use in Pati Regency and its agreement with the land-use directive.',
-  desc:'Classified land use in Pati Regency with the Random Trees (random forest) classifier, then compared it with the regency’s land-use function directive to map agreement and conflict.',
-  points:[],meta:[],when:'Coursework',tools:['Random Trees','Supervised classification'],imgs:['pati.jpg']},
- {id:'storymap',title:'Vulkanisme Indonesia StoryMap',cat:['carto'],label:'StoryMap',
-  short:'An ArcGIS StoryMap on Indonesian volcanism: mapping, benefits and hazards.',
-  desc:'A narrative web map built with ArcGIS StoryMaps on Indonesia’s volcanoes: background, definitions, benefits to people and the threats they pose.',
-  points:[],meta:[],when:'Oct 2024',tools:['ArcGIS StoryMaps'],imgs:['storymap.jpg']},
- {id:'teaching',title:'GIS Lab Modules',cat:['gis'],label:'Teaching',
-  short:'Practical modules and example maps for the Geographic Information Systems lab at UGM.',
-  desc:'As a Laboratory Teaching Assistant I co-developed modules on spatial analysis and map layout and produced example maps of Godean, Sleman (land use, vegetation density, roads and rivers) for students to reproduce.',
-  points:['Guided 13 students; their average score was above the practicum average.','100% of assessed student map projects completed.'],
-  meta:[['13','students guided']],when:'Feb – May 2025',tools:['QGIS','Map layout'],imgs:['lab-maps.jpg']}
+ {id:'palmgis',group:'main',title:'PalmGIS',cat:['webgis','rs'],label:'WebGIS · Deep learning',
+  short:'A WebGIS that counts oil palms on GeoTIFF imagery with a YOLO model and grades every crown with the VARI index.',
+  desc:'End-to-end WebGIS for oil palm plantations: load a GeoTIFF, detect every palm with a YOLOv8 model on 640 px tiles, score crown greenness with the VARI index, and export a map layout, a multi-page PDF report and CSV/Excel/GeoJSON data. Includes layers, filters, measuring and block tools, analysis history, and Indonesian/English interfaces.',
+  points:['Test block: 507 palms on 6.73 ha (75.4 palms/ha), mean VARI 0.665.','Health classes: 437 healthy (86.2%), 39 moderate (7.7%), 31 stressed (6.1%).','Automatic report with method notes, charts, an interpretation and a sample of the detection table.'],
+  meta:[['507','palms detected'],['6.73 ha','test area'],['0.665','mean VARI']],when:'2026 · ongoing',tools:['JavaScript','Leaflet','YOLOv8','ONNX','Python'],
+  imgs:['palmgis/12.png','palmgis/01.png','palmgis/05.png','palmgis/07.png','palmgis/02.png','palmgis/04.png','palmgis/03.png','palmgis/06.png','palmgis/13.png','palmgis/10.png','palmgis/08.png','palmgis/11.png'],
+  github:'https://github.com/FickingAlindra/palmgis'},
+ {id:'thesis',group:'main',title:'Traffic Accident Vulnerability, Magelang City',cat:['research','rs','field'],label:'Undergraduate thesis',
+  short:'Road-segment vulnerability to traffic accidents at weekend morning peak hours, from aerial photos, weighted overlay and field survey.',
+  desc:'Undergraduate thesis. Road segments of Magelang City were assessed for traffic accident vulnerability during the weekend morning peak, combining interpretation of 2025 aerial photographs, the city road network and a 2026 field survey in a weighted overlay. Field observations covered road markings, roadside land use, sight distance, curve radius, pedestrian crossings, junction control and signs, on-street parking, side friction and traffic flow, and sidewalks.',
+  points:['23 road segments classed as low vulnerability and 18 as moderate.','Each field parameter documented with photos linked to its location on the map.'],
+  meta:[['41','road segments assessed'],['1:15,000','map scale']],when:'2026',tools:['ArcGIS','Aerial photo interpretation','Weighted overlay','Field survey'],
+  imgs:['other/21.png']},
+ {id:'parking',group:'main',title:'UGM Campus Parking Capacity',cat:['research','rs','field','work'],label:'Research Assistant · UAV',
+  short:'Vehicle capacity of every parking area on the UGM campus, estimated from UAV aerial photos and checked in the field.',
+  desc:'Research Assistant at the Faculty of Geography, UGM. Parking areas were digitized from UAV aerial photographs, and capacity was calculated from area, the space needed per vehicle and circulation space: kpa = la / (kba + Gg). Bay dimensions were checked in the field with a laser rangefinder. Outputs are a 2026 campus parking capacity map and a recap by faculty and location.',
+  points:['107 parking polygons, 88,942.72 m² in total.','Estimated capacity of 16,788 vehicles: 2,359 cars and 14,429 motorbikes.'],
+  meta:[['16,788','vehicles of capacity'],['107','parking polygons'],['1:10,000','map scale']],when:'Oct 2025 – Oct 2026',tools:['ArcGIS Pro','UAV orthophoto','Laser rangefinder'],
+  imgs:['parking/01.png','parking/02.png','parking/03.png','parking/06.png','parking/07.png','parking/08.png','parking/05.png','parking/04.png']},
+ {id:'jembrana',group:'main',title:'Residential Land Suitability vs. Spatial Plan, Jembrana',cat:['rs','field','carto'],label:'Field Course III · Remote sensing',
+  short:'Testing settlement land against the Jembrana Regency spatial plan (RTRW) in Negara and Jembrana districts, Bali.',
+  desc:'Analysis of Spatial Plan Suitability for Residential Land Using Remote Sensing in Negara and Jembrana Districts, Jembrana Regency. Six physical parameters (soil texture, flood hazard, slope, groundwater depth, distance to roads and drainage) were mapped from DEM, PlanetScope imagery and existing data, overlaid into a residential suitability map and compared with the RTRW settlement allocation. Field validation and interviews were held across both districts.',
+  points:['Suitable residential land (S2+S3) covers 95.79 km², against an RTRW allocation of 44.55 km².','40+ field sample points with 96–99% parameter accuracy.','Chairperson of the field course: 98 students in 8 research themes.'],
+  meta:[['95.79 km²','suitable residential land'],['44.55 km²','RTRW allocation']],when:'Dec 2024 – Jul 2025',tools:['PlanetScope','DEM','Weighted overlay','ArcGIS'],
+  imgs:['jembrana/05.png','jembrana/13.png','jembrana/06.png','jembrana/07.png','jembrana/08.png','jembrana/09.png','jembrana/10.png','jembrana/11.png','jembrana/12.png','jembrana/16.png','jembrana/15.png','jembrana/01.jpg','jembrana/02.jpg','jembrana/03.jpg','jembrana/04.png']},
+ {id:'gombong',group:'main',title:'Land-Use Database for Agribusiness Suitability, Gombong',cat:['carto','field','rs'],label:'Field Course II · Large-scale mapping',
+  short:'Geospatial data acquisition for a 1:5,000 land-use database supporting agribusiness land suitability mapping in Gombong, Kebumen.',
+  desc:'Geospatial Data Acquisition for Developing a Land-Use Database to Support Agribusiness Land Suitability Mapping in Gombong Urban Village, Kebumen. A tentative land-use map was interpreted from high-resolution imagery with the RSNI2 scheme, then tested in the field with accuracy-assessment and settlement-density samples before producing the final land-use map.',
+  points:['Overall accuracy 85.86% and Kappa 84.52%.','Ground-truthing at 50 sample points, including density measurements for 15 settlement blocks.','Team leader for 18 students.'],
+  meta:[['85.86%','overall accuracy'],['1:5,000','map scale']],when:'Oct 2023 – Jul 2024',tools:['Visual interpretation','Confusion matrix','Field survey'],
+  imgs:['gombong/01.jpg','gombong/04.jpg','gombong/02.jpg','gombong/03.jpg','gombong/05.png','gombong/06.png','gombong/07.png','gombong/08.png','gombong/09.png']},
+ {id:'mining',group:'main',title:'Mining Area Map of D.I. Yogyakarta 2025',cat:['work'],label:'GIS Intern · DPUP-ESDM DIY',
+  short:'Consolidating mining permit data and georeferencing maps for the 2025 Mining Area (Wilayah Pertambangan) map of Yogyakarta.',
+  desc:'GIS internship at the Public Works, Housing and Energy & Mineral Resources Agency (DPUP-ESDM) of D.I. Yogyakarta. I consolidated spatial records of mining business permits (IUP), people’s mining permits (IPR), mineral potential and quarry sites, and digitized and georeferenced permit maps for Sleman, Kulon Progo, Gunungkidul and Bantul, updating the 2022 mining area data to 2025.',
+  points:['500+ spatial records consolidated; permit verification about 30% faster.','150+ mining maps georeferenced to about ±5 m boundary accuracy.','Joined field and permit-service activities with the agency team.'],
+  meta:[['500+','spatial records'],['150+','maps georeferenced']],when:'Aug – Oct 2025',tools:['ArcGIS','Georeferencing','Permit data'],
+  imgs:['mining/04.png','mining/01.png','mining/05.png','mining/02.png','mining/03.png']},
+ {id:'siglab',group:'main',title:'GIS Lab Teaching Assistant',cat:['work','carto'],label:'Teaching · Geographic Information Systems',
+  short:'Lab modules and example maps for the Geographic Information Systems practicum at UGM, 2025.',
+  desc:'Laboratory Teaching Assistant for Geographic Information Systems at UGM’s Faculty of Geography. With the 2025 assistant team I prepared practicum modules and slides (from Spatial Thinking to Map Layout in QGIS) and example 1:40,000 maps of Godean District, Sleman, for students to reproduce.',
+  points:['Guided 13 students through georeferencing, digitizing, geoprocessing, symbology and layout.','Mentored students scored above the practicum average; 100% of assessed map projects completed.'],
+  meta:[['13','students guided'],['1:40,000','example maps']],when:'Feb – May 2025',tools:['QGIS','Map layout','Teaching'],
+  imgs:['sig-lab/03.png','sig-lab/01.png','sig-lab/02.png','sig-lab/04.png','sig-lab/05.png']},
+ {id:'algolab',group:'main',title:'Algorithms & Programming Lab',cat:['work'],label:'Teaching · Practicum Coordinator',
+  short:'Teaching assistant and practicum coordinator for Algorithms and Programming, including Android UI programming modules.',
+  desc:'Laboratory Teaching Assistant and Practicum Coordinator for Algorithms and Programming, Department of Geographic Information Science, UGM. I taught algorithm design and debugging and helped prepare programming modules for geospatial problem-solving, including Android user interface programming.',
+  points:['Taught 11 students.','Coordinated the practicum schedule and assistant team.'],
+  meta:[['11','students taught']],when:'Aug – Dec 2024',tools:['Programming','Android','Teaching'],
+  imgs:['algo-lab/01.png','algo-lab/02.png']},
+ {id:'transco',group:'main',title:'Traffic Count Data, Bogor',cat:['work'],label:'Data Entry & GIS Intern · TRANSCO',
+  short:'Peak-hour vehicle counts and data validation for road segments in the Bogor metropolitan area.',
+  desc:'Data Entry & GIS Intern at the Transport Studies Community (TRANSCO). I recorded peak-hour vehicle counts across road segments in the Bogor metropolitan area and processed the observation data for transport analysis.',
+  points:['1,000+ observation records processed and validated.','Data input errors reduced by about 25%.'],
+  meta:[['1,000+','records validated']],when:'Apr – May 2022',tools:['Traffic counts','Data entry','GIS'],
+  imgs:['transco/01.png']},
+
+ /* ---------- other geospatial projects ---------- */
+ {id:'bogor',group:'other',title:'Slope & Land Cover, Bogor City',cat:['carto'],label:'Cartography',
+  short:'Slope classes combined with land cover, roads and public offices of Bogor City at 1:85,000.',
+  desc:'Map of slope and land cover/use of Bogor City, with point, line and area symbology for government offices, the road hierarchy, rivers and land-cover classes. Laboratory of Cartography, UGM, 2024.',
+  meta:[['1:85,000','map scale']],when:'2024',tools:['ArcGIS','Symbology'],imgs:['other/01.png']},
+ {id:'kartogram',group:'other',title:'Population Cartograms of Java 2023',cat:['carto'],label:'Cartography',
+  short:'Contiguous, non-contiguous and choropleth cartograms of population by regency and city on Java.',
+  desc:'Three ways to show 2023 population on Java: a choropleth-based cartogram, a contiguous cartogram and a non-contiguous cartogram that resize regencies and cities by population. Laboratory of Cartography, UGM, 2024.',
+  when:'2024',tools:['ArcGIS','Cartogram'],imgs:['other/04.png','other/02.png','other/03.png']},
+ {id:'regionalisasi',group:'other',title:'Population Regionalization of Indonesia',cat:['carto'],label:'Cartography',
+  short:'Provincial population for 2010 and 2020, and change in population growth rate 2000–2010 vs 2010–2020.',
+  desc:'Regionalization maps of Indonesian population by province for 2010 and 2020, plus a map of where the population growth rate changed between 2000–2010 and 2010–2020. Laboratory of Regional Studies, UGM, 2023.',
+  meta:[['1:9,500,000','map scale']],when:'2023',tools:['ArcGIS','Choropleth'],imgs:['other/24.png','other/22.png','other/23.png']},
+ {id:'economy',group:'other',title:'Oil & Gas and GDP Maps',cat:['carto'],label:'Cartography',
+  short:'Oil and gas reserves across Southeast Asia, and the 2022 GRDP classification of Sumatra.',
+  desc:'Thematic maps of oil and gas reserve distribution in Southeast Asia (1:11,000,000) and the 2022 regional GDP (PDRB) classification of Sumatra from BPS data (1:3,500,000). Laboratory of Regional Studies, UGM, 2023.',
+  when:'2023',tools:['ArcGIS','ArcGIS Online data','BPS data'],imgs:['other/26.jpg','other/25.png']},
+ {id:'rupabumi',group:'other',title:'Topographic Map of Salatiga',cat:['carto'],label:'Cartography',
+  short:'A 1:25,000 Rupabumi-style topographic map of Salatiga with contours, land use and infrastructure.',
+  desc:'Digital Rupabumi Indonesia-style map of Salatiga at 1:25,000 using DGN-95, 12.5 m contour interval and standard RBI symbology for buildings, transport, relief, vegetation and administrative boundaries. Laboratory of Cartography, UGM, 2024.',
+  meta:[['1:25,000','map scale'],['12.5 m','contour interval']],when:'2024',tools:['ArcGIS','RBI symbology'],imgs:['other/27.png']},
+ {id:'insar',group:'other',title:'Sentinel-1 Land Deformation, East Java',cat:['rs'],label:'Remote sensing · Radar',
+  short:'InSAR interferogram and displacement map over part of East Java from Sentinel-1A imagery.',
+  desc:'A Sentinel-1A SAR pair processed into an interferogram and a land deformation map, then checked as an overlay in Google Earth. Laboratory of Remote Sensing, UGM, 2024.',
+  meta:[['−0.033 to +0.028 m','displacement range']],when:'2024',tools:['SNAP','Sentinel-1','InSAR','Google Earth'],imgs:['other/10.png','other/09.png','other/11.png']},
+ {id:'lidar',group:'other',title:'LiDAR Point Clouds & Elevation Models',cat:['rs'],label:'Remote sensing · 3D',
+  short:'LAS point clouds classified by elevation, DTM and DSM surfaces, and 3D building views.',
+  desc:'LiDAR point clouds explored in LIDAR Data Viewer and processed into a bare-earth DTM and a DSM showing trees and buildings, with 3D views of buildings coloured by LAS point elevation.',
+  when:'Coursework',tools:['LiDAR','LAS','DTM / DSM'],imgs:['other/08.png','other/07.png','other/05.png','other/06.png','other/16.png','other/17.png']},
+ {id:'muria',group:'other',title:'Aspect & Slope of Mount Muria',cat:['rs'],label:'Remote sensing · Terrain',
+  short:'Aspect classified in ILWIS and slope classified in ArcGIS for Mount Muria at 1:300,000.',
+  desc:'The same DEM of Mount Muria processed in two packages: aspect classification in ILWIS and slope classification in ArcGIS. Laboratory of Cartography, UGM, 2024.',
+  meta:[['1:300,000','map scale']],when:'2024',tools:['ILWIS','ArcGIS','DEM'],imgs:['other/12.png','other/13.png']},
+ {id:'landform',group:'other',title:'Landform Delineation: Aeolian & Karst',cat:['rs'],label:'Remote sensing · Geomorphology',
+  short:'Aeolian dune landforms in Colorado (1:30,000) and solutional karst landforms in Gunung Kidul (1:40,000).',
+  desc:'Visual delineation of landforms from imagery: parabolic, longitudinal and barchan dunes in part of Colorado, and cockpits, dolines, karst domes, poljes and uvalas in part of Gunung Kidul. Laboratory of Remote Sensing, UGM, 2024.',
+  when:'2024',tools:['Visual interpretation','Geomorphology'],imgs:['other/15.png','other/14.png']},
+ {id:'pati',group:'other',title:'Land-Use Directive vs. Existing Use, Pati',cat:['rs'],label:'Remote sensing · Team project',
+  short:'Random Trees land-use classification of Pati Regency checked against its land-use function directive.',
+  desc:'Team project (with Rinasari Wijayanti and Sultan Derry Mahapani S.) for Spatial Modeling for Urban and Regional Development. Land use was classified with Random Trees, a land-use function directive was derived from slope, rainfall intensity and soil texture, and the two were compared to map agreement and conflict.',
+  meta:[['1:200,000','map scale']],when:'2025',tools:['Random Trees','ArcGIS Pro','Spatial modeling'],imgs:['other/18.png','other/19.png','other/20.png']}
 ];
-const FILTERS=[['all','All'],['webgis','WebGIS'],['rs','Remote sensing'],['carto','Cartography'],['field','Field research'],['research','Research'],['gis','GIS']];
+const FILTERS=[['all','All'],['webgis','WebGIS'],['rs','Remote sensing'],['carto','Cartography'],['field','Field research'],['research','Research'],['work','Work & teaching']];
 const EXP={
  work:['Work & research',[
-  ['Oct 2025 – Oct 2026','Research Assistant','Faculty of Geography, UGM',['Parking capacity estimation for UGM campus parking pockets from <b>UAV aerial photographs</b>.','Digitized parking areas and calculated capacity from area, space per vehicle and circulation space.']],
-  ['Aug – Oct 2025','GIS Intern','DPUP-ESDM Yogyakarta',['Consolidated <b>500+ spatial records</b> on mining permits; permit verification about 30% faster.','Digitized and georeferenced <b>150+ mining maps</b> (±5 m) for the 2025 Regional Mining Area Map.']],
-  ['Feb – May 2025','Lab Teaching Assistant, Geographic Information Systems','Dept. of Geographic Information Science, UGM',['Guided 13 students through georeferencing, digitizing, geoprocessing, symbology and layout.','Co-developed spatial analysis and visualization modules.']],
-  ['Aug – Dec 2024','Lab Teaching Assistant & Practicum Coordinator, Algorithms and Programming','Dept. of Geographic Information Science, UGM',['Taught algorithm design and debugging to 11 students.','Designed programming modules for geospatial problem-solving.']],
-  ['Apr – May 2022','Data Entry & GIS Intern','Transport Studies Community (TRANSCO)',['Peak-hour vehicle counts across road segments in the Bogor metropolitan area.','Processed and validated <b>1,000+ observation records</b>, cutting input errors by 25%.']]]],
+  ['Oct 2025 – Oct 2026','Research Assistant','Faculty of Geography, UGM',['Parking capacity estimation for UGM campus parking areas from <b>UAV aerial photographs</b>.','Digitized parking areas and calculated capacity from area, space per vehicle and circulation space.'],{proj:'parking'}],
+  ['Aug – Oct 2025','GIS Intern','DPUP-ESDM D.I. Yogyakarta',['Consolidated <b>500+ spatial records</b> on mining permits; permit verification about 30% faster.','Digitized and georeferenced <b>150+ mining maps</b> (±5 m) for the 2025 Mining Area Map.'],{proj:'mining'}],
+  ['Feb – May 2025','Lab Teaching Assistant, Geographic Information Systems','Dept. of Geographic Information Science, UGM',['Guided 13 students through georeferencing, digitizing, geoprocessing, symbology and layout.','Co-developed spatial analysis and visualization modules.'],{proj:'siglab'}],
+  ['Aug – Dec 2024','Lab Teaching Assistant & Practicum Coordinator, Algorithms and Programming','Dept. of Geographic Information Science, UGM',['Taught algorithm design and debugging to 11 students.','Designed programming modules for geospatial problem-solving.'],{proj:'algolab'}],
+  ['Apr – May 2022','Data Entry & GIS Intern','Transport Studies Community (TRANSCO)',['Peak-hour vehicle counts across road segments in the Bogor metropolitan area.','Processed and validated <b>1,000+ observation records</b>, cutting input errors by 25%.'],{proj:'transco'}]]],
  field:['Field projects',[
-  ['Dec 2024 – Jul 2025','Chairperson, Field Course III','West Bali, UGM',['Led and coordinated <b>98 students</b> across 8 research themes.','Theme: suitability of the Jembrana spatial plan (RTRW) for settlement land using remote sensing.']],
-  ['Oct 2023 – Jul 2024','Team Leader, Large-Scale Mapping','Field Course II, Kebumen, UGM',['Led 18 students in land use, socio-economic and waste management mapping.','Ground-truthing at 50 sample points; 1:5,000 land-use map.']]]],
+  ['Dec 2024 – Jul 2025','Chairperson, Field Course III','West Bali, UGM',['Led and coordinated <b>98 students</b> across 8 research themes.','Theme: suitability of the Jembrana spatial plan (RTRW) for residential land using remote sensing.'],{proj:'jembrana'}],
+  ['Oct 2023 – Jul 2024','Team Leader, Large-Scale Mapping','Field Course II, Kebumen, UGM',['Led 18 students in land use, socio-economic and waste management mapping.','Ground-truthing at 50 sample points; 1:5,000 land-use map.'],{proj:'gombong'}]]],
  org:['Organizations',[
-  ['Mar 2023 – May 2025','Staff, Talent and Interest Division','HMSaIG (GIS Student Association), UGM',['Ran sports and arts programs for 300+ students; participation up about 35% year over year.','Built a 300+ member database.']],
-  ['May 2024 – Feb 2025','Public Relations Staff','Pionir Geospace, UGM',['Produced 30+ promotional contents; event engagement up about 40%.','Liaison officer for 50+ speakers and guests.']],
-  ['Apr – Sep 2023','Secretariat Staff','GIS Competition (GISCOM & MAPCOM), UGM',['Managed documentation for 39 competition teams with complete records.']]]],
+  ['Mar 2023 – May 2025','Staff, Talent and Interest Division','Geographic Information Science Student Association (HMSaIG), UGM',['Ran sports and arts programs for 300+ students; participation up about 35% year over year.','Built a 300+ member database.'],{title:'HMSaIG, Talent and Interest Division',imgs:['hmsaig/02.png','hmsaig/01.png']}],
+  ['May 2024 – Feb 2025','Public Relations Staff','Pionir Geospace, Faculty of Geography, UGM',['Produced 30+ promotional contents; event engagement up about 40%.','Liaison officer for 50+ speakers and guests.'],{title:'Pionir Geospace 2024, Public Relations',imgs:['pionir/01.png']}],
+  ['Apr – Sep 2023','Secretariat Division Staff','GIS Competition (GISCOM & MAPCOM), UGM',['Managed documentation for 39 competition teams with complete records.','Part of the 8th Geoinformation Science Symposium, themed "Carbon Footprint Society Era 5.0".'],{title:'GIS Competition 2023, Secretariat Division',imgs:['giscom/01.png']}]]],
  edu:['Education',[
-  ['Aug 2022 – Sep 2026','B.Sc. Cartography and Remote Sensing','Faculty of Geography, Universitas Gadjah Mada',['GPA <b>3.81 / 4.00</b>.','Thesis: spatial analysis of traffic accident vulnerability using aerial photos and a weighted overlay approach in Magelang City.']]]]
+  ['Aug 2022 – Sep 2026','B.Sc. Cartography and Remote Sensing','Faculty of Geography, Universitas Gadjah Mada',['GPA <b>3.81 / 4.00</b>.','Thesis: spatial analysis of traffic accident vulnerability using aerial photos and a weighted overlay approach in Magelang City.'],{proj:'thesis'}]]]
 };
 const CERTS=[
- ['cert-yonsei.jpg','Spatial Data Science and Applications','Yonsei University · Coursera · Oct 2026'],
- ['cert-michigan.jpg','GIS: Geographic Information Systems for Sustainability','University of Michigan · Coursera · Oct 2026'],
- ['cert-mining.jpg','Masterclass GIS for Mining: ArcGIS Pro','Takeclass.id · Apr 2026'],
- ['cert-k3.jpg','OHS Management System, SNI ISO 45001:2018','National Standardization Agency (BSN) · Oct 2026'],
- ['cert-risk.jpg','Risk Management, SNI ISO 31000','National Standardization Agency (BSN) · Oct 2026'],
- ['cert-python.jpg','Python Essentials 1','Cisco Networking Academy & OpenEDG · Oct 2026'],
- ['cert-ds.jpg','Data Science Essentials with Python','Cisco Networking Academy · Oct 2026']
+ {imgs:['certs/01.jpg'],t:'Spatial Data Science and Applications',s:'Yonsei University · Coursera · Oct 2026',link:'https://coursera.org/verify/DIAFQPD69YVP'},
+ {imgs:['certs/08.jpg'],t:'GIS: Geographic Information Systems for Sustainability',s:'University of Michigan · Coursera · Oct 2026',link:'https://coursera.org/verify/MF3GQV6EKH0R'},
+ {imgs:['certs/06.jpg','certs/07.jpg'],t:'Masterclass GIS for Mining: ArcGIS Pro',s:'Takeclass · 15 hours · Apr 2026'},
+ {imgs:['certs/03.jpg'],t:'OHS Management System, SNI ISO 45001:2018',s:'National Standardization Agency (BSN) · Very Good · Oct 2026'},
+ {imgs:['certs/02.jpg'],t:'Risk Management, SNI ISO 31000',s:'National Standardization Agency (BSN) · Very Good · Oct 2026'},
+ {imgs:['certs/04.jpg'],t:'Data Science Essentials with Python',s:'Cisco Networking Academy · Oct 2026'},
+ {imgs:['certs/05.jpg'],t:'Python Essentials 1',s:'Cisco Networking Academy & OpenEDG Python Institute · Oct 2026'}
 ];
 
 /* =================== RENDER =================== */
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const IMG=f=>'img/'+f;
+const IMG=f=>'img/'+f;                                   /* original, full quality */
+const TH=f=>'img/thumb/'+f.replace(/\.(png|jpe?g)$/i,'.jpg');  /* light preview */
 const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const byId=id=>PROJECTS.find(p=>p.id===id);
 
 let filter='all';
 function renderFilters(){
   $('#filters').innerHTML=FILTERS.map(([k,l])=>{const n=k==='all'?PROJECTS.length:PROJECTS.filter(p=>p.cat.includes(k)).length;
     return n?`<button type="button" data-f="${k}" aria-pressed="${k===filter}">${l}<small>${n}</small></button>`:'';}).join('');}
-function renderGrid(){
-  $('#grid').innerHTML=PROJECTS.filter(p=>filter==='all'||p.cat.includes(filter)).map(p=>`
+const card=p=>`
    <button class="card" type="button" data-open="${p.id}">
-     <span class="thumb"><img src="${IMG(p.imgs[0])}" alt="${p.title}" loading="lazy"></span>
-     <span class="cat mono">${p.label}</span>
+     <span class="thumb"><img src="${TH(p.imgs[0])}" alt="${p.title}" loading="lazy"></span>
+     <span class="cat mono">${p.label}${p.imgs.length>1?` · ${p.imgs.length} images`:''}</span>
      <h3>${p.title}</h3>
      <p>${p.short}</p>
      <span class="more">View details ${ARROW}</span>
-   </button>`).join('');}
+   </button>`;
+function renderGrid(){
+  const ok=p=>filter==='all'||p.cat.includes(filter);
+  const main=PROJECTS.filter(p=>p.group==='main'&&ok(p)),other=PROJECTS.filter(p=>p.group==='other'&&ok(p));
+  $('#grid').innerHTML=main.map(card).join('');$('#grid').hidden=!main.length;
+  $('#grid2').innerHTML=other.map(card).join('');$('#otherWrap').hidden=!other.length;}
 $('#filters').addEventListener('click',e=>{const b=e.target.closest('[data-f]');if(!b)return;filter=b.dataset.f;renderFilters();renderGrid();});
-$('#grid').addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b)openModal(PROJECTS.find(p=>p.id===b.dataset.open));});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b)openModal(byId(b.dataset.open));});
 
 let expKind='work';
 function renderExp(){
   $('#expTabs').innerHTML=Object.entries(EXP).map(([k,[l,it]])=>`<button type="button" data-exp="${k}" aria-pressed="${k===expKind}">${l}<small>${it.length}</small></button>`).join('');
-  $('#timeline').innerHTML=EXP[expKind][1].map(([when,role,org,pts])=>`
-   <li class="job"><span class="when mono">${when}</span>
-     <div><h3>${role}</h3><div class="org">${org}</div><ul>${pts.map(x=>`<li>${x}</li>`).join('')}</ul></div></li>`).join('');}
+  $('#timeline').innerHTML=EXP[expKind][1].map(([when,role,org,pts,x],i)=>{
+    let act='';
+    if(x&&x.proj)act=`<button class="xlink" type="button" data-open="${x.proj}">See the project ${ARROW}</button>`;
+    else if(x&&x.imgs)act=`<button class="xlink" type="button" data-gal="${i}"><img src="${TH(x.imgs[0])}" alt="">View photos (${x.imgs.length}) ${ARROW}</button>`;
+    return `<li class="job"><span class="when mono">${when}</span>
+     <div><h3>${role}</h3><div class="org">${org}</div><ul>${pts.map(v=>`<li>${v}</li>`).join('')}</ul>${act}</div></li>`;}).join('');}
 $('#expTabs').addEventListener('click',e=>{const b=e.target.closest('[data-exp]');if(!b)return;expKind=b.dataset.exp;renderExp();});
+$('#timeline').addEventListener('click',e=>{const b=e.target.closest('[data-gal]');if(!b)return;const r=EXP[expKind][1][+b.dataset.gal];
+  openModal({title:r[4].title,label:r[0],desc:r[2],points:r[3].map(s=>s.replace(/<[^>]+>/g,'')),imgs:r[4].imgs});});
 
-$('#certs').innerHTML=CERTS.map(([img,t,s],i)=>`
-  <button class="cert" type="button" data-cert="${i}"><img src="${IMG(img)}" alt="Certificate: ${t}" loading="lazy">
-  <span><strong>${t}</strong><span>${s}</span></span></button>`).join('');
+$('#certs').innerHTML=CERTS.map((c,i)=>`
+  <button class="cert" type="button" data-cert="${i}"><img src="${TH(c.imgs[0])}" alt="Certificate: ${c.t}" loading="lazy">
+  <span><strong>${c.t}</strong><span>${c.s}</span></span></button>`).join('');
 $('#certs').addEventListener('click',e=>{const b=e.target.closest('[data-cert]');if(!b)return;const c=CERTS[+b.dataset.cert];
-  openModal({title:c[1],label:'Certificate',imgs:[c[0]],desc:c[2],points:[],meta:[]});});
+  openModal({title:c.t,label:'Certificate',imgs:c.imgs,desc:c.s,points:[],meta:[],verify:c.link});});
 
 /* =================== MODAL =================== */
 let cur=null,idx=0,lastFocus=null;
@@ -514,14 +576,19 @@ function openModal(p){cur=p;idx=0;lastFocus=document.activeElement;
   let meta=(p.meta||[]).map(([v,l])=>`<div class="figure">${v}<small>${l}</small></div>`).join('');
   if(p.when)meta+=`<div><h4>When</h4><span class="mono">${p.when}</span></div>`;
   if(p.tools)meta+=`<div><h4>Tools</h4><div class="chips">${p.tools.map(t=>`<span class="chip">${t}</span>`).join('')}</div></div>`;
+  if(p.verify)meta+=`<a class="btn btn-text" href="${p.verify}" target="_blank" rel="noopener" style="align-self:flex-start">Verify certificate ↗</a>`;
   if(p.github)meta+=`<a class="btn btn-accent" href="${p.github}" target="_blank" rel="noopener" style="align-self:flex-start">View on GitHub ${ARROW}</a>`;
   $('#mMeta').innerHTML=meta;$('#mMeta').hidden=!meta;
   const many=p.imgs.length>1;
-  $('#mThumbs').innerHTML=many?p.imgs.map((s,i)=>`<button type="button" data-i="${i}" aria-label="Image ${i+1}"><img src="${IMG(s)}" alt=""></button>`).join(''):'';
+  $('#mThumbs').innerHTML=many?p.imgs.map((s,i)=>`<button type="button" data-i="${i}" aria-label="Image ${i+1}"><img src="${TH(s)}" alt="" loading="lazy"></button>`).join(''):'';
   $('#mThumbs').hidden=!many;$('#mPrev').hidden=$('#mNext').hidden=$('#mCount').hidden=!many;
   show(0);$('#modal').hidden=false;document.body.style.overflow='hidden';$('#mClose').focus();}
-function show(i){idx=(i+cur.imgs.length)%cur.imgs.length;const src=IMG(cur.imgs[idx]);
-  $('#mImg').src=src;$('#mImg').alt=`${cur.title}, image ${idx+1}`;$('#mFull').href=src;
+let loadTok=0;
+function show(i){idx=(i+cur.imgs.length)%cur.imgs.length;const f=cur.imgs[idx],src=IMG(f),im=$('#mImg'),tok=++loadTok;
+  im.src=TH(f);im.classList.add('loading');            /* preview first, then the original file */
+  const full=new Image();full.onload=()=>{if(tok===loadTok){im.src=src;im.classList.remove('loading');}};
+  full.onerror=()=>{if(tok===loadTok)im.classList.remove('loading');};full.src=src;
+  im.alt=`${cur.title}, image ${idx+1}`;$('#mFull').href=src;
   $('#mCount').textContent=`${idx+1} / ${cur.imgs.length}`;
   $$('#mThumbs button').forEach((b,j)=>b.setAttribute('aria-current',j===idx));}
 function closeModal(){$('#modal').hidden=true;document.body.style.overflow='';if(lastFocus)lastFocus.focus();}

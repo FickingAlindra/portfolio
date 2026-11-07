@@ -453,6 +453,13 @@ const PROJECTS=[
   imgs:['palmgis/12.png','palmgis/01.png','palmgis/05.png','palmgis/07.png','palmgis/02.png','palmgis/04.png','palmgis/03.png','palmgis/06.png','palmgis/13.png','palmgis/10.png','palmgis/08.png','palmgis/11.png'],
   github:'https://github.com/FickingAlindra/palmgis',
   demo:''   /* isi dengan link online PalmGIS, misalnya 'https://palmgis.vercel.app' */},
+ {id:'ndpe',group:'main',title:'NDPE / EUDR Deforestation Screening, South Sumatra',cat:['rs','carto','research'],label:'Earth Engine · Python',
+  short:'Automated check of forest loss after the 31 Dec 2020 EUDR cut-off around an oil palm landscape north-east of Palembang.',
+  desc:'A reproducible screening workflow in Python and Google Earth Engine. The EC JRC Global Forest Cover 2020 map (FAO/EUDR definition, oil palm excluded) is intersected with Hansen/UMD tree cover loss 2021–2025 on a single 10 m UTM grid, keeping patches of at least 0.5 ha. Loss inside mapped oil palm (BIOPAMA v1.2) is separated as replanting, and Sentinel-2 composites before and after the cut-off are used to verify the largest patches. The script outputs a finished A3 map, a loss-by-year chart, before/after verification images, a written analysis and CSV/JSON tables.',
+  points:['20.3 ha of 2020 forest lost after the cut-off in 7 patches, mostly in 2024, all within 1 km of mapped oil palm.','Replanting (1.7 ha) and loss on other non-forest land (16.9 ha) kept separate, so they are not counted as deforestation.','Screening only: areas are pixel counts and flagged patches need field and permit checks.'],
+  meta:[['20.3 ha','post-cut-off deforestation'],['7','flagged patches'],['10 m','analysis grid']],when:'2026',tools:['Google Earth Engine','Python','Sentinel-2','Hansen GFC','JRC GFC2020'],
+  imgs:['ndpe/01.png','ndpe/02.png','ndpe/03.png'],
+  code:'files/ndpe_screening.py'},
  {id:'thesis',group:'main',title:'Traffic Accident Vulnerability, Magelang City',cat:['research','rs','field'],label:'Undergraduate thesis',
   short:'Road-segment vulnerability to traffic accidents at weekend morning peak hours, from aerial photos, weighted overlay and field survey.',
   desc:'Undergraduate thesis. Road segments of Magelang City were assessed for traffic accident vulnerability during the weekend morning peak, combining interpretation of 2025 aerial photographs, the city road network and a 2026 field survey in a weighted overlay. Field observations covered road markings, roadside land use, sight distance, curve radius, pedestrian crossings, junction control and signs, on-street parking, side friction and traffic flow, and sidewalks.',
@@ -582,6 +589,7 @@ const MAPI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wi
 const EXT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
 const GHI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>';
 
+const CODEI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>';
 let filter='all';
 function renderFilters(){
   $('#filters').innerHTML=FILTERS.map(([k,l])=>{const n=k==='all'?PROJECTS.length:PROJECTS.filter(p=>p.cat.includes(k)).length;
@@ -674,7 +682,7 @@ function openModal(p){cur=p;idx=0;lastFocus=document.activeElement;
   if(p.when)meta+=`<div><h4>When</h4><span class="mono">${p.when}</span></div>`;
   if(p.tools)meta+=`<div><h4>Tools</h4><div class="chips">${p.tools.map(t=>`<span class="chip">${t}</span>`).join('')}</div></div>`;
   if(p.verify)meta+=`<a class="btn btn-text" href="${p.verify}" target="_blank" rel="noopener" style="align-self:flex-start">Verify certificate ↗</a>`;
-  if(p.demo||p.github)meta+=`<div class="links-row">${p.demo?`<a class="btn btn-accent" href="${p.demo}" target="_blank" rel="noopener">${EXT}Live demo</a>`:''}${p.github?`<a class="btn btn-ghost" href="${p.github}" target="_blank" rel="noopener">${GHI}GitHub</a>`:''}</div>`;
+  if(p.demo||p.github||p.code)meta+=`<div class="links-row">${p.demo?`<a class="btn btn-accent" href="${p.demo}" target="_blank" rel="noopener">${EXT}Live demo</a>`:''}${p.github?`<a class="btn btn-ghost" href="${p.github}" target="_blank" rel="noopener">${GHI}GitHub</a>`:''}${p.code?`<a class="btn btn-ghost" href="${p.code}" download>${CODEI}Script (.py)</a>`:''}</div>`;
   $('#mMeta').innerHTML=meta;$('#mMeta').hidden=!meta;
   const many=p.imgs.length>1;
   $('#mThumbs').innerHTML=many?p.imgs.map((s,i)=>`<button type="button" data-i="${i}" aria-label="Image ${i+1}"><img src="${TH(s)}" alt="" loading="lazy"></button>`).join(''):'';

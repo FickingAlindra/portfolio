@@ -373,6 +373,60 @@ def summary_text(S, patches, per_year, cfg, g, verified_note=True):
     L.append('- Komponen No Peat dan No Exploitation tidak dinilai (perlu peta gambut resmi dan data sosial).')
     return '\n'.join(L)
 
+def layer_figures(D, g, cls, S, cfg, folder):
+    from matplotlib.colors import to_rgb
+    _en = lambda v: '{:,.1f}'.format(v)
+    cut = cfg['CUTOFF']; inside = g['inside']; ha = (g['res']**2)/10000
+    year = np.where(D['lossyear'] > 0, D['lossyear']+2000, 0)
+    def paper():
+        a = np.ones(inside.shape+(3,)); a[inside] = to_rgb('#ecebe6'); return a
+    def paint(a, m, c):
+        a[m & inside] = to_rgb(c); return a
+    sheets = []
+    a = rgb(D, 'a'); a[~inside] = a[~inside]*.35+.65
+    sheets.append(('Sentinel-2 imagery %s–%s' % (cfg['AFTER'][0][:4], cfg['AFTER'][1][:4]),
+                   'True-colour median composite, Cloud Score+ ≥ %g' % cfg['CLOUD_SCORE'], a, [],
+                   'Copernicus Sentinel-2 L2A (COPERNICUS/S2_SR_HARMONIZED)'))
+    a = paint(paper(), D['forest2020'] == 1, '#2e7d32')
+    sheets.append(('Forest cover 2020 (baseline)', 'FAO / EUDR forest definition; plantations excluded', a,
+                   [('#2e7d32', 'Forest 2020  (%s ha)' % _en(S['forest2020_ha']))], 'EC JRC Global Forest Cover 2020 V4'))
+    a = paint(paint(paper(), D['palm'] == 1, '#f2b33d'), D['palm'] == 2, '#c77dff')
+    sheets.append(('Oil palm plantations', 'Closed-canopy oil palm mapped 2016–2021', a,
+                   [('#f2b33d', 'Industrial  (%s ha)' % _en(S['palm_ind_ha'])), ('#c77dff', 'Smallholder  (%s ha)' % _en(S['palm_sh_ha']))],
+                   'BIOPAMA Global Oil Palm v1.2'))
+    a = paper(); before = (year > 0) & (year <= cut); afterm = year > cut
+    a = paint(a, before, '#9e9e9e')
+    pal = ['#ffd54f', '#ffa726', '#fb8c00', '#e53935', '#b71c1c', '#7f0000']
+    yrs = sorted(set(year[afterm & inside].ravel().tolist()))
+    for i, y in enumerate(yrs): a = paint(a, year == y, pal[min(i, len(pal)-1)])
+    leg = [('#9e9e9e', 'Loss 2001–%d  (%s ha)' % (cut, _en(S['loss_2001_2020_ha'])))]
+    leg += [(pal[min(i, len(pal)-1)], 'Loss %d  (%s ha)' % (y, _en(((year == y) & inside).sum()*ha))) for i, y in enumerate(yrs)]
+    sheets.append(('Tree cover loss by year', 'Stand-replacing loss of canopy > 5 m; tree crops included', a, leg,
+                   'Hansen / UMD Global Forest Change v1.13'))
+    out = []
+    for i, (title, sub, img, leg, src) in enumerate(sheets, 1):
+        fig = plt.figure(figsize=(16.5, 11.7), dpi=cfg.get('DPI', 200)); fig.patch.set_facecolor('white')
+        ax = fig.add_axes([0.035, 0.06, 0.58, 0.86])
+        ax.imshow(img, extent=g['extent'], interpolation='nearest')
+        ax.add_patch(Circle((g['cx'], g['cy']), g['radius_m'], fill=False, ec='k', lw=1.4, zorder=5))
+        ax.set_xlim(g['extent'][:2]); ax.set_ylim(g['extent'][2:])
+        utm_ticks(ax, g); ax.grid(color='#888', alpha=.25, lw=.6, ls='--'); scalebar(ax, g); north(ax, g)
+        for s in ax.spines.values(): s.set_linewidth(1.4)
+        R = 0.645
+        fig.text(R, 0.94, 'INPUT LAYER %d' % i, fontsize=11, color='#666', va='top')
+        fig.text(R, 0.91, title, fontsize=18, fontweight='bold', va='top')
+        fig.text(R, 0.872, sub, fontsize=11, color='#333', va='top')
+        fig.text(R, 0.845, cfg['NAME'], fontsize=10, color='#555', va='top')
+        if leg:
+            hs = [Patch(fc=c, ec='#333', lw=.5, label=l) for c, l in leg] + [Patch(fc='none', ec='k', lw=1.2, label='Study area')]
+            fig.legend(handles=hs, loc='upper left', bbox_to_anchor=(R-.005, 0.81), frameon=False, fontsize=11,
+                       title='Legend', title_fontsize=12, alignment='left', handlelength=1.6)
+        fig.text(R, 0.10, 'Source: ' + src, fontsize=9, color='#444')
+        fig.text(R, 0.075, 'WGS 84 / UTM zone %d%s  ·  10 m analysis grid' % (g['zone'], 'S' if g['south'] else 'N'), fontsize=9, color='#444')
+        fig.text(R, 0.04, 'Map: %s · %s' % (cfg['AUTHOR'], datetime.date.today().strftime('%d %B %Y')), fontsize=10)
+        p = os.path.join(folder, 'layer_%d.png' % i); fig.savefig(p, facecolor='white'); plt.close(fig); out.append(p)
+    return out
+
 g = make_grid(CFG['LON'], CFG['LAT'], CFG['RADIUS_KM'])
 print('Grid: %d x %d piksel @ %d m, EPSG:%d' % (g['n'], g['n'], g['res'], g['epsg']))
 D = fetch(ee, g, CFG)
@@ -385,6 +439,7 @@ cls, S, patches, per_year = analyse(D, g, CFG)
 map_figure(D, g, cls, S, patches, CFG, 'ndpe_output/01_map_ndpe_screening.png')
 chart_figure(per_year, CFG, 'ndpe_output/02_chart_loss_per_year.png')
 has_v = verify_figure(D, g, cls, patches, CFG, 'ndpe_output/03_verification_before_after.png')
+layer_figures(D, g, cls, S, CFG, 'ndpe_output')
 if not has_v: print('No deforestation patch >= %g ha' % CFG['MMU_HA'])
 
 import csv, shutil

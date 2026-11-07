@@ -7,7 +7,8 @@
 <meta name="description" content="Portfolio of Ficking Alindra Wijayadarma, Cartography and Remote Sensing graduate of Universitas Gadjah Mada. GIS analysis, remote sensing, cartography and WebGIS.">
 <meta property="og:title" content="Ficking Alindra Wijayadarma · GIS & Remote Sensing">
 <meta property="og:description" content="Maps, remote sensing analysis and WebGIS projects by a UGM Cartography & Remote Sensing graduate.">
-<meta property="og:image" content="img/thumb/palmgis/12.jpg">
+<meta property="og:image" content="https://fickingalindra.vercel.app/img/thumb/palmgis/12.jpg">
+<meta property="og:url" content="https://fickingalindra.vercel.app/">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#151719">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23151719'/%3E%3Ccircle cx='32' cy='28' r='11' fill='none' stroke='%23f2b33d' stroke-width='5'/%3E%3Cpath d='M32 39v14' stroke='%23f2b33d' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -642,9 +643,9 @@ const STACKS=[
  {id:'pati',tab:'Pati',title:'Land-use directive vs. existing use, Pati',proj:'pati',
   text:'A land-use function directive derived from slope, rainfall and soil texture was compared with a Random Trees land-use classification to map where existing use agrees with the directive.',
   layers:[['Result: agreement map','other/18.png'],['Land use, Random Trees','other/19.png'],['Land-use function directive','other/20.png']]},
- {id:'godean',tab:'Godean',title:'Thematic layers of Godean District',proj:'siglab',
-  text:'Three thematic layers of the same district prepared as example maps for the GIS practicum: transport and hydrography, vegetation density and land use.',
-  layers:[['Land use','sig-lab/03.png'],['Vegetation density','sig-lab/02.png'],['Roads & rivers','sig-lab/01.png']]},
+ {id:'ndpe',tab:'NDPE',title:'Deforestation screening after the EUDR cut-off',proj:'ndpe',
+  text:'Forest cover in 2020 is the baseline. Tree cover loss after 31 December 2020 inside that forest counts as deforestation, while loss inside oil palm is separated as replanting. Sentinel-2 imagery is used to check the flagged patches.',
+  layers:[['Result: deforestation after cut-off','ndpe/01.png'],['Tree cover loss by year','ndpe/layer_4.png'],['Oil palm plantations','ndpe/layer_3.png'],['Forest cover 2020','ndpe/layer_2.png'],['Sentinel-2 imagery','ndpe/layer_1.png']]},
  {id:'population',tab:'Population',title:'Population regionalization of Indonesia',proj:'regionalisasi',
   text:'Provincial population in 2010 and 2020 classified into regions, then compared to show where the growth rate changed between the two decades.',
   layers:[['Result: change in growth rate','other/24.png'],['Population 2020','other/23.png'],['Population 2010','other/22.png']]}

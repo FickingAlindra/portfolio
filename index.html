@@ -152,10 +152,10 @@ section{padding-block:clamp(72px,10vw,108px)}
 .thumb{border-radius:12px;overflow:hidden;aspect-ratio:3/2;background:var(--surface-2);border:1px solid var(--line)}
 .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
 .card:hover .thumb img{transform:scale(1.04)}
-.card .cat{color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-size:.7rem}
-.card h3{font-size:1.25rem;font-weight:700;letter-spacing:-.01em}
-.card p{color:var(--muted);font-size:.94rem;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card .more{font-weight:600;font-size:.9rem;display:inline-flex;align-items:center;gap:6px;color:var(--fg)}
+.card .cat{color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-size:.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card h3{font-size:1.25rem;font-weight:700;letter-spacing:-.01em;line-height:1.3;min-height:2.6em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card p{color:var(--muted);font-size:.94rem;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:3.1em}
+.card .more{margin-top:auto;font-weight:600;font-size:.9rem;display:inline-flex;align-items:center;gap:6px;color:var(--fg)}
 .card .more svg{width:15px;height:15px;transition:transform .15s;color:var(--accent)}
 .card:hover .more svg{transform:translateX(4px)}
 .card:hover h3{color:var(--accent)}
@@ -586,6 +586,7 @@ const IMG=f=>'img/'+f;                                   /* original, full quali
 const TH=f=>'img/thumb/'+f.replace(/\.(png|jpe?g)$/i,'.jpg');  /* light preview */
 const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 const byId=id=>PROJECTS.find(p=>p.id===id);
+const COVER=p=>'img/cover/'+p.id+'.jpg';   /* card cover: a tidy 3:2 crop of the main map */
 const MAPI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>';
 const EXT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
 const GHI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>';
@@ -597,7 +598,7 @@ function renderFilters(){
     return n?`<button type="button" data-f="${k}" aria-pressed="${k===filter}">${l}<small>${n}</small></button>`:'';}).join('');}
 const card=p=>`
    <button class="card" type="button" data-open="${p.id}">
-     <span class="thumb"><img src="${TH(p.imgs[0])}" alt="${p.title}" loading="lazy"></span>
+     <span class="thumb"><img src="${COVER(p)}" alt="${p.title}" loading="lazy"></span>
      <span class="cat mono">${p.label}${p.demo?' · live demo':p.imgs.length>1?` · ${p.imgs.length} images`:''}</span>
      <h3>${p.title}</h3>
      <p>${p.short}</p>

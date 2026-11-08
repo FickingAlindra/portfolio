@@ -597,8 +597,9 @@ const CERTS=[
 
 /* =================== RENDER =================== */
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const IMG=f=>'img/'+f;                                   /* original, full quality */
-const TH=f=>'img/thumb/'+f.replace(/\.(png|jpe?g)$/i,'.jpg');  /* light preview */
+const V=f=>f.startsWith('height/')?'?v=2':'';
+const IMG=f=>'img/'+f+V(f);
+const TH=f=>'img/thumb/'+f.replace(/\.(png|jpe?g)$/i,'.jpg')+V(f);
 const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 const byId=id=>PROJECTS.find(p=>p.id===id);
 const COVER=p=>p.cover||('img/cover/'+p.id+'.jpg');   /* card cover: a tidy 3:2 crop of the main map */

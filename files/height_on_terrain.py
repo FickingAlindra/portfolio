@@ -596,9 +596,7 @@ def display_verdict(S, cfg):
 def compare_figure(results, path, author, dpi=200):
     modes = [m for m in ('palm', 'forest', 'tea', 'urban') if m in results]
     fig = plt.figure(figsize=(16.5, 11.7), dpi=dpi); fig.patch.set_facecolor('white')
-    fig.text(.03, .965, 'ONE METHOD, THREE LANDSCAPES', fontsize=18, fontweight='bold', va='top')
-    fig.text(.03, .935, 'Object height above terrain = surface model minus FABDEM terrain. Same 6 × 4 km window, 10 m grid and layout for every setting.',
-             fontsize=10, color='#444', va='top')
+    fig.text(.03, .955, 'Height on Terrain Comparison: Oil Palm, Rainforest and Jakarta', fontsize=18, fontweight='bold', va='top')
     n = len(modes); W = .94/n
     for i, m in enumerate(modes):
         D, g, A, cfg = results[m]; P = prof(cfg); S, V = A['S'], A['V']; x0 = .03+i*W; w = W-.02

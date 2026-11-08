@@ -456,6 +456,18 @@ const PROJECTS=[
   imgs:['palmgis/12.png','palmgis/01.png','palmgis/05.png','palmgis/07.png','palmgis/02.png','palmgis/04.png','palmgis/03.png','palmgis/06.png','palmgis/13.png','palmgis/10.png','palmgis/08.png','palmgis/11.png'],
   github:'https://github.com/FickingAlindra/palmgis',
   demo:''   /* isi dengan link online PalmGIS, misalnya 'https://palmgis.vercel.app' */},
+ {id:'height',group:'main',title:'Height on Terrain: Oil Palm, Rainforest and Jakarta',cat:['rs','carto','research'],label:'Earth Engine · Python · 3D',
+  short:'One method, three landscapes: how tall are palms, forest canopy and buildings above the ground, and how far can global data be trusted.',
+  desc:'Object height above the ground was mapped the same way in three contrasting 6 × 4 km windows: an oil palm estate in Kutai Timur, lowland-to-montane rainforest at Gunung Palung (Ketapang) and central Jakarta (Sudirman, Kuningan, Menteng, Tebet). Terrain comes from FABDEM, a Copernicus DEM with trees and buildings removed; canopy height from the Meta/WRI 1 m map and building height from Google Open Buildings 2.5D. Each map was checked against an independent reference: GEDI lidar footprints for vegetation and the JRC GHSL built-height layer for the city. A single comparison sheet scores every landscape on data reliability (error relative to object height) and on display (object height relative to terrain relief). Each landscape also has an interactive 3D model with contours and adjustable height exaggeration.',
+  points:['Jakarta: 1,043 ha of buildings, 42% under 6 m (houses and kampung) beside 53 ha of towers over 40 m along Sudirman and Kuningan.',
+          'Rainforest: median top canopy 23 m, 14% above 30 m, on 1,000 m of relief; the 1 m canopy map reads 6.6 m lower than GEDI lidar, the known underestimate of tall tropical forest.',
+          'Oil palm: the canopy map shows mostly young palms, yet GEDI measured them about 8 m taller. The imagery behind the map predates the lidar, so it is flagged as not reliable instead of being reported as fact.',
+          'Screening only: heights are model estimates, areas are 10 m pixel counts.'],
+  meta:[['3','landscapes, one method'],['650+','GEDI lidar checks'],['1 m','canopy detail']],when:'2026',
+  tools:['Google Earth Engine','Python','FABDEM','GEDI lidar','Open Buildings 2.5D','WebGL'],
+  imgs:['height/01.png','height/02.png','height/03.png','height/04.png','height/05.png','height/06.png','height/07.png','height/08.png'],
+  views:[['3D Jakarta','3d/jakarta.html'],['3D rainforest','3d/forest.html'],['3D oil palm','3d/oil-palm.html']],
+  code:'files/height_on_terrain.py'},
  {id:'ndpe',group:'main',title:'NDPE / EUDR Deforestation Screening, South Sumatra',cat:['rs','carto','research'],label:'Earth Engine · Python',
   short:'Automated check of forest loss after the 31 Dec 2020 EUDR cut-off around an oil palm landscape north-east of Palembang.',
   desc:'A reproducible screening workflow in Python and Google Earth Engine. The EC JRC Global Forest Cover 2020 map (FAO/EUDR definition, oil palm excluded) is intersected with Hansen/UMD tree cover loss 2021–2025 on a single 10 m UTM grid, keeping patches of at least 0.5 ha. Loss inside mapped oil palm (BIOPAMA v1.2) is separated as replanting, and Sentinel-2 composites before and after the cut-off are used to verify the largest patches. The script outputs a finished A3 map, a loss-by-year chart, before/after verification images, a written analysis and CSV/JSON tables.',
@@ -686,7 +698,7 @@ function openModal(p){cur=p;idx=0;lastFocus=document.activeElement;
   if(p.when)meta+=`<div><h4>When</h4><span class="mono">${p.when}</span></div>`;
   if(p.tools)meta+=`<div><h4>Tools</h4><div class="chips">${p.tools.map(t=>`<span class="chip">${t}</span>`).join('')}</div></div>`;
   if(p.verify)meta+=`<a class="btn btn-text" href="${p.verify}" target="_blank" rel="noopener" style="align-self:flex-start">Verify certificate ↗</a>`;
-  if(p.demo||p.github||p.code)meta+=`<div class="links-row">${p.demo?`<a class="btn btn-accent" href="${p.demo}" target="_blank" rel="noopener">${EXT}Live demo</a>`:''}${p.github?`<a class="btn btn-ghost" href="${p.github}" target="_blank" rel="noopener">${GHI}GitHub</a>`:''}${p.code?`<a class="btn btn-ghost" href="${p.code}" download>${CODEI}Script (.py)</a>`:''}</div>`;
+  if(p.demo||p.github||p.code||p.views)meta+=`<div class="links-row">${(p.views||[]).map(v=>`<a class="btn btn-accent" href="${v[1]}" target="_blank" rel="noopener">${EXT}${v[0]}</a>`).join('')}${p.demo?`<a class="btn btn-accent" href="${p.demo}" target="_blank" rel="noopener">${EXT}Live demo</a>`:''}${p.github?`<a class="btn btn-ghost" href="${p.github}" target="_blank" rel="noopener">${GHI}GitHub</a>`:''}${p.code?`<a class="btn btn-ghost" href="${p.code}" download>${CODEI}Script (.py)</a>`:''}</div>`;
   $('#mMeta').innerHTML=meta;$('#mMeta').hidden=!meta;
   const many=p.imgs.length>1;
   $('#mThumbs').innerHTML=many?p.imgs.map((s,i)=>`<button type="button" data-i="${i}" aria-label="Image ${i+1}"><img src="${TH(s)}" alt="" loading="lazy"></button>`).join(''):'';

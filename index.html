@@ -661,6 +661,12 @@ const STACKS=[
  {id:'ndpe',tab:'NDPE',title:'Deforestation screening after the EUDR cut-off',proj:'ndpe',
   text:'Forest cover in 2020 is the baseline. Tree cover loss after 31 December 2020 inside that forest counts as deforestation, while loss inside oil palm is separated as replanting. Sentinel-2 imagery is used to check the flagged patches.',
   layers:[['Result: deforestation after cut-off','ndpe/01.png'],['Tree cover loss by year','ndpe/layer_4.png'],['Oil palm plantations','ndpe/layer_3.png'],['Forest cover 2020','ndpe/layer_2.png'],['Sentinel-2 imagery','ndpe/layer_1.png']]},
+ {id:'jakarta',tab:'Jakarta 3D',title:'Building height on terrain, central Jakarta',proj:'height',view:'3d/jakarta.html',
+  text:'The ground is mapped first, without buildings. Building heights are added on top to make the surface, and subtracting the ground again leaves the height of each building, which is grouped into classes and draped over the terrain for the 3D model.',
+  layers:[['Result: height classes on terrain','height/m-jakarta/04.png'],['Object height = surface − terrain','height/m-jakarta/03.png'],['Surface: ground + buildings','height/m-jakarta/02.png'],['Terrain: bare ground (FABDEM)','height/m-jakarta/01.png']]},
+ {id:'forest',tab:'Rainforest 3D',title:'Forest canopy height on terrain, Gunung Palung',proj:'height',view:'3d/forest.html',
+  text:'The same method on rainforest: canopy height from the Meta 1 m map is added to the FABDEM ground, then subtracted again so only tree height remains, grouped into forest classes on 1,000 m of relief.',
+  layers:[['Result: height classes on terrain','height/m-forest/04.png'],['Object height = surface − terrain','height/m-forest/03.png'],['Surface: ground + canopy','height/m-forest/02.png'],['Terrain: bare ground (FABDEM)','height/m-forest/01.png']]},
  {id:'population',tab:'Population',title:'Population regionalization of Indonesia',proj:'regionalisasi',
   text:'Provincial population in 2010 and 2020 classified into regions, then compared to show where the growth rate changed between the two decades.',
   layers:[['Result: change in growth rate','other/24.png'],['Population 2020','other/23.png'],['Population 2010','other/22.png']]}
@@ -675,7 +681,7 @@ function renderStack(){
      <div class="slabel"><span>${lab}</span></div></div>`).join('');
   $('#stackInfo').innerHTML=`<span class="mono" style="color:var(--accent)">${n} layers</span><h3>${st.title}</h3><p>${st.text}</p>
     <ol>${st.layers.slice().reverse().map(([l],i)=>`<li${i===n-1?' class="res"':''}>${l}</li>`).join('')}</ol>
-    <button class="xlink" type="button" data-open="${st.proj}">See the project ${ARROW}</button>`;
+    <button class="xlink" type="button" data-open="${st.proj}">See the project ${ARROW}</button>${st.view?`<a class="xlink" href="${st.view}" target="_blank" rel="noopener">Open the 3D model ↗</a>`:''}`;
   if(stackOpen)requestAnimationFrame(()=>el.classList.add('open'));}
 $('#stackTabs').addEventListener('click',e=>{const b=e.target.closest('[data-st]');if(!b)return;stackId=b.dataset.st;renderStack();});
 const stackEl=$('#stack');

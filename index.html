@@ -465,6 +465,7 @@ const PROJECTS=[
           'Screening only: heights are model estimates, areas are 10 m pixel counts.'],
   meta:[['3','landscapes, one method'],['650+','GEDI lidar checks'],['1 m','canopy detail']],when:'2026',
   tools:['Google Earth Engine','Python','FABDEM','GEDI lidar','Open Buildings 2.5D','WebGL'],
+  cover:'img/height/cover.jpg',
   imgs:['height/01.png','height/02.png','height/03.png','height/04.png','height/05.png','height/06.png','height/07.png','height/08.png'],
   views:[['3D Jakarta','3d/jakarta.html'],['3D rainforest','3d/forest.html'],['3D oil palm','3d/oil-palm.html']],
   code:'files/height_on_terrain.py'},
@@ -600,7 +601,7 @@ const IMG=f=>'img/'+f;                                   /* original, full quali
 const TH=f=>'img/thumb/'+f.replace(/\.(png|jpe?g)$/i,'.jpg');  /* light preview */
 const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 const byId=id=>PROJECTS.find(p=>p.id===id);
-const COVER=p=>'img/cover/'+p.id+'.jpg';   /* card cover: a tidy 3:2 crop of the main map */
+const COVER=p=>p.cover||('img/cover/'+p.id+'.jpg');   /* card cover: a tidy 3:2 crop of the main map */
 const MAPI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>';
 const EXT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
 const GHI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>';
@@ -667,6 +668,9 @@ const STACKS=[
  {id:'forest',tab:'Rainforest 3D',title:'Forest canopy height on terrain, Gunung Palung',proj:'height',view:'3d/forest.html',
   text:'The same method on rainforest: canopy height from the Meta 1 m map is added to the FABDEM ground, then subtracted again so only tree height remains, grouped into forest classes on 1,000 m of relief.',
   layers:[['Result: height classes on terrain','height/m-forest/04.png'],['Object height = surface − terrain','height/m-forest/03.png'],['Surface: ground + canopy','height/m-forest/02.png'],['Terrain: bare ground (FABDEM)','height/m-forest/01.png']]},
+ {id:'palm3d',tab:'Oil palm 3D',title:'Oil palm canopy height on terrain, Kutai Timur',proj:'height',view:'3d/oil-palm.html',
+  text:'The same method inside a mapped oil palm estate. Canopy height is added to the FABDEM ground and subtracted again, then grouped into palm age-like classes. Here the canopy map shows mostly young palms while GEDI lidar measured them about 8 m taller, so the result is kept as a flagged example of imagery older than the reference.',
+  layers:[['Result: height classes on terrain','height/m-palm/04.png'],['Object height = surface − terrain','height/m-palm/03.png'],['Surface: ground + oil palm canopy','height/m-palm/02.png'],['Terrain: bare ground (FABDEM)','height/m-palm/01.png']]},
  {id:'population',tab:'Population',title:'Population regionalization of Indonesia',proj:'regionalisasi',
   text:'Provincial population in 2010 and 2020 classified into regions, then compared to show where the growth rate changed between the two decades.',
   layers:[['Result: change in growth rate','other/24.png'],['Population 2020','other/23.png'],['Population 2010','other/22.png']]}

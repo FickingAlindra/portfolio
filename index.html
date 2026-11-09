@@ -6,7 +6,7 @@
 <title>Ficking Alindra Wijayadarma · GIS & Remote Sensing</title>
 <meta name="description" content="Portfolio of Ficking Alindra Wijayadarma, Cartography and Remote Sensing graduate of Universitas Gadjah Mada. GIS analysis, remote sensing, cartography and WebGIS.">
 <meta property="og:title" content="Ficking Alindra Wijayadarma · GIS & Remote Sensing">
-<meta property="og:description" content="Maps, remote sensing analysis and WebGIS projects by a UGM Cartography & Remote Sensing graduate.">
+<meta property="og:description" content="Portfolio of Ficking Alindra Wijayadarma: 300+ maps, field surveys, UAV mapping, satellite analysis in Google Earth Engine and WebGIS, each shown with its method and numbers.">
 <meta property="og:image" content="https://www.fickingalindra.my.id/img/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="627">
@@ -263,6 +263,26 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .meta h4{font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 @media (max-width:720px){.detail{grid-template-columns:1fr}.sheet-head{padding:18px 18px 0}.sheet-body{padding:14px 18px 22px}}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;z-index:120}
+
+/* ---------- motion ---------- */
+.hero h1 .ln,.hero h1 .ln span{color:var(--fg)}.hero h1 .ln:nth-child(2),.hero h1 .ln:nth-child(2) span{color:var(--accent)}.hero h1 .ln{display:block}
+@media (prefers-reduced-motion:no-preference){
+  .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.08em}
+  .hero h1 .ln>span{display:inline-block;transform:translateY(105%);animation:rise .9s cubic-bezier(.2,.7,.1,1) forwards}
+  .hero h1 .ln:nth-child(2)>span{animation-delay:.12s}
+  .hero .role,.hero .lead,.hero .ctas{opacity:0;transform:translateY(14px);animation:fadeUp .7s ease forwards}
+  .hero .role{animation-delay:.45s}.hero .lead{animation-delay:.58s}.hero .ctas{animation-delay:.72s}
+  .hero .photo{opacity:0;transform:scale(.94);animation:popIn 1s cubic-bezier(.2,.7,.1,1) .3s forwards}
+  .hero .photo::before{animation:spin 60s linear infinite}
+  .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.1,1)}
+  .rv.in{opacity:1;transform:none}
+  .card{transition:transform .25s ease}
+  .card:hover{transform:translateY(-4px)}
+}
+@keyframes rise{to{transform:none}}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+@keyframes popIn{to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -299,7 +319,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   <canvas id="contours" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-text">
-      <h1>Ficking Alindra<br><span>Wijayadarma</span></h1>
+      <h1><span class="ln"><span>Ficking Alindra</span></span><span class="ln"><span><span>Wijayadarma</span></span></span></h1>
       <p class="role">GIS &amp; Remote Sensing · Cartography</p>
       <p class="lead">Cartography and Remote Sensing graduate of Universitas Gadjah Mada. I turn aerial and satellite imagery, field surveys and spatial data into maps that support planning, plantation and mining decisions.</p>
       <div class="ctas">
@@ -805,6 +825,24 @@ if(!reduce){new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){i
 addEventListener('resize',()=>drawContours(true));
 
 renderFilters();renderGrid();renderExp();onScroll();
+</script>
+
+<script>
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  const mark=()=>document.querySelectorAll('.sec-head,.fact,.job,.card,.cert,.stack-wrap,.c-row,#about p').forEach((el,i)=>{
+    if(el.classList.contains('rv'))return; el.classList.add('rv');
+    const sib=[...el.parentElement.children].indexOf(el); el.style.transitionDelay=Math.min(sib,5)*70+'ms'; io.observe(el)});
+  mark(); new MutationObserver(mark).observe(document.body,{childList:true,subtree:true});
+  // count-up for the big numbers in the About facts
+  document.querySelectorAll('.fact strong').forEach(el=>{
+    const m=el.textContent.match(/^([\d,.]+)(.*)$/); if(!m)return;
+    const end=parseFloat(m[1].replace(/,/g,'')),suf=m[2],dec=(m[1].split('.')[1]||'').length;
+    const o=new IntersectionObserver(es=>{if(!es[0].isIntersecting)return;o.disconnect();const t0=performance.now();
+      const f=t=>{const k=Math.min(1,(t-t0)/1200),v=end*(1-Math.pow(1-k,3));el.textContent=v.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)},{threshold:.6});
+    o.observe(el)});
+})();
 </script>
 </body>
 </html>

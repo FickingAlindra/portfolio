@@ -457,7 +457,7 @@ const PROJECTS=[
   github:'https://github.com/FickingAlindra/palmgis',
   demo:''   /* isi dengan link online PalmGIS, misalnya 'https://palmgis.vercel.app' */},
  {id:'firewatch',group:'main',title:'FireWatch Merauke: 2026 Forest and Land Fires, South Papua',cat:['rs','carto','research'],label:'Earth Engine · Python · Story map',
-  cover:'img/firewatch/cover.jpg',
+  cover:'img/firewatch/cover.jpg?v=2',
   short:'Where the 2026 fire season burned in Merauke, from daily satellite hotspots and Sentinel-2 burn scars, checked against NASA records.',
   desc:'The 2026 fire season in Merauke regency, South Papua, mapped from two independent satellite sources. Daily NASA FIRMS hotspots (MODIS 1 km and VIIRS 375 m) show when and where fires burned. Sentinel-2 burn scars show what was left behind: the normalized burn ratio before the season is compared with a composite that keeps the darker quarter of clear views from mid-July to early November. A pixel is mapped as burned only when it lost vegetation signal, ended dark like char and is not water, which keeps dry savanna grass and freshly cleared bare ground out of the total. Scars on or next to a fire detection are reported as confirmed. The results are checked against VIIRS detections and NASA MODIS MCD64A1 burned area, and published as a poster and an interactive story page with a before-and-after slider.',
   points:['290,794 ha burned and confirmed by hotspots, about 6.5% of the regency; fire activity peaked on 6 October.',
@@ -468,8 +468,8 @@ const PROJECTS=[
   meta:[['290,794 ha','burned, confirmed'],['547k','VIIRS fire detections'],['98.6%','scars on a hotspot']],when:'Nov 2026',
   tools:['Google Earth Engine','Python','NASA FIRMS','Sentinel-2','dNBR','MCD64A1'],
   imgs:['firewatch/01.png','firewatch/03.png','firewatch/02.png'],
-  views:[['Interactive story','stories/firewatch-merauke.html']],
-  code:'files/firewatch_merauke.py'},
+  views:[['Interactive story','stories/firewatch-merauke.html?v=2']],
+  code:'files/firewatch_merauke.py?v=2'},
  {id:'height',group:'main',title:'Height on Terrain: Oil Palm, Rainforest and Jakarta',cat:['rs','carto','research'],label:'Earth Engine · Python · 3D',
   short:'One method, three landscapes: how tall are palms, forest canopy and buildings above the ground, and how far can global data be trusted.',
   desc:'Object height above the ground was mapped the same way in three contrasting 6 × 4 km windows: an oil palm estate in Kutai Timur, lowland-to-montane rainforest at Gunung Palung (Ketapang) and central Jakarta (Sudirman, Kuningan, Menteng, Tebet). Terrain comes from FABDEM, a Copernicus DEM with trees and buildings removed; canopy height from the Meta/WRI 1 m map and building height from Google Open Buildings 2.5D. Each map was checked against an independent reference: GEDI lidar footprints for vegetation and the JRC GHSL built-height layer for the city. A single comparison sheet scores every landscape on data reliability (error relative to object height) and on display (object height relative to terrain relief). Each landscape also has an interactive 3D model with contours and adjustable height exaggeration.',
@@ -611,7 +611,7 @@ const CERTS=[
 
 /* =================== RENDER =================== */
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const V=f=>f.startsWith('height/')?'?v=3':'';
+const V=f=>f.startsWith('height/')?'?v=3':f.startsWith('firewatch/')?'?v=2':'';
 const IMG=f=>'img/'+f+V(f);
 const TH=f=>'img/thumb/'+f.replace(/\.(png|jpe?g)$/i,'.jpg')+V(f);
 const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -677,7 +677,7 @@ const STACKS=[
  {id:'ndpe',tab:'NDPE',title:'Deforestation screening after the EUDR cut-off',proj:'ndpe',
   text:'Forest cover in 2020 is the baseline. Tree cover loss after 31 December 2020 inside that forest counts as deforestation, while loss inside oil palm is separated as replanting. Sentinel-2 imagery is used to check the flagged patches.',
   layers:[['Result: deforestation after cut-off','ndpe/01.png'],['Tree cover loss by year','ndpe/layer_4.png'],['Oil palm plantations','ndpe/layer_3.png'],['Forest cover 2020','ndpe/layer_2.png'],['Sentinel-2 imagery','ndpe/layer_1.png']]},
- {id:'fire',tab:'FireWatch',title:'Burn scars from Sentinel-2, Merauke 2026',proj:'firewatch',view:'stories/firewatch-merauke.html',
+ {id:'fire',tab:'FireWatch',title:'Burn scars from Sentinel-2, Merauke 2026',proj:'firewatch',view:'stories/firewatch-merauke.html?v=2',
   text:'The same 24 × 16 km window at the densest hotspot cluster. Vegetation before the season is compared with the darker quarter of clear views after it; the drop in the normalized burn ratio (dNBR) marks candidate scars, which are kept only if the ground ended dark like char and sat next to a satellite fire detection. Bright bare ground from clearing is set aside.',
   layers:[['Result: confirmed burn scars','firewatch/m/04.png'],['Burn ratio change (dNBR)','firewatch/m/03.png'],['Sentinel-2 after the season','firewatch/m/02.png'],['Sentinel-2 before the season','firewatch/m/01.png']]},
  {id:'jakarta',tab:'Jakarta 3D',title:'Building height on terrain, central Jakarta',proj:'height',view:'3d/jakarta.html',

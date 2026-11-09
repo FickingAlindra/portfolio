@@ -7,7 +7,10 @@
 <meta name="description" content="Portfolio of Ficking Alindra Wijayadarma, Cartography and Remote Sensing graduate of Universitas Gadjah Mada. GIS analysis, remote sensing, cartography and WebGIS.">
 <meta property="og:title" content="Ficking Alindra Wijayadarma · GIS & Remote Sensing">
 <meta property="og:description" content="Maps, remote sensing analysis and WebGIS projects by a UGM Cartography & Remote Sensing graduate.">
-<meta property="og:image" content="https://www.fickingalindra.my.id/img/thumb/palmgis/12.jpg">
+<meta property="og:image" content="https://www.fickingalindra.my.id/img/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://www.fickingalindra.my.id/">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#151719">
@@ -52,15 +55,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
 .nav.scrolled{border-bottom-color:var(--line)}
 .nav .wrap{display:flex;align-items:center;gap:24px;height:68px}
-.brand{display:flex;align-items:center;gap:10px;font:700 1.05rem var(--sans);text-decoration:none;letter-spacing:-.01em}
-.brand i{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent)}
-.links{display:flex;gap:26px;margin:0 0 0 auto;list-style:none;padding:0}
-.links a{text-decoration:none;font-size:.95rem;font-weight:500;color:var(--muted);display:inline-flex;align-items:center;gap:7px}
-.links a::before{content:"";width:5px;height:5px;border-radius:50%;background:transparent}
+.brand{display:flex;align-items:center;gap:11px;font:600 1.02rem var(--sans);text-decoration:none;letter-spacing:-.005em}
+.brand i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--accent);display:grid;place-items:center;flex:none}
+.brand i::after{content:"";width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.links{display:flex;gap:30px;margin:0 0 0 auto;list-style:none;padding:0}
+.links a{position:relative;text-decoration:none;font-size:.92rem;font-weight:500;letter-spacing:.01em;color:var(--muted);padding:6px 0;transition:color .2s}
+.links a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:var(--accent);transform:scaleX(0);transition:transform .25s ease}
 .links a:hover{color:var(--fg)}
 .links a.active{color:var(--fg)}
-.links a.active::before{background:var(--accent)}
-.icons{display:flex;gap:4px;align-items:center;padding-left:14px;border-left:1px solid var(--line)}
+.links a.active::after{transform:scaleX(1)}
+.icons{display:flex;gap:4px;align-items:center;padding-left:16px;border-left:1px solid var(--line)}
 .iconbtn{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;border:0;background:transparent;cursor:pointer;text-decoration:none}
 .iconbtn:hover{background:var(--surface-2)}
 .iconbtn svg{width:19px;height:19px}
@@ -70,6 +74,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     padding:8px max(20px,env(safe-area-inset-right,0px)) 16px max(20px,env(safe-area-inset-left,0px));transform:translateY(-8px);opacity:0;pointer-events:none;transition:.2s}
   .links.open{transform:none;opacity:1;pointer-events:auto}
   .links a{padding:12px 0;font-size:1.05rem}
+  .links a::after{display:none}
   .menu-btn{display:grid}
   .icons{margin-left:auto;border-left:0;padding-left:0}
 }

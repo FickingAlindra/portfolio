@@ -481,6 +481,21 @@ const PROJECTS=[
   imgs:['palmgis/12.png','palmgis/01.png','palmgis/05.png','palmgis/07.png','palmgis/02.png','palmgis/04.png','palmgis/03.png','palmgis/06.png','palmgis/13.png','palmgis/10.png','palmgis/08.png','palmgis/11.png'],
   github:'https://github.com/FickingAlindra/palmgis',
   demo:''   /* isi dengan link online PalmGIS, misalnya 'https://palmgis.vercel.app' */},
+ {id:'palmage',group:'main',title:'Palm Age: Oil Palm Planting Year from 17 Years of Landsat, Ketapang',cat:['rs','carto','research'],label:'Earth Engine · Python · Time series',
+  cover:'img/palmage/cover.jpg',
+  short:'The year every oil palm block was planted, read from the Landsat archive 2010-2026 and checked against a published map, GEDI lidar and Hansen forest loss.',
+  desc:'Oil palm planting year mapped block by block in a 15 x 10 km estate landscape in Ketapang regency, West Kalimantan. Every Landsat 7, 8 and 9 image from 2010 to 2026 was cloud and haze masked, and a yearly normalized burn ratio (NBR) was built for each 30 m pixel. A block is dated to the barest year of its last bare-soil period, and only when the canopy grew back within five years; blocks never bare since 2010 are labelled as planted earlier. Block boundaries come from segmenting a 10 m Sentinel-2 image, so they follow the field roads and canals, and each segment takes the majority planting year of the pixels inside it. The result was checked three ways: against the published planting-year map of Descals et al. (2024), against GEDI lidar canopy height, and against the Hansen forest-loss year.',
+  points:['11,988 ha of oil palm in 495 blocks; two thirds were planted in 2011 and 2012, with a median planting year of 2012.',
+          '93% of the area is 9-16 years old in 2026, in its prime-yield years, so most of the landscape will reach replanting age at about the same time in the late 2030s.',
+          '96% of pixels fall within 3 years of the Descals et al. (2024) map (79% within 1 year), RMSE 1.5 years.',
+          'GEDI lidar height rises with estimated age (Spearman 0.44), from about 7 m at five years to about 11 m at ten.',
+          '80% of blocks with a Hansen forest-loss record were planted between one year before and two years after the loss year.',
+          'Screening from satellite data: under-planting without full clearing is not detected and areas are 10 m pixel counts.'],
+  meta:[['11,988 ha','oil palm dated'],['96%','within 3 yr of published map'],['2012','median planting year']],when:'Nov 2026',
+  tools:['Google Earth Engine','Python','Landsat','Sentinel-2','GEDI','Time series'],
+  imgs:['palmage/01.png','palmage/02.png','palmage/03.png'],
+  views:[['Timelapse video','files/palm_age_timelapse.mp4']],
+  code:'files/palm_age.py'},
  {id:'firewatch',group:'main',title:'FireWatch Merauke: 2026 Forest and Land Fires, South Papua',cat:['rs','carto','research'],label:'Earth Engine · Python · Story map',
   cover:'img/firewatch/cover.jpg?v=2',
   short:'Where the 2026 fire season burned in Merauke, from daily satellite hotspots and Sentinel-2 burn scars, checked against NASA records.',
@@ -702,6 +717,9 @@ const STACKS=[
  {id:'ndpe',tab:'NDPE',title:'Deforestation screening after the EUDR cut-off',proj:'ndpe',
   text:'Forest cover in 2020 is the baseline. Tree cover loss after 31 December 2020 inside that forest counts as deforestation, while loss inside oil palm is separated as replanting. Sentinel-2 imagery is used to check the flagged patches.',
   layers:[['Result: deforestation after cut-off','ndpe/01.png'],['Tree cover loss by year','ndpe/layer_4.png'],['Oil palm plantations','ndpe/layer_3.png'],['Forest cover 2020','ndpe/layer_2.png'],['Sentinel-2 imagery','ndpe/layer_1.png']]},
+ {id:'palm',tab:'Palm Age',title:'Oil palm planting year, Ketapang 2010-2026',proj:'palmage',view:'files/palm_age_timelapse.mp4',
+  text:'Yearly Landsat NBR finds the year each 30 m pixel was last bare soil before the palms grew back. A 10 m Sentinel-2 image is then split into segments along roads and canals, and each segment takes the majority year, giving one planting year per block.',
+  layers:[['Result: planting year by block','palmage/m/05.png'],['Year of bare soil, per pixel','palmage/m/04.png'],['Oil palm extent','palmage/m/03.png'],['Sentinel-2 2026','palmage/m/02.png'],['Landsat 2010','palmage/m/01.png']]},
  {id:'fire',tab:'FireWatch',title:'Burn scars from Sentinel-2, Merauke 2026',proj:'firewatch',view:'stories/firewatch-merauke.html?v=2',
   text:'The same 24 × 16 km window at the densest hotspot cluster. Vegetation before the season is compared with the darker quarter of clear views after it; the drop in the normalized burn ratio (dNBR) marks candidate scars, which are kept only if the ground ended dark like char and sat next to a satellite fire detection. Bright bare ground from clearing is set aside.',
   layers:[['Result: confirmed burn scars','firewatch/m/04.png'],['Burn ratio change (dNBR)','firewatch/m/03.png'],['Sentinel-2 after the season','firewatch/m/02.png'],['Sentinel-2 before the season','firewatch/m/01.png']]},
@@ -728,7 +746,7 @@ function renderStack(){
      <div class="slabel"><span>${lab}</span></div></div>`).join('');
   $('#stackInfo').innerHTML=`<span class="mono" style="color:var(--accent)">${n} layers</span><h3>${st.title}</h3><p>${st.text}</p>
     <ol>${st.layers.slice().reverse().map(([l],i)=>`<li${i===n-1?' class="res"':''}>${l}</li>`).join('')}</ol>
-    <button class="xlink" type="button" data-open="${st.proj}">See the project ${ARROW}</button>${st.view?`<a class="xlink" href="${st.view}" target="_blank" rel="noopener">${st.view.includes('stories/')?'Open the interactive story':'Open the 3D model'} ↗</a>`:''}`;
+    <button class="xlink" type="button" data-open="${st.proj}">See the project ${ARROW}</button>${st.view?`<a class="xlink" href="${st.view}" target="_blank" rel="noopener">${st.view.includes('stories/')?'Open the interactive story':st.view.endsWith('.mp4')?'Watch the timelapse':'Open the 3D model'} ↗</a>`:''}`;
   if(stackOpen)requestAnimationFrame(()=>el.classList.add('open'));}
 $('#stackTabs').addEventListener('click',e=>{const b=e.target.closest('[data-st]');if(!b)return;stackId=b.dataset.st;renderStack();});
 const stackEl=$('#stack');

@@ -164,6 +164,12 @@ section{padding-block:clamp(72px,10vw,108px)}
 .card .more svg{width:15px;height:15px;transition:transform .15s;color:var(--accent)}
 .card:hover .more svg{transform:translateX(4px)}
 .card:hover h3{color:var(--accent)}
+.role .badge{color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor;white-space:nowrap}
+.feat{margin-bottom:56px}
+.feat-k{display:block;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;margin-bottom:16px}
+.card .hl{display:flex;align-items:baseline;gap:10px;padding:10px 0 2px;border-top:1px solid var(--line)}
+.card .hl strong{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:var(--accent);white-space:nowrap}
+.card .hl span{color:var(--muted);font-size:.86rem;line-height:1.4}
 .subhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;font-size:1.3rem;font-weight:700;margin:64px 0 24px;padding-top:28px;border-top:1px solid var(--line)}
 .subhead .mono{color:var(--muted);font-weight:400}
 .imap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
@@ -320,7 +326,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   <div class="wrap">
     <div class="hero-text">
       <h1><span class="ln"><span>Ficking Alindra</span></span><span class="ln"><span><span>Wijayadarma</span></span></span></h1>
-      <p class="role">GIS &amp; Remote Sensing · Cartography</p>
+      <p class="role">GIS &amp; Remote Sensing · Cartography · <a href="#certificates" class="badge">Certified GIS Analyst (BNSP)</a></p>
       <p class="lead">Cartography and Remote Sensing graduate of Universitas Gadjah Mada. I turn aerial and satellite imagery, field surveys and spatial data into maps that support planning, plantation and mining decisions.</p>
       <div class="ctas">
         <a class="btn btn-accent" href="#projects">View projects
@@ -377,6 +383,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 <section id="projects">
   <div class="wrap">
     <div class="sec-head"><div><span class="mono">Projects</span><h2>Selected work</h2></div><p>Click a project to see its maps in full size, the method and the numbers. Prefer a document? <a href="https://canva.link/quvcclw7e7auh99" target="_blank" rel="noopener" style="color:var(--accent)">Open the portfolio on Canva ↗</a></p></div>
+    <div class="feat" id="featWrap"><span class="mono feat-k">Featured</span><div class="grid" id="feat"></div></div>
     <div class="tabs" id="filters" role="group" aria-label="Filter projects"></div>
     <div class="grid" id="grid"></div>
     <div id="otherWrap">
@@ -414,7 +421,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     <div>
       <span class="mono" style="color:var(--accent)">Contact</span>
       <h3 style="margin-top:8px">Looking for a GIS or remote sensing analyst?</h3>
-      <p>I'm open to roles in GIS analysis, plantation and environmental mapping, and spatial data. Email reaches me fastest.</p>
+      <p>I'm open to roles in GIS analysis, plantation and environmental mapping, and spatial data. Email or WhatsApp reaches me fastest.</p>
     </div>
     <div class="c-list">
       <div class="c-row">
@@ -422,6 +429,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
         <span class="v"><small>Email</small><a href="mailto:falindraw@gmail.com" style="text-decoration:none">falindraw@gmail.com</a></span>
         <button class="act" type="button" data-copy="falindraw@gmail.com">Copy</button>
       </div>
+      <a class="c-row" href="https://wa.me/6285895838579" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20.5l1.3-4A8.5 8.5 0 1 1 8 19.6z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1.2-1.6-2-1-1 .9c-1.2-.5-2.5-1.8-3-3l.9-1-1-2z"/></svg>
+        <span class="v"><small>WhatsApp</small>+62 858 9583 8579</span><span class="act">Chat ↗</span></a>
       <a class="c-row" href="https://www.linkedin.com/in/fickingalindrawijayadarma" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.75v5.7h-4v-5.05c0-1.2-.02-2.75-1.7-2.75-1.7 0-1.95 1.3-1.95 2.66v5.14h-4z"/></svg>
         <span class="v"><small>LinkedIn</small>linkedin.com/in/fickingalindrawijayadarma</span><span class="act">Open ↗</span></a>
@@ -667,19 +677,27 @@ let filter='all';
 function renderFilters(){
   $('#filters').innerHTML=FILTERS.map(([k,l])=>{const n=k==='all'?PROJECTS.length:PROJECTS.filter(p=>p.cat.includes(k)).length;
     return n?`<button type="button" data-f="${k}" aria-pressed="${k===filter}">${l}<small>${n}</small></button>`:'';}).join('');}
-const card=p=>`
+const FEATURED=[['palmage','96%','of pixels within 3 years of the published planting-year map'],
+ ['firewatch','98.6%','of mapped burn scars sit on or next to a satellite fire detection'],
+ ['palmgis','507','palms detected and scored for crown health on a 6.73 ha test block']];
+const SMCOVER=p=>'img/cover/sm/'+p.id+'.jpg';
+const card=(p,hl)=>`
    <button class="card" type="button" data-open="${p.id}">
-     <span class="thumb"><img src="${COVER(p)}" alt="${p.title}" loading="lazy"></span>
+     <span class="thumb"><img src="${SMCOVER(p)}" alt="${p.title}" loading="lazy"></span>
      <span class="cat mono">${p.label}${p.demo?' · live demo':p.imgs.length>1?` · ${p.imgs.length} images`:''}</span>
      <h3>${p.title}</h3>
      <p>${p.short}</p>
+     ${hl?`<span class="hl"><strong>${hl[0]}</strong><span>${hl[1]}</span></span>`:''}
      <span class="more">View details ${ARROW}</span>
    </button>`;
 function renderGrid(){
   const ok=p=>filter==='all'||p.cat.includes(filter);
   const main=PROJECTS.filter(p=>p.group==='main'&&ok(p)),other=PROJECTS.filter(p=>p.group==='other'&&ok(p));
-  $('#grid').innerHTML=main.map(card).join('');$('#grid').hidden=!main.length;
-  $('#grid2').innerHTML=other.map(card).join('');$('#otherWrap').hidden=!other.length;}
+  const fid=FEATURED.map(f=>f[0]);
+  $('#feat').innerHTML=FEATURED.map(f=>card(byId(f[0]),[f[1],f[2]])).join('');
+  const mainShown=filter==='all'?main.filter(p=>!fid.includes(p.id)):main;
+  $('#grid').innerHTML=mainShown.map(p=>card(p)).join('');$('#grid').hidden=!main.length;
+  $('#grid2').innerHTML=other.map(p=>card(p)).join('');$('#otherWrap').hidden=!other.length;}
 $('#filters').addEventListener('click',e=>{const b=e.target.closest('[data-f]');if(!b)return;filter=b.dataset.f;renderFilters();renderGrid();});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b)openModal(byId(b.dataset.open));});
 

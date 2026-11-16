@@ -491,6 +491,20 @@ const PROJECTS=[
   imgs:['palmgis/12.png','palmgis/01.png','palmgis/05.png','palmgis/07.png','palmgis/02.png','palmgis/04.png','palmgis/03.png','palmgis/06.png','palmgis/13.png','palmgis/10.png','palmgis/08.png','palmgis/11.png'],
   github:'https://github.com/FickingAlindra/palmgis',
   demo:''   /* isi dengan link online PalmGIS, misalnya 'https://palmgis.vercel.app' */},
+ {id:'rice',group:'main',title:'Rice Planting Calendar from Sentinel-1 Radar, Indramayu',cat:['rs','carto','research'],label:'Earth Engine · Python · SAR time series',
+  cover:'img/rice/cover.jpg',
+  short:'When every rice field in Indramayu was flooded and transplanted in the 2024/25 crop year, read from Sentinel-1 radar through the rainy-season clouds.',
+  desc:'Indramayu is one of the largest rice-producing regencies in Indonesia, and its main planting season falls in the rainy months when optical satellites see mostly cloud. Sentinel-1 radar sees through cloud: a flooded field reflects almost nothing back, so its VH backscatter drops sharply at transplanting and rises again as the rice grows. Every Sentinel-1 VH image from August 2024 to January 2026 from a single orbit track was composited into 12-day periods and smoothed, with gaps filled from the other tracks. Each 30 m field gets a transplanting date for every season where a flooding low is followed by regrowth, which gives the planting calendar, the second season and the number of crops per year. The map was checked against Sentinel-2 NDVI at 1,500 random rice pixels and against the official paddy-field baseline of ATR/BPN.',
+  points:['119,625 ha of rice detected, 5% below the official paddy-field baseline of 126,088 ha.',
+          'The first season starts in the south in early October and moves north; half of it was transplanted by 22 January 2025.',
+          '92,647 ha carried a second crop, transplanted mostly between May and mid-August 2025; average cropping index 1.82.',
+          '93% of 2,733 detected seasons with a clear Sentinel-2 view were confirmed by the NDVI green-up, and the radar caught 80% of the crops that NDVI shows.',
+          'Limits: plots under about 0.1 ha mix with settlements at 30 m, and rice sown without flooding can be missed.'],
+  meta:[['119,625 ha','rice mapped'],['93%','seasons confirmed by Sentinel-2'],['1.82','crops per year']],when:'Nov 2026',
+  tools:['Google Earth Engine','Python','Sentinel-1 SAR','Sentinel-2','Time series'],
+  imgs:['rice/01.png','rice/02.png','rice/03.png','rice/04.png','rice/06.png','rice/07.png'],
+  views:[['Planting wave video','files/rice_planting_wave.mp4'],['Radar vs optical video','files/rice_regency_timelapse.mp4']],
+  code:'files/rice_calendar.py'},
  {id:'palmage',group:'main',title:'Palm Age: Oil Palm Planting Year from 17 Years of Landsat, Ketapang',cat:['rs','carto','research'],label:'Earth Engine · Python · Time series',
   cover:'img/palmage/cover.jpg',
   short:'The year every oil palm block was planted, read from the Landsat archive 2010-2026 and checked against a published map, GEDI lidar and Hansen forest loss.',
@@ -677,7 +691,7 @@ let filter='all';
 function renderFilters(){
   $('#filters').innerHTML=FILTERS.map(([k,l])=>{const n=k==='all'?PROJECTS.length:PROJECTS.filter(p=>p.cat.includes(k)).length;
     return n?`<button type="button" data-f="${k}" aria-pressed="${k===filter}">${l}<small>${n}</small></button>`:'';}).join('');}
-const FEATURED=[['palmage','96%','of pixels within 3 years of the published planting-year map'],
+const FEATURED=[['rice','93%','of radar-detected rice seasons confirmed by Sentinel-2'],
  ['firewatch','98.6%','of mapped burn scars sit on or next to a satellite fire detection'],
  ['palmgis','507','palms detected and scored for crown health on a 6.73 ha test block']];
 const SMCOVER=p=>'img/cover/sm/'+p.id+'.jpg';
@@ -736,6 +750,9 @@ const STACKS=[
  {id:'ndpe',tab:'NDPE',title:'Deforestation screening after the EUDR cut-off',proj:'ndpe',
   text:'Forest cover in 2020 is the baseline. Tree cover loss after 31 December 2020 inside that forest counts as deforestation, while loss inside oil palm is separated as replanting. Sentinel-2 imagery is used to check the flagged patches.',
   layers:[['Result: deforestation after cut-off','ndpe/01.png'],['Tree cover loss by year','ndpe/layer_4.png'],['Oil palm plantations','ndpe/layer_3.png'],['Forest cover 2020','ndpe/layer_2.png'],['Sentinel-2 imagery','ndpe/layer_1.png']]},
+ {id:'rice',tab:'Rice calendar',title:'Rice planting calendar, Indramayu 2024/25',proj:'rice',view:'files/rice_planting_wave.mp4',
+  text:'Sentinel-1 radar every 12 days through the rainy season. A field goes dark when it is flooded for transplanting and brightens as the rice grows, so each field gets a planting date for every season, and the count of seasons gives the cropping intensity.',
+  layers:[['Result: first-season planting date','rice/01.png'],['Second-season planting date','rice/02.png'],['Crops per year','rice/03.png'],['Sentinel-2 accuracy check','rice/04.png']]},
  {id:'palm',tab:'Palm Age',title:'Oil palm planting year, Ketapang 2010-2026',proj:'palmage',view:'files/palm_age_timelapse.mp4',
   text:'Yearly Landsat NBR finds the year each 30 m pixel was last bare soil before the palms grew back. A 10 m Sentinel-2 image is then split into segments along roads and canals, and each segment takes the majority year, giving one planting year per block.',
   layers:[['Result: planting year by block','palmage/m/05.png'],['Year of bare soil, per pixel','palmage/m/04.png'],['Oil palm extent','palmage/m/03.png'],['Sentinel-2 2026','palmage/m/02.png'],['Landsat 2010','palmage/m/01.png']]},

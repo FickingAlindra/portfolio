@@ -883,7 +883,7 @@ function i18nStatic(lang){
 
 /* =================== RENDER =================== */
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const V=f=>f.startsWith('height/')?'?v=3':f.startsWith('firewatch/')?'?v=2':'';
+const V=f=>/^(jembrana-field|gombong-field|mining-site)\.jpg$/.test(f)?'?v=4':f.startsWith('height/')?'?v=3':f.startsWith('firewatch/')?'?v=2':'';
 const IMG=f=>'img/'+f+V(f);
 const TH=f=>'img/thumb/'+f.replace(/\.(png|jpe?g)$/i,'.jpg')+V(f);
 const ARROW='<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -1091,7 +1091,7 @@ function openModal(p){cur=p;idx=0;lastFocus=document.activeElement;
   if(p.demo||p.github||p.code||p.views)meta+=`<div class="links-row">${(p.views||[]).map(v=>`<a class="btn btn-accent" href="${v[1]}" target="_blank" rel="noopener">${EXT}${v[0]}</a>`).join('')}${p.demo?`<a class="btn btn-accent" href="${p.demo}" target="_blank" rel="noopener">${EXT}${T('live')}</a>`:''}${p.github?`<a class="btn btn-ghost" href="${p.github}" target="_blank" rel="noopener">${GHI}GitHub</a>`:''}${p.code?`<a class="btn btn-ghost" href="${p.code}" download>${CODEI}Script (.py)</a>`:''}</div>`;
   $('#mMeta').innerHTML=meta;$('#mMeta').hidden=!meta;
   const many=p.imgs.length>1;
-  $('#mThumbs').innerHTML=many?p.imgs.map((s,i)=>`<button type="button" data-i="${i}" aria-label="Image ${i+1}"><img src="${TH(s)}" alt="" loading="lazy"></button>`).join(''):'';
+  $('#mThumbs').innerHTML=many?p.imgs.map((s,i)=>`<button type="button" data-i="${i}" aria-label="Image ${i+1}"><img src="${TH(s)}" alt="" loading="lazy" data-full="${IMG(s)}" onerror="if(this.dataset.full&&this.src.indexOf('/thumb/')>-1){this.src=this.dataset.full}"></button>`).join(''):'';
   $('#mThumbs').hidden=!many;$('#mPrev').hidden=$('#mNext').hidden=$('#mCount').hidden=!many;
   show(0);$('#modal').hidden=false;document.body.style.overflow='hidden';$('#mClose').focus();}
 let loadTok=0;

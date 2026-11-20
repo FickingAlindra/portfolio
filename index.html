@@ -572,13 +572,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   </div>
 </section>
 
-<!-- ================= NOTES ================= -->
-<section id="notes">
-  <div class="wrap">
-    <div class="sec-head"><div><h2 data-i18n="h_notes">Field notes</h2></div><p data-i18n="notes_p">Short write-ups on what went wrong, what worked and why.</p></div>
-    <div class="notes" id="notesList"></div>
-  </div>
-</section>
 <section id="words" hidden>
   <div class="wrap"><div class="sec-head"><div><h2 data-i18n="h_words">What supervisors say</h2></div></div><div class="quotes" id="quotes"></div></div>
 </section>
@@ -1061,7 +1054,7 @@ function renderField(){
 $('#fieldGrid').addEventListener('click',e=>{const b=e.target.closest('[data-field]');if(!b)return;
   openModal({title:X('field'),label:'',imgs:FIELD.map(f=>f[0]),caps:FIELD.map(f=>LI([f[1],f[2]])),desc:'',points:[],meta:[]});show(+b.dataset.field);});
 function renderNotes(){
-  $('#notesList').innerHTML=NOTES.map((n,i)=>`<article class="note"><span class="note-d">${LI(n.date)}</span><h3>${LI(n.t)}</h3>
+  if(false)$('#notesList').innerHTML=NOTES.map((n,i)=>`<article class="note"><span class="note-d">${LI(n.date)}</span><h3>${LI(n.t)}</h3>
     <details><summary><span class="rd">${X('readnote')}</span><span class="cl">${X('closenote')}</span></summary><div class="note-b">${LI(n.b)}</div>
     <button class="xlink" type="button" data-open="${n.proj}">${X('related')}: ${byId(n.proj).title} ${ARROW}</button></details></article>`).join('');
   $('#words').hidden=!TESTIMONIALS.length;

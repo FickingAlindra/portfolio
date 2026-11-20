@@ -1145,7 +1145,8 @@ $('#menuBtn').onclick=()=>{const o=$('#links').classList.toggle('open');$('#menu
 $('#links').addEventListener('click',e=>{if(e.target.closest('a')){$('#links').classList.remove('open');$('#menuBtn').setAttribute('aria-expanded',false);}});
 const secs=$$('main section');
 function onScroll(){$('#nav').classList.toggle('scrolled',scrollY>8);$('#toTop').hidden=scrollY<1200;
-  let id='home';for(const s of secs)if(s.getBoundingClientRect().top<140)id=s.id;
+  const vis=secs.filter(s=>!s.hidden&&s.offsetHeight),line=Math.max(140,innerHeight*.45);let id='home';for(const s of vis)if(s.getBoundingClientRect().top<line)id=s.id;
+  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4&&vis.length)id=vis[vis.length-1].id;
   $$('.links a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}
 addEventListener('scroll',onScroll,{passive:true});
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(!b)return;

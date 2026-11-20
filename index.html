@@ -1033,7 +1033,7 @@ const COMPARE={
  palmage:[['palmage/m/01.png','Landsat 2010','Landsat 2010'],['palmage/m/02.png','Sentinel-2 2026','Sentinel-2 2026']],
  firewatch:[['firewatch/m/01.png','Before the fire season','Sebelum musim kebakaran'],['firewatch/m/02.png','After the fire season','Sesudah musim kebakaran']]};
 const FIELD=[
- ['jembrana/02.jpg','Interviewing residents, Jembrana (Field Course III)','Wawancara warga, Jembrana (KKL III)'],
+ ['jembrana/01.jpg','Interviewing residents, Jembrana (Field Course III)','Wawancara warga, Jembrana (KKL III)'],
  ['jembrana-field.jpg','Field team, Jembrana','Tim lapangan, Jembrana'],
  ['gombong-field.jpg','Field Course II team, Gombong','Tim KKL II, Gombong'],
  ['mining-site.jpg','Site visit, DPUP-ESDM internship','Kunjungan lapangan, magang DPUP-ESDM']];
@@ -1059,7 +1059,7 @@ function renderField(){
   $('#fieldH').textContent=X('field');
   $('#fieldGrid').innerHTML=FIELD.map(([f,en,idn],i)=>`<figure><button type="button" data-field="${i}"><img src="img/${f}" alt="${LI([en,idn])}" loading="lazy" decoding="async"></button><figcaption>${LI([en,idn])}</figcaption></figure>`).join('');}
 $('#fieldGrid').addEventListener('click',e=>{const b=e.target.closest('[data-field]');if(!b)return;
-  openModal({title:X('field'),label:'',imgs:FIELD.map(f=>f[0]),desc:'',points:FIELD.map(f=>LI([f[1],f[2]])),meta:[]});show(+b.dataset.field);});
+  openModal({title:X('field'),label:'',imgs:FIELD.map(f=>f[0]),caps:FIELD.map(f=>LI([f[1],f[2]])),desc:'',points:[],meta:[]});show(+b.dataset.field);});
 function renderNotes(){
   $('#notesList').innerHTML=NOTES.map((n,i)=>`<article class="note"><span class="note-d">${LI(n.date)}</span><h3>${LI(n.t)}</h3>
     <details><summary><span class="rd">${X('readnote')}</span><span class="cl">${X('closenote')}</span></summary><div class="note-b">${LI(n.b)}</div>
@@ -1100,7 +1100,7 @@ function show(i){$('#mImg').classList.remove('zoom');idx=(i+cur.imgs.length)%cur
   const full=new Image();full.onload=()=>{if(tok===loadTok){im.src=src;im.classList.remove('loading');}};
   full.onerror=()=>{if(tok===loadTok)im.classList.remove('loading');};full.src=src;
   im.alt=`${cur.title}, ${T('image')} ${idx+1}`;$('#mFull').href=src;
-  $('#mCount').textContent=`${idx+1} / ${cur.imgs.length}`;
+  $('#mCount').textContent=`${idx+1} / ${cur.imgs.length}`;if(cur.caps)$('#mDesc').textContent=cur.caps[idx];
   $$('#mThumbs button').forEach((b,j)=>b.setAttribute('aria-current',j===idx));}
 function closeModal(){if(location.hash.startsWith('#p/')&&history.replaceState)history.replaceState(null,'',location.pathname+location.search);$('#mImg').classList.remove('zoom');$('#modal').hidden=true;document.body.style.overflow='';if(lastFocus)lastFocus.focus();}
 $('#mClose').onclick=closeModal;$('#mPrev').onclick=()=>show(idx-1);$('#mNext').onclick=()=>show(idx+1);

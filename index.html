@@ -378,6 +378,70 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 [data-theme="blueprint"] .hero h1{font-size:clamp(2.6rem,6.4vw,5.6rem)}
 [data-theme="specimen"] .card .hl strong,[data-theme="specimen"] .fact strong{font-family:var(--sans);font-weight:500;letter-spacing:-.03em}
 [data-theme="specimen"] .sec-head{border-bottom-width:1px}
+
+/* ---------- v3: CV button, status, back to top ---------- */
+.navcv{height:38px;display:inline-flex;align-items:center;padding:0 14px;margin-right:4px;border-radius:var(--btn-r);background:var(--accent);color:var(--accent-ink);font:700 .85rem var(--sans);text-decoration:none;transition:background-color .15s}
+.navcv:hover{background:color-mix(in oklab,var(--accent) 85%,var(--fg))}
+.navcv:focus-visible,.totop:focus-visible,.fgrid button:focus-visible,.note summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:520px){.navcv{display:none}}
+.status{color:var(--fg);font-size:.95rem;font-weight:500;margin-top:-4px}
+.totop{position:fixed;right:max(20px,env(safe-area-inset-right,0px));bottom:max(20px,env(safe-area-inset-bottom,0px));z-index:40;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:var(--surface);border:1px solid var(--line);color:var(--fg);box-shadow:0 8px 24px var(--drop-soft);transition:border-color .15s}
+.totop:hover{border-color:var(--accent)}
+.totop svg{width:20px;height:20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+/* ---------- field photos ---------- */
+.field{margin-top:56px}
+.field-h{font-size:1.15rem;font-weight:700;margin-bottom:16px}
+.fgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.fgrid figure{margin:0;min-width:0}
+.fgrid button{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.fgrid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--card-r);border:1px solid var(--line)}
+.fgrid figcaption{margin-top:8px;color:var(--muted);font-size:.86rem;line-height:1.4}
+@media (max-width:820px){.fgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---------- map archive (compact) ---------- */
+#grid2{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+#grid2 .card p,#grid2 .card .more,#grid2 .card .cat{display:none}
+#grid2 .card h3{font-size:1rem;min-height:0;font-family:var(--sans);font-weight:600}
+@media (max-width:900px){#grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---------- notes ---------- */
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+@media (max-width:820px){.notes{grid-template-columns:minmax(0,1fr)}}
+.note{border-top:1.5px solid var(--accent);padding-top:16px;min-width:0}
+.note-d{color:var(--muted);font-size:.84rem}
+.note h3{font-size:1.4rem;line-height:1.25;margin:6px 0 12px}
+.note summary{cursor:pointer;color:var(--accent);font-weight:600;list-style:none;width:max-content}
+.note summary::-webkit-details-marker{display:none}
+.note details .cl,.note details[open] .rd{display:none}
+.note details[open] .cl{display:inline}
+.note-b{color:var(--fg-2);margin:12px 0}
+.note-b p+p{margin-top:12px}
+.quotes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.quote{margin:0}.quote blockquote{margin:0;font-size:1.15rem;line-height:1.5}
+.quote figcaption{margin-top:10px;color:var(--muted);font-size:.88rem}.quote figcaption strong{display:block;color:var(--fg)}
+
+/* ---------- modal: story, compare, zoom ---------- */
+.mread{color:var(--muted);font-size:.8rem}
+.story{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 24px;margin:0 0 20px;padding:16px;background:var(--surface-2);border-radius:var(--card-r)}
+.story dt{font-size:.8rem;color:var(--muted);font-weight:600}
+.story dd{margin:4px 0 0;font-size:.94rem;line-height:1.5}
+@media (max-width:620px){.story{grid-template-columns:minmax(0,1fr)}}
+#mCmp{margin-top:20px}
+.cmp{position:relative;border-radius:var(--card-r);overflow:hidden;border:1px solid var(--line)}
+.cmp img{display:block;width:100%;height:auto}
+.cmp .cmp-a{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 calc(100% - var(--x)) 0 0)}
+.cmp-h{position:absolute;top:0;bottom:0;left:var(--x);width:2px;margin-left:-1px;background:var(--paper);box-shadow:0 0 0 1px var(--edge);pointer-events:none}
+.cmp input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.cmp input:focus-visible+*,.cmp:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.cmp-l{position:absolute;top:10px;padding:3px 8px;border-radius:6px;background:var(--scrim);color:var(--paper);font-size:.78rem;pointer-events:none}
+.cmp-l.l{left:10px}.cmp-l.r{right:10px}
+.cmp-n{margin-top:6px;color:var(--muted);font-size:.82rem}
+.viewer{overflow:hidden}
+#mImg{cursor:zoom-in;transition:transform .25s ease}
+#mImg.zoom{transform:scale(2.4);cursor:zoom-out}
+@media (prefers-reduced-motion: reduce){#mImg{transition:none}}
 </style>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -388,14 +452,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   <div class="wrap">
     <a class="brand" href="#home" aria-label="Back to top"><i></i>Ficking Alindra</a>
     <ul class="links" id="links">
-      <li data-i18n="nav_about"><a href="#about">About</a></li>
-      <li data-i18n="nav_exp"><a href="#experience">Experience</a></li>
-      <li data-i18n="nav_proj"><a href="#projects">Projects</a></li>
-      <li data-i18n="nav_meth"><a href="#stacks">Methods</a></li>
-      <li data-i18n="nav_cert"><a href="#certificates">Certificates</a></li>
-      <li data-i18n="nav_contact"><a href="#contact">Contact</a></li>
+      <li><a data-i18n="nav_about" href="#about">About</a></li>
+      <li><a data-i18n="nav_exp" href="#experience">Experience</a></li>
+      <li><a data-i18n="nav_proj" href="#projects">Projects</a></li>
+      <li><a data-i18n="nav_meth" href="#stacks">Methods</a></li>
+      <li><a data-i18n="nav_cert" href="#certificates">Certificates</a></li>
+      <li><a data-i18n="nav_contact" href="#contact">Contact</a></li>
     </ul>
     <div class="icons">
+      <a class="navcv" href="cv.pdf" target="_blank" rel="noopener">CV</a>
       <button class="langbtn" id="langBtn" type="button" aria-label="Bahasa Indonesia">ID</button>
       <div class="tpick">
         <button class="iconbtn" id="themeBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu" aria-label="Choose a theme">
@@ -427,7 +492,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     <div class="hero-text">
       <h1><span class="ln"><span>Ficking Alindra</span></span><span class="ln"><span><span>Wijayadarma</span></span></span></h1>
       <p class="role"><span data-i18n="role">GIS, Remote Sensing Analyst &amp; Cartography</span><br><a href="#certificates" class="badge" data-i18n="badge">Certified GIS Analyst (BNSP)</a></p>
-      <p data-i18n="lead" class="lead">Cartography and Remote Sensing graduate of Universitas Gadjah Mada. I turn aerial and satellite imagery, field surveys and spatial data into maps that support planning, plantation and mining decisions.</p>
+      <p class="lead" data-i18n="lead">Cartography and Remote Sensing graduate of Universitas Gadjah Mada. I turn aerial and satellite imagery, field surveys and spatial data into maps that support planning, plantation and mining decisions.</p>
       <div class="ctas">
         <a class="btn btn-accent" href="#projects"><span data-i18n="cta">View projects</span>
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -467,6 +532,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
         </div>
       </div>
     </div>
+    <div class="field"><h3 class="field-h" id="fieldH"></h3><div class="fgrid" id="fieldGrid"></div></div>
   </div>
 </section>
 
@@ -487,7 +553,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     <div class="tabs" id="filters" role="group" aria-label="Filter projects"></div>
     <div class="grid" id="grid"></div>
     <div id="otherWrap">
-      <h3 class="subhead"><span data-i18n="other">Other geospatial projects</span> <span class="mono" data-i18n="other2">coursework &amp; lab maps</span></h3>
+      <h3 class="subhead"><span data-i18n="other">Map archive</span> <span class="mono" data-i18n="other2">coursework &amp; lab maps</span></h3>
       <div class="grid" id="grid2"></div>
     </div>
   </div>
@@ -504,6 +570,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       <div class="stack-info" id="stackInfo"></div>
     </div>
   </div>
+</section>
+
+<!-- ================= NOTES ================= -->
+<section id="notes">
+  <div class="wrap">
+    <div class="sec-head"><div><h2 data-i18n="h_notes">Field notes</h2></div><p data-i18n="notes_p">Short write-ups on what went wrong, what worked and why.</p></div>
+    <div class="notes" id="notesList"></div>
+  </div>
+</section>
+<section id="words" hidden>
+  <div class="wrap"><div class="sec-head"><div><h2 data-i18n="h_words">What supervisors say</h2></div></div><div class="quotes" id="quotes"></div></div>
 </section>
 
 <!-- ================= CERTIFICATES ================= -->
@@ -548,12 +625,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 </section>
 </main>
 
-<footer><div class="wrap"><span>© <span id="yr">2026</span> Ficking Alindra Wijayadarma</span><span class="mono" data-i18n="foot">WGS 84, hosted on Vercel</span></div></footer>
+<footer><div class="wrap"><span>© <span id="yr">2026</span> Ficking Alindra Wijayadarma</span></div></footer>
 
 <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="sheet">
     <div class="sheet-head">
-      <div><span class="mono" id="mCat"></span><h3 id="mTitle"></h3></div>
+      <div><span class="mono" id="mCat"></span> <span class="mread" id="mRead"></span><h3 id="mTitle"></h3></div>
       <button class="iconbtn" id="mClose" type="button" aria-label="Close"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <div class="sheet-body">
@@ -566,13 +643,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       </div>
       <div class="thumbs" id="mThumbs"></div>
       <div class="detail">
-        <div><p id="mDesc"></p><ul id="mPoints"></ul></div>
+        <div><dl class="story" id="mStory" hidden></dl><p id="mDesc"></p><ul id="mPoints"></ul><div id="mCmp" hidden></div></div>
         <div class="meta" id="mMeta"></div>
       </div>
     </div>
   </div>
 </div>
 <div class="toast" id="toast" hidden></div>
+<a class="totop" id="toTop" href="#home" hidden><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg><span class="sr" id="toTopL">Back to top</span></a>
 
 <script>
 /* =====================================================================
@@ -932,15 +1010,84 @@ if('IntersectionObserver' in window){new IntersectionObserver((es,o)=>es.forEach
 else{stackOpen=true;}
 renderStack();
 
+
+/* =================== EXTRA CONTENT =================== */
+const STORY={
+ palmgis:{en:['Counting oil palms and checking crown health by hand is slow on large estates.','GeoTIFF drone or satellite imagery uploaded by the user.','Designed and built the WebGIS, the YOLOv8 detection step and the report export.','507 palms found on a 6.73 ha test block, each graded with the VARI index.'],
+          id:['Menghitung pohon sawit dan mengecek kesehatan tajuk secara manual lambat di kebun yang luas.','Citra GeoTIFF drone atau satelit yang diunggah pengguna.','Merancang dan membangun WebGIS, tahap deteksi YOLOv8, dan ekspor laporan.','507 pohon ditemukan pada blok uji 6,73 ha, masing-masing dinilai dengan indeks VARI.']},
+ rice:{en:['The main rice season falls in the rainy months, when optical satellites mostly see cloud.','Sentinel-1 VH radar Aug 2024 to Jan 2026, Sentinel-2 NDVI, ESA WorldCover, the official paddy-field baseline.','Designed the method, ran the analysis in Earth Engine and Python, made the maps and the accuracy checks.','119,625 ha of rice dated season by season; 93% of checked seasons confirmed by Sentinel-2.'],
+       id:['Musim tanam utama jatuh pada bulan hujan, saat satelit optik kebanyakan hanya melihat awan.','Radar VH Sentinel-1 Agu 2024 sampai Jan 2026, NDVI Sentinel-2, ESA WorldCover, Lahan Baku Sawah resmi.','Merancang metode, menjalankan analisis di Earth Engine dan Python, membuat peta dan uji akurasi.','119.625 ha sawah diberi tanggal tanam per musim; 93% musim yang diuji terkonfirmasi Sentinel-2.']},
+ palmage:{en:['Estates need the planting year of each block to plan replanting, but records are often missing.','Landsat 7, 8 and 9 from 2010 to 2026, Sentinel-2, Descals et al. (2024), GEDI lidar, Hansen forest loss.','Designed the method, ran the analysis in Earth Engine and Python, made the maps and the three checks.','11,988 ha dated block by block; 96% of pixels within 3 years of the published map.'],
+          id:['Kebun perlu tahun tanam setiap blok untuk merencanakan peremajaan, tetapi catatannya sering tidak ada.','Landsat 7, 8, dan 9 tahun 2010–2026, Sentinel-2, Descals dkk. (2024), lidar GEDI, kehilangan hutan Hansen.','Merancang metode, menjalankan analisis di Earth Engine dan Python, membuat peta dan tiga pengujian.','11.988 ha diberi tahun tanam per blok; 96% piksel berselisih paling banyak 3 tahun dari peta terpublikasi.']},
+ firewatch:{en:['Where did the 2026 fire season burn in Merauke, and how much of it can satellites confirm?','NASA FIRMS hotspots (MODIS, VIIRS), Sentinel-2, NASA MCD64A1 burned area.','Designed the method, ran the analysis, made the poster and the interactive story page.','290,794 ha burned and confirmed; 98.6% of mapped scars sit on or next to a fire detection.'],
+            id:['Di mana musim kebakaran 2026 membakar Merauke, dan seberapa banyak yang bisa dikonfirmasi satelit?','Titik panas NASA FIRMS (MODIS, VIIRS), Sentinel-2, area terbakar NASA MCD64A1.','Merancang metode, menjalankan analisis, membuat poster dan halaman cerita interaktif.','290.794 ha terbakar dan terkonfirmasi; 98,6% bekas terbakar berada di atas atau di samping deteksi api.']},
+ height:{en:['How tall are palms, forest and buildings above the ground, and can global height data be trusted?','FABDEM, Meta/WRI 1 m canopy height, Google Open Buildings 2.5D, GEDI lidar, JRC GHSL.','Designed the comparison, ran the analysis and built the three interactive 3D models.','Three landscapes scored for data reliability; the oil palm result flagged as not reliable.'],
+         id:['Seberapa tinggi sawit, hutan, dan gedung di atas tanah, dan bisakah data tinggi global dipercaya?','FABDEM, tinggi tajuk 1 m Meta/WRI, Google Open Buildings 2.5D, lidar GEDI, JRC GHSL.','Merancang perbandingan, menjalankan analisis, dan membuat tiga model 3D interaktif.','Tiga lanskap dinilai keandalan datanya; hasil sawit ditandai tidak andal.']},
+ ndpe:{en:['Buyers under the EUDR need proof that oil palm is not linked to forest loss after 31 Dec 2020.','JRC Global Forest Cover 2020, Hansen/UMD tree cover loss 2021–2025, BIOPAMA oil palm, Sentinel-2.','Wrote the screening workflow and produced the map, charts and written analysis.','20.3 ha of post-cut-off loss in 7 patches, with replanting kept separate.'],
+       id:['Pembeli di bawah EUDR butuh bukti bahwa sawit tidak terkait kehilangan hutan setelah 31 Des 2020.','JRC Global Forest Cover 2020, kehilangan tutupan pohon Hansen/UMD 2021–2025, sawit BIOPAMA, Sentinel-2.','Menulis alur kerja penapisan serta membuat peta, grafik, dan analisis tertulis.','20,3 ha kehilangan setelah batas waktu dalam 7 petak, dengan peremajaan dipisahkan.']},
+ thesis:{en:['Which road segments in Magelang City are most vulnerable to traffic accidents at weekend morning peaks?','2025 aerial photographs, the city road network and a 2026 field survey.','Sole author: photo interpretation, field survey and weighted overlay.','23 segments classed as low vulnerability and 18 as moderate, each documented with field photos.'],
+         id:['Ruas jalan mana di Kota Magelang yang paling rawan kecelakaan pada jam puncak pagi akhir pekan?','Foto udara 2025, jaringan jalan kota, dan survei lapangan 2026.','Penulis tunggal: interpretasi foto, survei lapangan, dan overlay berbobot.','23 ruas masuk kelas kerawanan rendah dan 18 sedang, masing-masing didokumentasikan dengan foto lapangan.']},
+ jembrana:{en:['Does the regency spatial plan allocate settlement land where the land is actually suitable?','DEM, PlanetScope imagery, existing data and field validation in two districts.','Chairperson of the field course, coordinating 98 students in 8 research themes including this one.','95.79 km² of suitable residential land against an RTRW allocation of 44.55 km².'],
+           id:['Apakah RTRW kabupaten mengalokasikan permukiman di lahan yang memang sesuai?','DEM, citra PlanetScope, data yang tersedia, dan validasi lapangan di dua kecamatan.','Ketua kuliah kerja lapangan yang mengoordinasikan 98 mahasiswa dalam 8 tema penelitian, termasuk tema ini.','Lahan permukiman sesuai 95,79 km² dibandingkan alokasi RTRW 44,55 km².']}};
+const COMPARE={
+ palmage:[['palmage/m/01.png','Landsat 2010','Landsat 2010'],['palmage/m/02.png','Sentinel-2 2026','Sentinel-2 2026']],
+ firewatch:[['firewatch/m/01.png','Before the fire season','Sebelum musim kebakaran'],['firewatch/m/02.png','After the fire season','Sesudah musim kebakaran']]};
+const FIELD=[
+ ['jembrana/02.jpg','Interviewing residents, Jembrana (Field Course III)','Wawancara warga, Jembrana (KKL III)'],
+ ['jembrana-field.jpg','Field team, Jembrana','Tim lapangan, Jembrana'],
+ ['gombong-field.jpg','Field Course II team, Gombong','Tim KKL II, Gombong'],
+ ['mining-site.jpg','Site visit, DPUP-ESDM internship','Kunjungan lapangan, magang DPUP-ESDM']];
+const NOTES=[
+ {proj:'rice',date:['Nov 2026','Nov 2026'],
+  t:['How radar sees rice through the rainy-season clouds','Cara radar melihat sawah menembus awan musim hujan'],
+  b:['<p>Indramayu plants most of its rice in the rainy months, exactly when Sentinel-2 sees mostly cloud. On 16 January 2025 the optical image of the regency was almost entirely white, while the radar showed three quarters of the rice fields under water.</p><p>Sentinel-1 sends its own microwave signal and measures what comes back. A flooded field acts like a mirror and returns very little, so the VH backscatter drops to around −20 dB at transplanting. As the rice grows, the stems and leaves scatter more energy back and the signal rises again. A field’s planting date is the low point followed by that rise.</p><p>The catch is that every radar image must come from the same orbit track. Mixing tracks drew a straight false line across my first map, and fixing it was the most useful step in the project.</p>',
+     '<p>Indramayu menanam sebagian besar padinya pada bulan-bulan hujan, tepat saat Sentinel-2 kebanyakan hanya melihat awan. Pada 16 Januari 2025 citra optik kabupaten hampir seluruhnya putih, sementara radar menunjukkan tiga perempat sawah sedang tergenang.</p><p>Sentinel-1 memancarkan sinyal gelombang mikro sendiri lalu mengukur pantulannya. Sawah yang tergenang bekerja seperti cermin dan hampir tidak memantulkan apa pun ke satelit, sehingga hamburan balik VH turun sampai sekitar −20 dB saat tanam. Seiring padi tumbuh, batang dan daun memantulkan lebih banyak energi dan sinyalnya naik lagi. Tanggal tanam sebuah sawah adalah titik terendah yang diikuti kenaikan itu.</p><p>Kuncinya, semua citra radar harus dari jalur orbit yang sama. Mencampur jalur orbit membuat garis lurus palsu di peta pertama saya, dan memperbaikinya menjadi langkah paling berguna dalam proyek ini.</p>']},
+ {proj:'palmage',date:['Nov 2026','Nov 2026'],
+  t:['Reading oil palm planting years from 17 years of Landsat','Membaca tahun tanam sawit dari 17 tahun Landsat'],
+  b:['<p>An oil palm block is usually cleared, left as bare soil for a short time and then planted. In a yearly Landsat burn-ratio series this shows up as one or two very low years followed by a steady climb as the canopy closes.</p><p>My first version used a trend-fitting algorithm (LandTrendr), which smoothed away bare spells that lasted only one year and dated many blocks to before 1990. Reading each year directly, and only accepting a bare year when the canopy grew back within five years, fixed it.</p><p>I also limited the series to 2010–2026, because earlier Landsat coverage was too sparse and cloudy to trust. The result now agrees with the published planting-year map within three years for 96% of pixels.</p>',
+     '<p>Blok sawit biasanya dibuka, dibiarkan menjadi tanah terbuka sebentar, lalu ditanami. Pada deret burn ratio Landsat tahunan, ini terlihat sebagai satu atau dua tahun yang sangat rendah, lalu naik perlahan seiring tajuk menutup.</p><p>Versi pertama saya memakai algoritma penyesuaian tren (LandTrendr), yang menghaluskan periode tanah terbuka yang hanya berlangsung satu tahun, sehingga banyak blok terbaca ditanam sebelum 1990. Membaca setiap tahun secara langsung, dan hanya menerima tahun terbuka jika tajuk tumbuh kembali dalam lima tahun, memperbaikinya.</p><p>Saya juga membatasi deret waktu ke 2010–2026, karena cakupan Landsat sebelumnya terlalu jarang dan berawan untuk dipercaya. Hasilnya kini sesuai dengan peta tahun tanam terpublikasi dalam tiga tahun untuk 96% piksel.</p>']}];
+const TESTIMONIALS=[];
+const XUI={story:[['The problem','Masalahnya'],['Data','Data'],['My role','Peran saya'],['Result','Hasil']],
+ read:['min read','menit baca'],copylink:['Copy link','Salin link'],linkcopied:['Link copied','Link disalin'],
+ slide:['Drag to compare','Geser untuk membandingkan'],zoom:['Click the map to zoom','Klik peta untuk memperbesar'],
+ readnote:['Read the note','Baca catatan'],closenote:['Close','Tutup'],related:['Related project','Proyek terkait'],
+ field:['From the field','Dari lapangan'],top:['Back to top','Kembali ke atas'],sites:['places','lokasi']};
+const X=k=>XUI[k][LANG==='id'?1:0];
+const LI=a=>a[LANG==='id'?1:0];
+
+function renderField(){
+  $('#fieldH').textContent=X('field');
+  $('#fieldGrid').innerHTML=FIELD.map(([f,en,idn],i)=>`<figure><button type="button" data-field="${i}"><img src="img/${f}" alt="${LI([en,idn])}" loading="lazy" decoding="async"></button><figcaption>${LI([en,idn])}</figcaption></figure>`).join('');}
+$('#fieldGrid').addEventListener('click',e=>{const b=e.target.closest('[data-field]');if(!b)return;
+  openModal({title:X('field'),label:'',imgs:FIELD.map(f=>f[0]),desc:'',points:FIELD.map(f=>LI([f[1],f[2]])),meta:[]});show(+b.dataset.field);});
+function renderNotes(){
+  $('#notesList').innerHTML=NOTES.map((n,i)=>`<article class="note"><span class="note-d">${LI(n.date)}</span><h3>${LI(n.t)}</h3>
+    <details><summary><span class="rd">${X('readnote')}</span><span class="cl">${X('closenote')}</span></summary><div class="note-b">${LI(n.b)}</div>
+    <button class="xlink" type="button" data-open="${n.proj}">${X('related')}: ${byId(n.proj).title} ${ARROW}</button></details></article>`).join('');
+  $('#words').hidden=!TESTIMONIALS.length;
+  $('#quotes').innerHTML=TESTIMONIALS.map(q=>`<figure class="quote"><blockquote>${LI(q.q)}</blockquote><figcaption><strong>${q.name}</strong>${LI(q.role)}</figcaption></figure>`).join('');}
+function renderExtra(){$('#toTopL').textContent=X('top');renderField();renderNotes();}
+renderExtra();
+
 /* =================== MODAL =================== */
 let cur=null,idx=0,lastFocus=null;
 function openModal(p){cur=p;idx=0;lastFocus=document.activeElement;
+  if(p.id&&history.replaceState)history.replaceState(null,'','#p/'+p.id);
   $('#mCat').textContent=(p.label||'').replace(/ · /g,', ');$('#mTitle').textContent=p.title;$('#mDesc').textContent=p.desc;
   $('#mPoints').innerHTML=(p.points||[]).map(x=>`<li>${x}</li>`).join('');$('#mPoints').hidden=!(p.points||[]).length;
+  const st=p.id&&STORY[p.id];
+  $('#mStory').innerHTML=st?XUI.story.map((l,i)=>`<div><dt>${LI(l)}</dt><dd>${LI([st.en[i],st.id[i]])}</dd></div>`).join(''):'';$('#mStory').hidden=!st;
+  const words=((p.desc||'')+' '+(p.points||[]).join(' ')+(st?' '+LI([st.en.join(' '),st.id.join(' ')]):'')).split(/\s+/).length;
+  $('#mRead').textContent=p.id&&words>60?`${Math.max(1,Math.round(words/200))} ${X('read')}`:'';
+  const cp=p.id&&COMPARE[p.id];
+  $('#mCmp').innerHTML=cp?`<div class="cmp" style="--x:50%"><img src="${IMG(cp[1][0])}" alt="${LI([cp[1][1],cp[1][2]])}" loading="lazy"><img class="cmp-a" src="${IMG(cp[0][0])}" alt="${LI([cp[0][1],cp[0][2]])}" loading="lazy">
+    <span class="cmp-l l">${LI([cp[0][1],cp[0][2]])}</span><span class="cmp-l r">${LI([cp[1][1],cp[1][2]])}</span><i class="cmp-h" aria-hidden="true"></i>
+    <input type="range" min="0" max="100" value="50" aria-label="${X('slide')}"></div><p class="cmp-n">${X('slide')}</p>`:'';$('#mCmp').hidden=!cp;
   let meta=(p.meta||[]).map(([v,l])=>`<div class="figure">${v}<small>${l}</small></div>`).join('');
   if(p.when)meta+=`<div><h4>${T('when')}</h4><span class="mono">${p.when}</span></div>`;
   if(p.tools)meta+=`<div><h4>${T('tools')}</h4><div class="chips">${p.tools.map(t=>`<span class="chip">${t}</span>`).join('')}</div></div>`;
   if(p.verify)meta+=`<a class="btn btn-text" href="${p.verify}" target="_blank" rel="noopener" style="align-self:flex-start">${T('verify')}</a>`;
+  if(p.id)meta+=`<button class="btn btn-ghost" type="button" id="mLink" style="align-self:flex-start">${X('copylink')}</button>`;
   if(p.demo||p.github||p.code||p.views)meta+=`<div class="links-row">${(p.views||[]).map(v=>`<a class="btn btn-accent" href="${v[1]}" target="_blank" rel="noopener">${EXT}${v[0]}</a>`).join('')}${p.demo?`<a class="btn btn-accent" href="${p.demo}" target="_blank" rel="noopener">${EXT}${T('live')}</a>`:''}${p.github?`<a class="btn btn-ghost" href="${p.github}" target="_blank" rel="noopener">${GHI}GitHub</a>`:''}${p.code?`<a class="btn btn-ghost" href="${p.code}" download>${CODEI}Script (.py)</a>`:''}</div>`;
   $('#mMeta').innerHTML=meta;$('#mMeta').hidden=!meta;
   const many=p.imgs.length>1;
@@ -948,22 +1095,33 @@ function openModal(p){cur=p;idx=0;lastFocus=document.activeElement;
   $('#mThumbs').hidden=!many;$('#mPrev').hidden=$('#mNext').hidden=$('#mCount').hidden=!many;
   show(0);$('#modal').hidden=false;document.body.style.overflow='hidden';$('#mClose').focus();}
 let loadTok=0;
-function show(i){idx=(i+cur.imgs.length)%cur.imgs.length;const f=cur.imgs[idx],src=IMG(f),im=$('#mImg'),tok=++loadTok;
+function show(i){$('#mImg').classList.remove('zoom');idx=(i+cur.imgs.length)%cur.imgs.length;const f=cur.imgs[idx],src=IMG(f),im=$('#mImg'),tok=++loadTok;
   im.src=TH(f);im.classList.add('loading');            /* preview first, then the original file */
   const full=new Image();full.onload=()=>{if(tok===loadTok){im.src=src;im.classList.remove('loading');}};
   full.onerror=()=>{if(tok===loadTok)im.classList.remove('loading');};full.src=src;
   im.alt=`${cur.title}, ${T('image')} ${idx+1}`;$('#mFull').href=src;
   $('#mCount').textContent=`${idx+1} / ${cur.imgs.length}`;
   $$('#mThumbs button').forEach((b,j)=>b.setAttribute('aria-current',j===idx));}
-function closeModal(){$('#modal').hidden=true;document.body.style.overflow='';if(lastFocus)lastFocus.focus();}
+function closeModal(){if(location.hash.startsWith('#p/')&&history.replaceState)history.replaceState(null,'',location.pathname+location.search);$('#mImg').classList.remove('zoom');$('#modal').hidden=true;document.body.style.overflow='';if(lastFocus)lastFocus.focus();}
 $('#mClose').onclick=closeModal;$('#mPrev').onclick=()=>show(idx-1);$('#mNext').onclick=()=>show(idx+1);
 $('#mThumbs').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)show(+b.dataset.i);});
 $('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal();});
 document.addEventListener('keydown',e=>{if($('#modal').hidden)return;
   if(e.key==='Escape')closeModal();if(e.key==='ArrowLeft')show(idx-1);if(e.key==='ArrowRight')show(idx+1);});
 
+$('#mMeta').addEventListener('click',async e=>{if(!e.target.closest('#mLink'))return;const u=location.origin+location.pathname+'#p/'+cur.id;
+  try{await navigator.clipboard.writeText(u);toast(X('linkcopied'));}catch(_){toast(u);}});
+$('#mCmp').addEventListener('input',e=>{if(e.target.type==='range')e.target.closest('.cmp').style.setProperty('--x',e.target.value+'%');});
+const mImg=$('#mImg');
+mImg.addEventListener('click',e=>{const r=mImg.getBoundingClientRect();mImg.style.transformOrigin=`${(e.clientX-r.left)/r.width*100}% ${(e.clientY-r.top)/r.height*100}%`;mImg.classList.toggle('zoom');});
+mImg.addEventListener('mousemove',e=>{if(!mImg.classList.contains('zoom'))return;const r=mImg.getBoundingClientRect();
+  mImg.style.transformOrigin=`${(e.clientX-r.left)/r.width*100}% ${(e.clientY-r.top)/r.height*100}%`;});
+function openFromHash(){const m=location.hash.match(/^#p\/([\w-]+)/);if(m&&byId(m[1])&&$('#modal').hidden)openModal(byId(m[1]));}
+openFromHash();window.addEventListener('hashchange',openFromHash);
+
 /* =================== THEME, NAV, COPY =================== */
 const root=document.documentElement;
+Object.assign(ID_UI,{"h_atlas": "Lokasi yang pernah saya petakan", "atlas_p": "Setiap proyek yang punya lokasi di lapangan. Pilih titik atau nama untuk membuka proyeknya.", "h_notes": "Catatan lapangan", "notes_p": "Tulisan singkat tentang apa yang salah, apa yang berhasil, dan alasannya.", "h_words": "Kata pembimbing", "other": "Arsip peta", "nav_atlas": "Peta"});
 const ID_UI_X={"theme_h": "Tema", "t_dark": "Asli gelap", "t_light": "Asli terang"};Object.assign(ID_UI,ID_UI_X);
 const THEMES={dark:['#151719',''],light:['#f5f4ef',''],
   hedgerow:['#13301f','family=Prata&family=Manrope:wght@300;400;500;700'],
@@ -986,14 +1144,14 @@ document.addEventListener('click',e=>{if(!tMenu.hidden&&!e.target.closest('.tpic
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!tMenu.hidden){menu(false);$('#themeBtn').focus();}});
 function applyLang(l){LANG=l;root.lang=l;setData(l);setStacks(l);i18nStatic(l);
   const b=$('#langBtn');b.textContent=l==='id'?'EN':'ID';b.setAttribute('aria-label',l==='id'?'English':'Bahasa Indonesia');
-  renderFilters();renderGrid();renderExp();renderCerts();renderStack();if(!$('#modal').hidden&&cur&&cur.id)openModal(byId(cur.id));}
+  renderFilters();renderGrid();renderExp();renderCerts();renderStack();renderExtra();if(!$('#modal').hidden&&cur&&cur.id)openModal(byId(cur.id));}
 let savedL=null;try{savedL=localStorage.getItem('lang')}catch(_){}
 if(savedL==='id')applyLang('id');
 $('#langBtn').onclick=()=>{const l=LANG==='id'?'en':'id';applyLang(l);try{localStorage.setItem('lang',l)}catch(_){}};
 $('#menuBtn').onclick=()=>{const o=$('#links').classList.toggle('open');$('#menuBtn').setAttribute('aria-expanded',o);};
 $('#links').addEventListener('click',e=>{if(e.target.closest('a')){$('#links').classList.remove('open');$('#menuBtn').setAttribute('aria-expanded',false);}});
 const secs=$$('main section');
-function onScroll(){$('#nav').classList.toggle('scrolled',scrollY>8);
+function onScroll(){$('#nav').classList.toggle('scrolled',scrollY>8);$('#toTop').hidden=scrollY<1200;
   let id='home';for(const s of secs)if(s.getBoundingClientRect().top<140)id=s.id;
   $$('.links a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}
 addEventListener('scroll',onScroll,{passive:true});

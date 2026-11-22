@@ -583,6 +583,23 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   .brand:hover .mark.lg .px{animation:pxIn .7s cubic-bezier(.3,.8,.2,1)}
 }
 @keyframes pxIn{from{transform:scaleX(0)}}
+
+/* ---------- name gradient + cursor light ---------- */
+:root{--g1:#0f2a6b;--g2:var(--accent);--g3:#5aa0ff}
+:root[data-theme="mint"],:root[data-theme="coral"],:root[data-theme="dark"]{--g1:var(--fg);--g3:var(--accent)}
+:root[data-theme="sage"]{--g1:#16352a;--g3:#5fa883}
+.hero .gname{background:linear-gradient(100deg,var(--g1) 0%,var(--g2) 45%,var(--g3) 75%,var(--g1) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-fill-color:transparent}
+.cglow{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;pointer-events:none;z-index:0;opacity:0;
+  background:radial-gradient(circle,color-mix(in srgb,var(--accent) 16%,transparent) 0%,transparent 65%);transition:opacity .4s;will-change:transform}
+.cglow.on{opacity:1}
+main,section .wrap{position:relative;z-index:1}
+.card,.cert,.c-row,.fgrid button{--gx:50%;--gy:50%}
+.card::after,.cert::after{content:"";position:absolute;inset:-14px;border-radius:calc(var(--card-r) + 10px);pointer-events:none;z-index:-1;opacity:0;transition:opacity .3s;
+  background:radial-gradient(260px circle at var(--gx) var(--gy),color-mix(in srgb,var(--accent) 18%,transparent),transparent 70%)}
+.card:hover::after,.cert:hover::after{opacity:1}
+.cert{position:relative;isolation:isolate}
+@media (prefers-reduced-motion:no-preference){.hero .gname{animation:gname 9s ease-in-out infinite alternate}}
+@keyframes gname{from{background-position:0 0}to{background-position:100% 0}}
 </style>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -634,7 +651,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   <canvas id="contours" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-text">
-      <h1><span class="ln"><span>Ficking Alindra</span></span><span class="ln"><span><span>Wijayadarma</span></span></span></h1>
+      <h1><span class="ln"><span>Ficking Alindra</span></span><span class="ln"><span><span class="gname">Wijayadarma</span></span></span></h1>
       <p class="role"><span data-i18n="role">GIS, Remote Sensing Analyst &amp; Cartography</span><br><a href="#certificates" class="badge" data-i18n="badge">Certified GIS Analyst (BNSP)</a></p>
       <p class="lead" data-i18n="lead">Cartography and Remote Sensing graduate of Universitas Gadjah Mada. I turn aerial and satellite imagery, field surveys and spatial data into maps that support planning, plantation and mining decisions.</p>
       <div class="ctas">
@@ -649,6 +666,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     </div>
   </div>
 </section>
+<div class="cglow" aria-hidden="true"></div>
 
 <!-- ================= ABOUT ================= -->
 <section id="about">
@@ -1364,6 +1382,17 @@ renderFilters();renderGrid();renderExp();onScroll();
     h.innerHTML=ws.map((w,i)=>`<span class="w"><span style="--i:${i}">${w.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</span></span>`).join(' ');};
   const run=()=>document.querySelectorAll('.sec-head h2').forEach(split);
   run();new MutationObserver(m=>{if(m.some(r=>r.target.closest&&r.target.closest('.sec-head')))run();}).observe(document.body,{childList:true,subtree:true,characterData:true});
+})();
+</script>
+
+<script>
+(function(){
+  if(!matchMedia('(hover:hover) and (pointer:fine)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const g=document.querySelector('.cglow');let x=0,y=0,tx=0,ty=0,run=false;
+  const step=()=>{x+=(tx-x)*.18;y+=(ty-y)*.18;g.style.transform=`translate(${x}px,${y}px)`;if(Math.abs(tx-x)+Math.abs(ty-y)>.5)requestAnimationFrame(step);else run=false;};
+  addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;g.classList.add('on');if(!run){run=true;requestAnimationFrame(step);}
+    const c=e.target.closest&&e.target.closest('.card,.cert');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--gx',(e.clientX-r.left+14)+'px');c.style.setProperty('--gy',(e.clientY-r.top+14)+'px');}},{passive:true});
+  document.addEventListener('pointerleave',()=>g.classList.remove('on'));
 })();
 </script>
 </body>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-hv="b">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -19,7 +19,7 @@
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@500;600;700;800&family=Figtree:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <script>document.documentElement.classList.add('js')</script>
 <style>
 /* Hallmark · built: the project · redesign: polish (css pass 2: type Rethink Sans + Figtree, 4px scale, quiet hover, plain portrait) · genre: editorial · theme: kept (own system) + switchable: hedgerow, blueprint, specimen, garden · stamp 2026-11-20 */
@@ -31,7 +31,7 @@
   --fg:#f0efea;--muted:#a1a6a8;--accent:#f2b33d;--accent-ink:#1a1407;
   --contour:rgba(242,179,61,.10);--shadow:0 18px 40px rgba(0,0,0,.35);
   --paper:#fbfaf6;--edge:rgba(0,0,0,.25);--drop:rgba(0,0,0,.55);--drop-soft:rgba(0,0,0,.15);--scrim:rgba(8,9,10,.75);
-  --sans:"Figtree",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --sans:"Plus Jakarta Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --measure:1120px;color-scheme:dark;
 }
@@ -302,7 +302,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .tmenu button:hover{background:var(--surface-2)}
 .tmenu button[aria-pressed="true"]{background:var(--surface-2);font-weight:700}
 .tmenu i{flex:none;width:28px;height:20px;border-radius:5px;border:1px solid var(--line);background:linear-gradient(135deg,var(--a) 0 55%,var(--b) 55% 100%)}
-:root{--fg-2:var(--muted);--display:"Rethink Sans",ui-sans-serif,system-ui,sans-serif;--dw:800;--btn-r:6px;--card-r:4px;--hcase:none}
+:root{--fg-2:var(--muted);--display:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;--dw:800;--btn-r:6px;--card-r:4px;--hcase:none}
 
 :root{--sw-sage-a:#f6f5f1;--sw-sage-b:#2f6b4f;--sw-cobalt-a:#fafaf8;--sw-cobalt-b:#2450d6;--sw-mint-a:#0e1116;--sw-mint-b:#5fd3b3;--sw-coral-a:#0d1b2a;--sw-coral-b:#ff7a59;--sw-dark-a:#151719;--sw-dark-b:#f2b33d;--sw-light-a:#f5f4ef;--sw-light-b:#976105;--sw-hedgerow-a:#13301f;--sw-hedgerow-b:#cde65a;--sw-blueprint-a:#1d3f78;--sw-blueprint-b:#f4f7fb;--sw-specimen-a:#f6f0e4;--sw-specimen-b:#2a46b8;--sw-garden-a:#f3eedb;--sw-garden-b:#3f7a35;}
 .tmenu [data-t="dark"] i{--a:var(--sw-dark-a);--b:var(--sw-dark-b)}
@@ -514,6 +514,65 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .tmenu [data-t="cobalt"] i{--a:var(--sw-cobalt-a);--b:var(--sw-cobalt-b)}
 .tmenu [data-t="mint"] i{--a:var(--sw-mint-a);--b:var(--sw-mint-b)}
 .tmenu [data-t="coral"] i{--a:var(--sw-coral-a);--b:var(--sw-coral-b)}
+
+/* ---------- light touches ---------- */
+.sec-head{position:relative}
+.sec-head::after{content:"";position:absolute;left:0;bottom:-1px;width:96px;height:2px;background:var(--accent);transform-origin:left}
+.card .thumb{overflow:hidden}
+@media (prefers-reduced-motion:no-preference){
+  .js .sec-head::after{transform:scaleX(0);transition:transform .8s cubic-bezier(.3,.8,.2,1) .2s}
+  .js .sec-head.in::after{transform:none}
+  .card .thumb img{transition:transform .6s cubic-bezier(.2,.7,.1,1)}
+  .card:hover .thumb img{transform:scale(1.03)}
+  .cert{transition:transform .25s ease}
+  .cert:hover{transform:translateY(-3px)}
+}
+
+/* ---------- hover ---------- */
+.card{position:relative;isolation:isolate}
+.card .thumb{position:relative;overflow:hidden}
+.card .thumb::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,color-mix(in srgb,var(--fg) 40%,transparent),transparent 55%);opacity:0;pointer-events:none}
+.card .go{position:absolute;right:12px;bottom:12px;z-index:2;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--accent);color:var(--accent-ink);opacity:0;transform:translateY(10px) scale(.85);pointer-events:none}
+.card .go svg{width:18px;height:18px}
+#grid2 .card .go{width:34px;height:34px;right:8px;bottom:8px}
+.card h3{transition:color .25s}
+.card .more svg{transition:transform .3s cubic-bezier(.2,.7,.1,1)}
+.fgrid button{overflow:hidden;border-radius:var(--card-r)}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .card,.card .thumb,.card .thumb img,.card .thumb::before,.card .go{transition:transform .5s cubic-bezier(.2,.7,.1,1),opacity .35s ease,box-shadow .4s ease,border-color .3s,filter .4s ease}
+  .card:hover .thumb img{transform:scale(1.05)}
+  .card:hover .go{opacity:1;transform:none}
+  .card:hover h3{color:var(--accent)}
+  .card:hover .more svg{transform:translateX(5px)}
+  .fgrid img{transition:transform .6s cubic-bezier(.2,.7,.1,1)}
+  .fgrid button:hover img{transform:scale(1.05)}
+  .cert{transition:transform .35s cubic-bezier(.2,.7,.1,1)}
+  .cert img{transition:box-shadow .35s,border-color .3s}
+  .cert:hover{transform:translateY(-5px)}
+  .cert:hover img{box-shadow:0 18px 34px -18px var(--drop);border-color:var(--accent)}
+  [data-hv="a"] .card:hover{transform:translateY(-6px)}
+  [data-hv="a"] .card:hover .thumb{box-shadow:0 22px 40px -22px var(--drop)}
+  [data-hv="a"] .card:hover .thumb::before{opacity:1}
+  [data-hv="b"] .card::before{content:"";position:absolute;inset:-14px;z-index:-1;border-radius:calc(var(--card-r) + 10px);background:var(--surface);border:1px solid var(--line);box-shadow:0 24px 48px -28px var(--drop);opacity:0;transform:scale(.97);transition:opacity .35s ease,transform .45s cubic-bezier(.2,.7,.1,1)}
+  [data-hv="b"] .card:hover::before{opacity:1;transform:none}
+  [data-hv="c"] :is(#feat,#grid,#grid2):has(.card:hover) .card:not(:hover){opacity:.4;filter:saturate(.3)}
+  [data-hv="c"] .card:hover .thumb{box-shadow:0 22px 40px -22px var(--drop)}
+}
+
+/* ---------- type + heading reveal ---------- */
+:root:not([data-skin]) h1,:root:not([data-skin]) h2,:root:not([data-skin]) .card h3,:root:not([data-skin]) .brand{font-family:var(--display);font-weight:var(--dw);letter-spacing:-.03em;font-optical-sizing:auto}
+:root:not([data-skin]) .hero h1{font-size:clamp(2.8rem,6.6vw,5.2rem);line-height:1.02}
+:root:not([data-skin]) .sec-head h2{font-size:clamp(2rem,4vw,3rem);line-height:1.08}
+:root:not([data-skin]) .card h3{font-size:1.3rem;line-height:1.25;font-weight:700;letter-spacing:-.02em}
+:root:not([data-skin]) .hero h1{letter-spacing:-.04em}
+:root:not([data-skin]) .card .hl strong,:root:not([data-skin]) .fact strong{font-family:var(--display);font-weight:var(--dw)}
+.sec-head h2 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.sec-head h2 .w>span{display:inline-block}
+@media (prefers-reduced-motion:no-preference){
+  .js .sec-head h2 .w>span{transform:translateY(105%);transition:transform .8s cubic-bezier(.2,.7,.1,1);transition-delay:calc(var(--i) * 60ms)}
+  .js .sec-head.in h2 .w>span{transform:none}
+  .js .sec-head.rv{opacity:1;transform:none}
+}
 </style>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -623,7 +682,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 <!-- ================= PROJECTS ================= -->
 <section id="projects">
   <div class="wrap">
-    <div class="sec-head"><div><h2 data-i18n="h_proj">Selected work</h2></div><p data-i18n-html="proj_p">Click a project to see its maps in full size, the method and the numbers. Prefer a document? <a href="https://canva.link/quvcclw7e7auh99" target="_blank" rel="noopener" style="color:var(--accent)">Open the portfolio on Canva ↗</a></p></div>
+    <div class="sec-head"><div><h2 data-i18n="h_proj">Selected work</h2></div></div>
     <div class="feat" id="featWrap"><span class="mono feat-k" data-i18n="feat">Featured</span><div class="grid" id="feat"></div></div>
     <div class="tabs" id="filters" role="group" aria-label="Filter projects"></div>
     <div class="grid" id="grid"></div>
@@ -974,7 +1033,7 @@ const FEATURED_EN=FEATURED.map(f=>f[2]);
 const SMCOVER=p=>'img/cover/sm/'+p.id+'.jpg';
 const card=(p,hl)=>`
    <button class="card" type="button" data-open="${p.id}">
-     <span class="thumb"><img src="${SMCOVER(p)}" alt="${p.title}" loading="lazy"></span>
+     <span class="thumb"><img src="${SMCOVER(p)}" alt="${p.title}" loading="lazy"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></span>
      <span class="cat">${p.label.replace(/ · /g,', ')}${p.demo?', '+T('demo'):p.imgs.length>1?`, ${p.imgs.length} ${T('images')}`:''}</span>
      <h3>${p.title}</h3>
      <p>${p.short}</p>
@@ -1286,6 +1345,15 @@ renderFilters();renderGrid();renderExp();onScroll();
     const o=new IntersectionObserver(es=>{if(!es[0].isIntersecting)return;o.disconnect();const t0=performance.now();
       const f=t=>{const k=Math.min(1,(t-t0)/1200),v=end*(1-Math.pow(1-k,3));el.textContent=v.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)},{threshold:.6});
     o.observe(el)});
+})();
+</script>
+
+<script>
+(function(){
+  const split=h=>{if(h.querySelector('.w'))return;const ws=h.textContent.trim().split(/\s+/);
+    h.innerHTML=ws.map((w,i)=>`<span class="w"><span style="--i:${i}">${w.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</span></span>`).join(' ');};
+  const run=()=>document.querySelectorAll('.sec-head h2').forEach(split);
+  run();new MutationObserver(m=>{if(m.some(r=>r.target.closest&&r.target.closest('.sec-head')))run();}).observe(document.body,{childList:true,subtree:true,characterData:true});
 })();
 </script>
 </body>
